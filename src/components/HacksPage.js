@@ -12,7 +12,8 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     textAlign: "center",
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
+    backgroundColor: "dodgerBlue"
   }
 }));
 
