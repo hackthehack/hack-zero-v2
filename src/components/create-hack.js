@@ -1,20 +1,29 @@
-import React from "react"
+import React, {useState} from "react"
+
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid'
-import TextField from '@material-ui/core/TextField';
+
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
+import Axios from "axios";
+
 
 const useStyles = makeStyles(theme => ({
     root: {
       flexGrow: 1,
     },
     field: {
-      padding: theme.spacing(2),
+      padding: theme.spacing(1),
       textAlign: 'left',
       color: theme.palette.text.secondary,
+      width: '90vw',
     },
     button: {
-        padding: theme.spacing(2)
+        margin: theme.spacing(1)
     }
   }));
 
@@ -23,43 +32,91 @@ function CreateHack(){
 
     const classes = useStyles()
 
+    let [, title, description, show] = useState()
+
     const handleChange = event =>{
-        console.log(event.target.value)
+        if(event.target.name === 'title'){
+            title = event.target.value
+        } else{
+            description = event.target.value
+        }
     }
 
     const handleClick = event => {
-        console.log("Button Clicked")
+        show = true;
+        const obj = {
+            title: title,
+            description: description,
+            goal: "temp"
+        }
+        Axios.post('http://localhost:3001/addhack',obj).then(res =>{
+            console.log(res)
+        })
+
+
+        console.log('Hack: '+title+"\nDescription: "+description)
+        console.log(show)
     }
+
+    // const renderHack = () =>{
+    //     if(show === true){
+    //         return(
+    //             <Grid container
+    //                 direction="column"
+    //                 justify="center"
+    //                 alignItems="stretch"
+    //                 alignContent="center">
+    //                 <Paper elevation={2}>
+    //                     <Typography variant="h2" component="h2">
+    //                         {title}
+    //                     </Typography>
+    //                     <Typography variant="h4" component="h4">
+    //                         {description}
+    //                     </Typography>
+    //                 </Paper>
+    //             </Grid>
+    //         )
+    //     }
+    //     return null
+    // }
 
     return(
         <div className={classes.root}>
-            <Grid container
-            direction="column"
-            justify="center"
-            alignItems="center">
-                <form noValidate autoComplete='false'>
-                    <Grid item xs={6}>
-                        <TextField 
-                        className={classes.field} 
-                        label="Hack Name"
-                        onChange={handleChange}></TextField>
+            <form width={1} noValidate autoComplete='false'>
+                <Grid container
+                direction="column"
+                justify="center"
+                alignItems="stretch"
+                alignContent="center">
+                    <Grid className={classes.field} item xs={12}>
+                        <FormControl fullWidth variant='outlined'>
+                            <InputLabel htmlFor='outlined-adornment-amount'>Hack Name</InputLabel>
+                            <OutlinedInput
+                                name='title'
+                                onChange={handleChange}
+                                labelWidth={85}>
+                            </OutlinedInput>
+                        </FormControl>
                     </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                        className={classes.field}
-                        label="Hack Description"
-                        multiline
-                        rows="4"
-                        onChange={handleChange}>
-                        </TextField>
+                    <Grid className={classes.field} item xs>
+                        <FormControl fullWidth variant='outlined'>
+                            <InputLabel htmlFor='outlined-adornment-amount'>Hack Description</InputLabel>
+                            <OutlinedInput
+                                name='description'
+                                onChange={handleChange}
+                                multiline
+                                rows={5}
+                                labelWidth={125}>
+                            </OutlinedInput>
+                        </FormControl>
                     </Grid>
                     <Grid item xs>
                         <Button className={classes.button} onClick={handleClick} variant='contained' color='primary'>
                             Create Hack
                         </Button>
                     </Grid>
-                </form>
-            </Grid>
+                </Grid>
+            </form>
         </div>
     )
 }

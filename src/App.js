@@ -6,7 +6,9 @@ function App() {
 	return (
 		<BrowserRouter>
 			<Switch>
-				<Route path='/' component={CreateHack}/>
+				<Route path='/'>
+					<CreateHack/>
+				</Route>
 			</Switch>
 		</BrowserRouter>
 	);
