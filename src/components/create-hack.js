@@ -44,7 +44,8 @@ function CreateHack(){
         }
     }
 
-    const handleClick = event => {
+    const handleSubmit = event => {
+        event.preventDefault()
         setShow(true)
         const obj = {
             title: title,
@@ -54,10 +55,6 @@ function CreateHack(){
         // Axios.post('http://localhost:3001/addhack',obj).then(res =>{
         //     console.log(res)
         // })
-
-
-        console.log('Hack: '+title+"\nDescription: "+description)
-        console.log(show)
     }
 
     const renderHack = () =>{
@@ -69,10 +66,10 @@ function CreateHack(){
                     alignItems="stretch"
                     alignContent="center">
                     <Paper elevation={2}>
-                        <Typography variant="h2" component="h2">
+                        <Typography alt='title' variant="h2" component="h2">
                             {title}
                         </Typography>
-                        <Typography variant="h4" component="h4">
+                        <Typography alt='description' variant="h4" component="h4">
                             {description}
                         </Typography>
                     </Paper>
@@ -84,7 +81,7 @@ function CreateHack(){
 
     return(
         <div className={classes.root}>
-            <form width={1} noValidate autoComplete='false'>
+            <form width={1} noValidate autoComplete='false' onSubmit={handleSubmit}>
                 <Grid container
                 direction="column"
                 justify="center"
@@ -94,8 +91,10 @@ function CreateHack(){
                         <FormControl fullWidth variant='outlined'>
                             <InputLabel htmlFor='outlined-adornment-amount'>Hack Name</InputLabel>
                             <OutlinedInput
+                                placeholder="Hack Name"
                                 name='title'
                                 onChange={handleChange}
+                                value={title}
                                 labelWidth={85}>
                             </OutlinedInput>
                         </FormControl>
@@ -104,8 +103,10 @@ function CreateHack(){
                         <FormControl fullWidth variant='outlined'>
                             <InputLabel htmlFor='outlined-adornment-amount'>Hack Description</InputLabel>
                             <OutlinedInput
+                                placeholder="Hack Description"
                                 name='description'
                                 onChange={handleChange}
+                                value={description}
                                 multiline
                                 rows={5}
                                 labelWidth={125}>
@@ -113,7 +114,7 @@ function CreateHack(){
                         </FormControl>
                     </Grid>
                     <Grid item xs>
-                        <Button className={classes.button} onClick={handleClick} variant='contained' color='primary'>
+                        <Button type='submit' className={classes.button} variant='contained' color='primary'>
                             Create Hack
                         </Button>
                     </Grid>
