@@ -32,53 +32,55 @@ function CreateHack(){
 
     const classes = useStyles()
 
-    let [, title, description, show] = useState()
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
+    const [show, setShow] = useState(false)
 
     const handleChange = event =>{
         if(event.target.name === 'title'){
-            title = event.target.value
+            setTitle(event.target.value)
         } else{
-            description = event.target.value
+            setDescription(event.target.value)
         }
     }
 
     const handleClick = event => {
-        show = true;
+        setShow(true)
         const obj = {
             title: title,
             description: description,
             goal: "temp"
         }
-        Axios.post('http://localhost:3001/addhack',obj).then(res =>{
-            console.log(res)
-        })
+        // Axios.post('http://localhost:3001/addhack',obj).then(res =>{
+        //     console.log(res)
+        // })
 
 
         console.log('Hack: '+title+"\nDescription: "+description)
         console.log(show)
     }
 
-    // const renderHack = () =>{
-    //     if(show === true){
-    //         return(
-    //             <Grid container
-    //                 direction="column"
-    //                 justify="center"
-    //                 alignItems="stretch"
-    //                 alignContent="center">
-    //                 <Paper elevation={2}>
-    //                     <Typography variant="h2" component="h2">
-    //                         {title}
-    //                     </Typography>
-    //                     <Typography variant="h4" component="h4">
-    //                         {description}
-    //                     </Typography>
-    //                 </Paper>
-    //             </Grid>
-    //         )
-    //     }
-    //     return null
-    // }
+    const renderHack = () =>{
+        if(show === true){
+            return(
+                <Grid container
+                    direction="column"
+                    justify="center"
+                    alignItems="stretch"
+                    alignContent="center">
+                    <Paper elevation={2}>
+                        <Typography variant="h2" component="h2">
+                            {title}
+                        </Typography>
+                        <Typography variant="h4" component="h4">
+                            {description}
+                        </Typography>
+                    </Paper>
+                </Grid>
+            )
+        }
+        return null
+    }
 
     return(
         <div className={classes.root}>
@@ -117,6 +119,7 @@ function CreateHack(){
                     </Grid>
                 </Grid>
             </form>
+            {renderHack()}
         </div>
     )
 }
