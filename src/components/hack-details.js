@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from 'react'
+import Axios from 'axios'
 
 // UI imports
 import { 
@@ -22,18 +23,32 @@ const useStyles = makeStyles(theme =>({
 }))
 
 
-function HackDetails(){
+function HackDetails(props){
     const classes = useStyles()
 
+    const [data, setData] = useState([])
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [goal, setGoal] = useState('')
 
     useEffect(()=>{
-        setTitle("Hack-Zero")
-        setDescription("Your bones don't break, mine do. That's clear. Your cells react to bacteria and viruses differently than mine. You don't get sick, I do. That's also clear. But for some reason, you and I react the exact same way to water. We swallow it too fast, we choke. We get some in our lungs, we drown. However unreal it may seem, we are connected, you and I. We're on the same curve, just on opposite ends.")
-        setGoal("To win and get that cash")
-
+        if(props.hackID!==undefined){
+            Axios.get('http://localhost:3001/addhack'+props.hackID).then(res =>{
+                if(res.status === 200){
+                    setData(res.data)
+                } else{
+                    console.log(res)
+                }
+            }).then(()=>{
+                setTitle(data.title)
+                setDescription(data.description)
+                setGoal(data.goal)
+            })
+        }else{
+            setTitle("Hack-Zero")
+            setDescription("This is where the description/idea for the hack will be displayed when there is one. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In faucibus in tortor a molestie. Vestibulum congue, eros et ultricies vehicula, sapien est sollicitudin risus, ut volutpat augue tellus in neque. Aliquam erat volutpat.")
+            setGoal("To win and get that dosh but also the experience")
+        }
     })
 
     return (
