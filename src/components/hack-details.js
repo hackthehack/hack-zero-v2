@@ -26,30 +26,27 @@ const useStyles = makeStyles(theme =>({
 function HackDetails(props){
     const classes = useStyles()
 
-    const [data, setData] = useState([])
+    const [data, setData] = useState()
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [goal, setGoal] = useState('')
 
     useEffect(()=>{
-        if(props.hackID!==undefined){
-            Axios.get('http://localhost:3001/addhack'+props.hackID).then(res =>{
-                if(res.status === 200){
-                    setData(res.data)
-                } else{
-                    console.log(res)
-                }
+        console.log(props.match.params)
+        if(props.match!==undefined){
+            Axios.get('http://localhost:3001/hackdetail/'+props.match.params.id).then(res =>{
+                setTitle(res.data.title)
+                setDescription(res.data.description)
+                setGoal(res.data.goal)
             }).then(()=>{
-                setTitle(data.title)
-                setDescription(data.description)
-                setGoal(data.goal)
+                console.log(data)
             })
         }else{
             setTitle("Hack-Zero")
             setDescription("This is where the description/idea for the hack will be displayed when there is one. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In faucibus in tortor a molestie. Vestibulum congue, eros et ultricies vehicula, sapien est sollicitudin risus, ut volutpat augue tellus in neque. Aliquam erat volutpat.")
             setGoal("To win and get that dosh but also the experience")
         }
-    })
+    },[])
 
     return (
         <Grid
