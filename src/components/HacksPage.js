@@ -24,26 +24,7 @@ const useStyles = makeStyles(theme => ({
 const Hacks = () => {
   const classes = useStyles();
   const [data, setData] = useState([]);
-  // const [hacks, setHacks] = useState([
-  //   {
-  //     name: "World Peace",
-  //     title: "Egg day",
-  //     description:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Curabitur aliquet quam id dui posuere blandit."
-  //   },
-  //   {
-  //     name: "Nodejs day",
-  //     title: "Hooray",
-  //     description:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Curabitur aliquet quam id dui posuere blandit."
-  //   },
-  //   {
-  //     name: "MAC day",
-  //     title: "$$$",
-  //     description:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Curabitur aliquet quam id dui posuere blandit."
-  //   }
-  // ]);
+
   useEffect(() => {
     const fetchData = async () => {
       let result = await axios.get("http://localhost:3001/hacklist");
@@ -65,7 +46,7 @@ const Hacks = () => {
       );
     });
   };
-  console.log(data);
+  //console.log(data);
   return (
     <Container>
       <Grid container>{renderHacks()}</Grid>
