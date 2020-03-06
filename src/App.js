@@ -8,12 +8,9 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/createHack">
-          <CreateHack />
-        </Route>
-        <Route path="/hacks">
-          <HacksPage />
-        </Route>
+        <Route path="/" component={<h1>This is root</h1>}/>
+        <Route path="/createHack" component={CreateHack}/>
+        <Route path="/hacks" component={HacksPage}/>
         <Route path="/hack/:id" component={HackDetails}/>
       </Switch>
     </BrowserRouter>
