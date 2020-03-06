@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
+import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -36,7 +37,14 @@ const Hacks = () => {
   const renderHacks = () => {
     return data.map(hack => {
       return (
-        <Grid data-testid="hack-idea" key={hack.title} item xs={12}>
+        <Grid
+          component={Link}
+          to={`/hack/${hack._id}`}
+          data-testid="hack-idea"
+          key={hack._id}
+          item
+          xs={12}
+        >
           <Paper className={classes.paper} key={hack.title}>
             <Typography variant="h2" component="h2">
               Name: {hack.title}
