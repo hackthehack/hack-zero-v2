@@ -39,6 +39,7 @@ const Hacks = () => {
       return (
         <Grid
           component={Link}
+          style={{ textDecoration: "none" }}
           to={`/hack/${hack._id}`}
           data-testid="hack-idea"
           key={hack._id}
