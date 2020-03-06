@@ -42,7 +42,7 @@ const Hacks = () => {
   const renderHacks = () => {
     return hacks.map(hack => {
       return (
-        <Grid item xs={12}>
+        <Grid data-testid="hack-idea" key={hack.name} item xs={12}>
           <Paper className={classes.paper} key={hack.title}>
             <h2>Name: {hack.name}</h2>
             <h3>Title: {hack.title}</h3>
@@ -53,15 +53,9 @@ const Hacks = () => {
     });
   };
   return (
-    <div>
-      <Container>
-        <Grid container>
-          <Grid item xs={12}>
-            {renderHacks()}
-          </Grid>
-        </Grid>
-      </Container>
-    </div>
+    <Container>
+      <Grid container>{renderHacks()}</Grid>
+    </Container>
   );
 };
 
