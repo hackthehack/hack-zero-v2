@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 function HackDetails(props) {
   const classes = useStyles();
 
-  const [data, setData] = useState();
+  const [data] = useState();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [goal, setGoal] = useState("");

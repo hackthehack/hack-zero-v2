@@ -3,8 +3,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -50,21 +48,49 @@ const useStyles = makeStyles(theme => ({
 export default function Register() {
   const classes = useStyles();
 
-  const [fName, setfName] = useState('')
-  const [lname, setlName] = useState('')
+  // const [fName, setfName] = useState('')
+  // const [lname, setlName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showError, setShowerror] = useState(false)
+  const [_error, setError] = useState(false)
 
   const handleSub = (event) =>{
     event.preventDefault()
-    // const data = new FormData(event.target);
     let obj = {
       email: email,
       password: password
     }
     Axios.post("http://localhost:3001/register", obj).then(res => {
-      console.log(res);
+      if(res.statusCode === 200){
+        console.log("Success")
+      }
+    }).catch((error)=>{
+      setShowerror(true)
+      setError(error.message)
+      console.log(error.response)
+      // console.log(error)
     });
+  }
+
+  const errorMessage = () => {
+    if(showError){
+      return(
+        <Box mt={5}>
+          <Typography variant="body2" color="textSecondary" align="center">
+            {_error}
+          </Typography>
+        </Box>
+      )
+    }else{
+      return(
+        <Box mt={5}>
+          <Typography variant="body2" color="textSecondary" align="center">
+            No Error
+          </Typography>
+        </Box>
+      )
+    }
   }
 
   return (
@@ -139,6 +165,7 @@ export default function Register() {
           </Button>
         </form>
       </div>
+      {errorMessage()}
       <Box mt={5}>
         <Copyright />
       </Box>
