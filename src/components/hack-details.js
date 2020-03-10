@@ -27,7 +27,7 @@ function HackDetails(props) {
   useEffect(() => {
     //console.log(props.match.params);
     if (props.match !== undefined) {
-      Axios.get("http://localhost:3001/hackdetail/" + props.match.params.id)
+      Axios.get(process.env.REACT_APP_API_URL+"hackdetail/" + props.match.params.id)
         .then(res => {
           setTitle(res.data.title);
           setDescription(res.data.description);

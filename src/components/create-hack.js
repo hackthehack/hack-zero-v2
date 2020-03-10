@@ -49,7 +49,7 @@ function CreateHack() {
       description: description,
       goal: "temp"
     };
-    Axios.post("http://localhost:3001/addhack", obj).then(res => {
+    Axios.post(process.env.API_URL+"addhack", obj).then(res => {
       console.log(res);
     });
   };

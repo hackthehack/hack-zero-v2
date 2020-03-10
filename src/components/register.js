@@ -48,50 +48,62 @@ const useStyles = makeStyles(theme => ({
 export default function Register() {
   const classes = useStyles();
 
-  // const [fName, setfName] = useState('')
-  // const [lname, setlName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [showError, setShowerror] = useState(false)
-  const [_error, setError] = useState(false)
+  const [fName, setfName] = useState("");
+  const [lName, setlName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confPassword, setConfpassword] = useState("");
+  const [showError, setShowerror] = useState(false);
+  const [_error, setError] = useState(false);
 
-  const handleSub = (event) =>{
-    event.preventDefault()
-    let obj = {
-      email: email,
-      password: password
+  const handleSub = event => {
+    event.preventDefault();
+    if (password === confPassword) {
+      setShowerror(false);
+      let obj = {
+        name: fName + " " + lName,
+        email: email,
+        password: password
+      };
+      Axios.post(process.env.API_URL+"register", obj)
+        .then(res => {
+          if (res.statusCode === 200) {
+            console.log("Success");
+          }
+        })
+        .catch(error => {
+          setShowerror(true);
+          if (error.response.status === 500) {
+            setError(error.response.data);
+          } else {
+            setError("Unexpected Error");
+          }
+          // console.log(error)
+        });
+    } else {
+      setShowerror(true);
+      setError("Oh No! Passwords do not match!");
     }
-    Axios.post("http://localhost:3001/register", obj).then(res => {
-      if(res.statusCode === 200){
-        console.log("Success")
-      }
-    }).catch((error)=>{
-      setShowerror(true)
-      setError(error.message)
-      console.log(error.response)
-      // console.log(error)
-    });
-  }
+  };
 
   const errorMessage = () => {
-    if(showError){
-      return(
+    if (showError) {
+      return (
         <Box mt={5}>
-          <Typography variant="body2" color="textSecondary" align="center">
+          <Typography variant="body2" color="error" align="center">
             {_error}
           </Typography>
         </Box>
-      )
-    }else{
-      return(
+      );
+    } else {
+      return (
         <Box mt={5}>
-          <Typography variant="body2" color="textSecondary" align="center">
-            No Error
+          <Typography variant="body2" color="error" align="center">
           </Typography>
         </Box>
-      )
+      );
     }
-  }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -105,7 +117,7 @@ export default function Register() {
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSub}>
           <Grid container spacing={2}>
-            {/* <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
                 name="firstName"
@@ -115,6 +127,7 @@ export default function Register() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                onChange={event => setfName(event.target.value)}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -126,8 +139,9 @@ export default function Register() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                onChange={event => setlName(event.target.value)}
               />
-            </Grid> */}
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -137,7 +151,7 @@ export default function Register() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                onChange={(event)=>setEmail(event.target.value)}
+                onChange={event => setEmail(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -150,7 +164,20 @@ export default function Register() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={(event)=>setPassword(event.target.value)}
+                onChange={event => setPassword(event.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Confirm Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={event => setConfpassword(event.target.value)}
               />
             </Grid>
           </Grid>
