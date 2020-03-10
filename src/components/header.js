@@ -23,16 +23,15 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1
   },
-  link:{
-    color: '#ffffff',
-    textDecoration: 'none'
+  link: {
+    color: "#ffffff",
+    textDecoration: "none"
   }
 }));
 
 export default function Header(props) {
   // eslint-disable-next-line
   const [auth, setAuth] = React.useState(false);
-  const [login, setLogin] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -43,14 +42,6 @@ export default function Header(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const handleBS = event =>{
-    if(login){
-      setLogin(false)
-    }else{
-      setLogin(true)
-    }
-  }
 
   const buttonType = () => {
     if (auth) {
@@ -85,21 +76,20 @@ export default function Header(props) {
           </Menu>
         </div>
       );
-    } else if (login) {
-      return (
-        <Link to="/register" className={classes.link}>
-          <Button color="inherit" className={classes.loginbutton} onClick={handleBS}>
-            Register
-          </Button>
-        </Link>
-      );
     } else {
       return (
-        <Link to="/login" className={classes.link}>
-          <Button color="inherit" className={classes.loginbutton} onClick={handleBS}>
-            Login
-          </Button>
-        </Link>
+        <>
+          <Link to="/login" className={classes.link}>
+            <Button color="inherit" className={classes.loginbutton}>
+              Login
+            </Button>
+          </Link>
+          <Link to="/register" className={classes.link}>
+            <Button color="inherit" className={classes.loginbutton}>
+              Register
+            </Button>
+          </Link>
+        </>
       );
     }
   };
