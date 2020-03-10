@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,6 +12,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Axios from "axios";
 
 function Copyright() {
   return (
@@ -49,6 +50,23 @@ const useStyles = makeStyles(theme => ({
 export default function Register() {
   const classes = useStyles();
 
+  const [fName, setfName] = useState('')
+  const [lname, setlName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleSub = (event) =>{
+    event.preventDefault()
+    // const data = new FormData(event.target);
+    let obj = {
+      email: email,
+      password: password
+    }
+    Axios.post("http://localhost:3001/register", obj).then(res => {
+      console.log(res);
+    });
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -59,9 +77,9 @@ export default function Register() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSub}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
                 name="firstName"
@@ -83,7 +101,7 @@ export default function Register() {
                 name="lastName"
                 autoComplete="lname"
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -93,6 +111,7 @@ export default function Register() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={(event)=>setEmail(event.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -105,6 +124,7 @@ export default function Register() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(event)=>setPassword(event.target.value)}
               />
             </Grid>
           </Grid>
