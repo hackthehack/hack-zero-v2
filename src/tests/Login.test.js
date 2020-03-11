@@ -2,7 +2,7 @@ import React from "react";
 import { Login } from "../components/Login";
 import { render, fireEvent } from "@testing-library/react";
 
-test("If <Login/> Component displays Login headig", () => {
+test("If <Login/> Component displays Login heading", () => {
   const { getByTestId } = render(<Login />);
   const heading = getByTestId("login-heading");
   expect(heading).toBeInTheDocument();
