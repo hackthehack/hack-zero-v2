@@ -11,6 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
+import { connect } from "react-redux";
+import { login } from "../store/actions/authActions";
 
 function Copyright() {
   return (
@@ -45,13 +47,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = () => {
+const Login = props => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(email, password);
+    props.auth(email, password);
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -110,5 +112,10 @@ const Login = () => {
     </Container>
   );
 };
-
-export default Login;
+const mapDispatch = dispatch => ({
+  auth: (email, password) => dispatch(login(email, password))
+});
+export default connect(
+  null,
+  mapDispatch
+)(Login);
