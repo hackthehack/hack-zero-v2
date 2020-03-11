@@ -101,7 +101,7 @@ const Login = props => {
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+            Login
           </Button>
         </form>
       </div>
