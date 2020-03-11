@@ -49,7 +49,7 @@ function CreateHack() {
       description: description,
       goal: "temp"
     };
-    Axios.post(process.env.API_URL+"addhack", obj).then(res => {
+    Axios.post(process.env.REACT_APP_API_URL+"addhack", obj).then(res => {
       console.log(res);
     });
   };

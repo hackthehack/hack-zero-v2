@@ -65,7 +65,7 @@ export default function Register() {
         email: email,
         password: password
       };
-      Axios.post(process.env.API_URL+"register", obj)
+      Axios.post(process.env.REACT_APP_API_URL+"register", obj)
         .then(res => {
           if (res.statusCode === 200) {
             console.log("Success");
