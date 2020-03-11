@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = props => {
+export const Login = props => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -62,7 +62,7 @@ const Login = props => {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography data-testid="login-heading" component="h1" variant="h5">
           Login
         </Typography>
         <form onSubmit={handleSubmit} className={classes.form} noValidate>
@@ -97,6 +97,7 @@ const Login = props => {
           <Button
             type="submit"
             fullWidth
+            data-testid="login-button"
             variant="contained"
             color="primary"
             className={classes.submit}
