@@ -1,6 +1,7 @@
 import * as ActionType from "../actions/index";
 const initialState = {
-  isAuth: false
+  isAuth: false,
+  userId: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -9,7 +10,8 @@ const reducer = (state = initialState, action) => {
       console.log(action);
       return {
         ...state,
-        isAuth: true
+        isAuth: true,
+        userId: action.payload.userId
       };
     default:
       console.log("default");
