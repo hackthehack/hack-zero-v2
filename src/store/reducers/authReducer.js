@@ -7,11 +7,11 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.LOGIN:
-      console.log(action);
+      const { userId } = action.payload;
       return {
         ...state,
         isAuth: true,
-        userId: action.payload.userId
+        userId
       };
     default:
       console.log("default");
