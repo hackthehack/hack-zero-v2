@@ -22,6 +22,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import AddIcon from "@material-ui/icons/Add";
 import MenuIcon from "@material-ui/icons/Menu";
 import ViewListIcon from "@material-ui/icons/ViewList";
+import HomeIcon from "@material-ui/icons/Home";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
@@ -116,7 +117,19 @@ export default function Header(props) {
   const handleDrawerClose = () => {
     setOpenDrawer(false);
   };
-  const links = ["createHack", "hacks"];
+  const links = ["/", "/createHack", "/hacks"];
+  const displayLinkIcon = index => {
+    switch (index) {
+      case 0:
+        return <HomeIcon />;
+      case 1:
+        return <AddIcon />;
+      case 2:
+        return <ViewListIcon />;
+      default:
+        return "/";
+    }
+  };
   const buttonType = () => {
     if (auth) {
       return (
@@ -219,14 +232,16 @@ export default function Header(props) {
             <ListItem
               onClick={handleDrawerClose}
               component={Link}
-              to={`/${text}`}
+              to={`${text}`}
               button
               key={text}
             >
-              <ListItemIcon>
-                {index % 2 === 0 ? <AddIcon /> : <ViewListIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemIcon>{displayLinkIcon(index)}</ListItemIcon>
+              {text === "/" ? (
+                <ListItemText primary={"home"} />
+              ) : (
+                <ListItemText primary={text.substr(1)} />
+              )}
             </ListItem>
           ))}
         </List>
