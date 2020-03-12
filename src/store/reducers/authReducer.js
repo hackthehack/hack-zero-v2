@@ -14,7 +14,7 @@ const reducer = (state = initialState, action) => {
         userId
       };
     default:
-      console.log("default");
+      //console.log("default");
       return state;
   }
 };
