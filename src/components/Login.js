@@ -74,7 +74,7 @@ export const Login = props => {
         </Typography>
         <form onSubmit={handleSubmit} className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 autoComplete="email"
                 name="email"
@@ -87,7 +87,7 @@ export const Login = props => {
                 onChange={e => setEmail(e.target.value)}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
