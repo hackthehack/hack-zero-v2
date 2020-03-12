@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -55,7 +55,12 @@ export default function Register() {
   const [confPassword, setConfpassword] = useState("");
   const [showError, setShowerror] = useState(false);
   const [_error, setError] = useState(false);
-
+  useEffect(() => {
+    return () => {
+      setPassword("");
+      setConfpassword("");
+    };
+  }, []);
   const handleSub = event => {
     event.preventDefault();
     if (password === confPassword) {
@@ -65,10 +70,12 @@ export default function Register() {
         email: email,
         password: password
       };
-      Axios.post(process.env.REACT_APP_API_URL+"register", obj)
+      Axios.post(process.env.REACT_APP_API_URL + "register", obj)
         .then(res => {
           if (res.statusCode === 200) {
             console.log("Success");
+            setPassword("");
+            setConfpassword("");
           }
         })
         .catch(error => {
@@ -98,8 +105,7 @@ export default function Register() {
     } else {
       return (
         <Box mt={5}>
-          <Typography variant="body2" color="error" align="center">
-          </Typography>
+          <Typography variant="body2" color="error" align="center"></Typography>
         </Box>
       );
     }
