@@ -19,9 +19,9 @@ import {
 import { AccountCircle } from "@material-ui/icons";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
+import AddIcon from "@material-ui/icons/Add";
 import MenuIcon from "@material-ui/icons/Menu";
-import MailIcon from "@material-ui/icons/Mail";
+import ViewListIcon from "@material-ui/icons/ViewList";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
@@ -216,9 +216,15 @@ export default function Header(props) {
         <Divider />
         <List>
           {links.map((text, index) => (
-            <ListItem component={Link} to={`/${text}`} button key={text}>
+            <ListItem
+              onClick={handleDrawerClose}
+              component={Link}
+              to={`/${text}`}
+              button
+              key={text}
+            >
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {index % 2 === 0 ? <AddIcon /> : <ViewListIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
