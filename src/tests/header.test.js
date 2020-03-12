@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
-import { render, getByTestId } from "@testing-library/react";
+import { render, getByTestId, fireEvent } from "@testing-library/react";
 import Header from "../components/header";
 
 test("If a container exists for displayng the hacks", () => {
@@ -20,4 +20,16 @@ test("if the side drawer is not visible by default", () => {
   );
   const drawer = getByTestId(container, "drawerComponent");
   expect(drawer).not.toBeVisible();
+});
+
+test("if the side drawer is visible after the button is pressed", () => {
+  const { container } = render(
+    <BrowserRouter>
+      <Header />
+    </BrowserRouter>
+  );
+  const drawer = getByTestId(container, "drawerComponent");
+  const toggleButton = getByTestId(container, "toggleButton");
+  fireEvent.click(toggleButton);
+  expect(drawer).toBeVisible();
 });

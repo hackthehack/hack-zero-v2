@@ -190,6 +190,7 @@ export default function Header(props) {
           <IconButton
             color="inherit"
             aria-label="open drawer"
+            data-testid="toggleButton"
             onClick={handleDrawerOpen}
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
