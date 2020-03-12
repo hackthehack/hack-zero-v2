@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -51,9 +51,16 @@ export const Login = props => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  useEffect(() => {
+    return () => {
+      setPassword("");
+    };
+  }, []);
   const handleSubmit = e => {
     e.preventDefault();
     props.auth(email, password);
+    setPassword("");
+    setEmail("");
   };
   return (
     <Container component="main" maxWidth="xs">
