@@ -1,5 +1,5 @@
 import React from "react";
-
+import clsx from "clsx";
 import {
   AppBar,
   Toolbar,
@@ -7,15 +7,80 @@ import {
   Typography,
   IconButton,
   Menu,
-  MenuItem
+  MenuItem,
+  Drawer,
+  CssBaseline,
+  ListItemIcon,
+  ListItemText,
+  ListItem,
+  Divider,
+  List
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
-import { makeStyles } from "@material-ui/core/styles";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import AddIcon from "@material-ui/icons/Add";
+import MenuIcon from "@material-ui/icons/Menu";
+import ViewListIcon from "@material-ui/icons/ViewList";
+import HomeIcon from "@material-ui/icons/Home";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+
+const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
+  },
+  appBar: {
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    })
+  },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    })
+  },
+  menuButton: {
+    marginRight: theme.spacing(2)
+  },
+  hide: {
+    display: "none"
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0
+  },
+  drawerPaper: {
+    width: drawerWidth
+  },
+  drawerHeader: {
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(0, 1),
+    ...theme.mixins.toolbar,
+    justifyContent: "flex-end"
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    marginLeft: -drawerWidth
+  },
+  contentShift: {
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    }),
+    marginLeft: 0
   },
   loginbutton: {
     marginRight: theme.spacing(2)
@@ -33,7 +98,9 @@ export default function Header(props) {
   // eslint-disable-next-line
   const [auth, setAuth] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [openDrawer, setOpenDrawer] = React.useState(false);
   const open = Boolean(anchorEl);
+  const theme = useTheme();
 
   const handleMenu = event => {
     setAnchorEl(event.currentTarget);
@@ -43,6 +110,26 @@ export default function Header(props) {
     setAnchorEl(null);
   };
 
+  const handleDrawerOpen = () => {
+    setOpenDrawer(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpenDrawer(false);
+  };
+  const links = ["/", "/createHack", "/hacks"];
+  const displayLinkIcon = index => {
+    switch (index) {
+      case 0:
+        return <HomeIcon />;
+      case 1:
+        return <AddIcon />;
+      case 2:
+        return <ViewListIcon />;
+      default:
+        return "/";
+    }
+  };
   const buttonType = () => {
     if (auth) {
       return (
@@ -96,13 +183,71 @@ export default function Header(props) {
 
   const classes = useStyles();
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h6" className={classes.title}>
-          Hack Zero
-        </Typography>
-        {buttonType()}
-      </Toolbar>
-    </AppBar>
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            data-testid="toggleButton"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, open && classes.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            component={Link}
+            style={{ textDecoration: "none", color: "white" }}
+            to="/"
+            variant="h6"
+            className={classes.title}
+          >
+            Hack Zero
+          </Typography>
+          {buttonType()}
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={openDrawer}
+        classes={{
+          paper: classes.drawerPaper
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </div>
+        <Divider />
+        <List data-testid="drawerComponent">
+          {links.map((text, index) => (
+            <ListItem
+              onClick={handleDrawerClose}
+              component={Link}
+              to={`${text}`}
+              button
+              key={text}
+            >
+              <ListItemIcon>{displayLinkIcon(index)}</ListItemIcon>
+              {text === "/" ? (
+                <ListItemText primary={"home"} />
+              ) : (
+                <ListItemText primary={text.substr(1)} />
+              )}
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+      </Drawer>
+    </div>
   );
 }
