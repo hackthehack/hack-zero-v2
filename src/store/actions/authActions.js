@@ -10,7 +10,9 @@ export const login = (email, password) => {
         email,
         password
       });
+      //console.log(result.data);
       const { userId } = result.data;
+      //console.log(userId);
       dispatch(loginOkay(userId));
     } catch (err) {
       console.log(err);

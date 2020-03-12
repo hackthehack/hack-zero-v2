@@ -7,7 +7,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.LOGIN:
-      const { userId } = action.payload;
+      const userId = action.payload;
       return {
         ...state,
         isAuth: true,
