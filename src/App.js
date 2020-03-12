@@ -4,15 +4,24 @@ import CreateHack from "./components/create-hack";
 import HacksPage from "./components/HacksPage";
 import HackDetails from "./components/hack-details";
 import Login from "./components/Login";
+import Register from './components/register'
+import Header from './components/header'
+import './css/main.css'
+
 
 function App() {
   return (
     <BrowserRouter>
+      <Header/>
       <Switch>
-        <Route path="/createHack" component={CreateHack} />
-        <Route path="/hacks" component={HacksPage} />
+
+        {/* <Route exact path="/" component={<h1>This is root</h1>}/> */}
         <Route paht="/login" component={Login} />
-        <Route path="/hack/:id" component={HackDetails} />
+        <Route path="/register" component={Register}/>
+        <Route path="/createHack" component={CreateHack}/>
+        <Route path="/hacks" component={HacksPage}/>
+        <Route path="/hack/:id" component={HackDetails}/>
+
       </Switch>
     </BrowserRouter>
   );
