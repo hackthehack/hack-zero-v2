@@ -184,7 +184,13 @@ export default function Header(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography
+            component={Link}
+            style={{ textDecoration: "none", color: "white" }}
+            to="/"
+            variant="h6"
+            className={classes.title}
+          >
             Hack Zero
           </Typography>
           {buttonType()}
