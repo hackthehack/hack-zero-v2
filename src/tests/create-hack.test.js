@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom'
 import { render, fireEvent } from '@testing-library/react';
 import CreateHack from '../components/create-hack'
 import axiosMock from 'axios'
@@ -6,7 +7,7 @@ import axiosMock from 'axios'
 // afterEach(cleanup);
 
 test('Important info rendered', () =>{
-    const {getByText} = render(<CreateHack/>)
+    const {getByText} = render(<BrowserRouter><CreateHack/></BrowserRouter>)
     const element = getByText(/Create Hack/i)
     expect(element).toBeInTheDocument()
 })

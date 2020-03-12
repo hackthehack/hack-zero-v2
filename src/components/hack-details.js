@@ -12,8 +12,9 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ErrorOutlineOutlinedIcon from "@material-ui/icons/ErrorOutlineOutlined";
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function HackDetails(props) {
+export function HackDetails(props) {
   const classes = useStyles();
 
   const [data] = useState();
@@ -46,24 +47,47 @@ function HackDetails(props) {
     if (props.match !== undefined) {
       Axios.get(
         process.env.REACT_APP_API_URL + "hackdetail/" + props.match.params.id
-      )
-        .then(res => {
-          setTitle(res.data.title);
-          setDescription(res.data.description);
-          setGoal(res.data.goal);
-          setTeam(res.data.team);
-        })
+      ).then(res => {
+        setTitle(res.data.title);
+        setDescription(res.data.description);
+        setGoal(res.data.goal);
+        setTeam(res.data.team);
+      });
     }
   }, [data, props.match]);
 
   const joinHack = event => {
     const object = {
-      hackId: "5e6999fb5c13b5d80505cde4",
-      userId: "5e683ccc10c5d40008a40e56"
+      hackId: props.match.params.id,
+      userId: props.userId
     };
     Axios.post(process.env.REACT_APP_API_URL + "joinhack", object).then(res => {
       setTeam(res.data.team);
     });
+  };
+
+  const joinHackButton = () => {
+    if (team !== undefined) {
+      if (team.includes(props.userId)) {
+        return (
+          <Button variant="contained" color="primary" onClick={joinHack} disabled>
+            Join Hack
+          </Button>
+        );
+      } else {
+        return (
+          <Button variant="contained" color="primary" onClick={joinHack}>
+            Join Hack
+          </Button>
+        );
+      }
+    }
+    return(
+      <Button variant="contained" color="primary" onClick={joinHack}>
+            Join Hack
+          </Button>
+    )
+    
   };
 
   const showTeam = () => {
@@ -114,9 +138,7 @@ function HackDetails(props) {
               />
             </Grid>
             <Grid item xs={3} className={classes.rightFeild}>
-              <Button variant="contained" color="primary" onClick={joinHack}>
-                Join Hack
-              </Button>
+              {joinHackButton()}
             </Grid>
             <Grid item xs={12}>
               <Typography variant="h4">{title}</Typography>
@@ -154,4 +176,8 @@ function HackDetails(props) {
   }
 }
 
-export default HackDetails;
+const mapState = state => ({
+  userId: state.auth.userId
+});
+
+export default connect(mapState)(HackDetails);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import clsx from "clsx";
 import {
   AppBar,
@@ -25,6 +25,8 @@ import ViewListIcon from "@material-ui/icons/ViewList";
 import HomeIcon from "@material-ui/icons/Home";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+
+import {connect} from 'react-redux'
 
 const drawerWidth = 240;
 
@@ -94,11 +96,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Header(props) {
+export function Header(props) {
   // eslint-disable-next-line
-  const [auth, setAuth] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [openDrawer, setOpenDrawer] = React.useState(false);
+  // const [auth, setAuth] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [openDrawer, setOpenDrawer] = useState(false);
   const open = Boolean(anchorEl);
   const theme = useTheme();
 
@@ -131,7 +133,7 @@ export default function Header(props) {
     }
   };
   const buttonType = () => {
-    if (auth) {
+    if (props.auth.isAuth) {
       return (
         <div>
           <IconButton
@@ -251,3 +253,10 @@ export default function Header(props) {
     </div>
   );
 }
+
+
+const mapState = state => ({
+  auth: state.auth
+});
+
+export default connect(mapState)(Header);

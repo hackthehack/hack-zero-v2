@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function CreateHack() {
+function CreateHack(props) {
   const classes = useStyles();
 
   const [title, setTitle] = useState("");
@@ -36,7 +36,7 @@ function CreateHack() {
   const [goal, setGoal] = useState("");
   const [show, setShow] = useState(false);
 
-  const history = useHistory()
+  const history = props.history
 
   const handleSubmit = event => {
     event.preventDefault();
