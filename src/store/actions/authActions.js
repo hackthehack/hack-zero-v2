@@ -1,7 +1,9 @@
 import * as ActionType from "./index";
 import axios from "axios";
 const devUrl = "http://localhost:3001/auth";
+
 const loginOkay = userId => ({ type: ActionType.LOGIN, payload: userId });
+
 export const login = (email, password) => {
   return async (dispatch, getState) => {
     //console.log("inside async login");
@@ -10,6 +12,9 @@ export const login = (email, password) => {
         email,
         password
       });
+      //let users = await axios.get(devUsersUrl);
+      //users = users.data;
+
       //console.log(result.data);
       const { userId } = result.data;
       //console.log(userId);

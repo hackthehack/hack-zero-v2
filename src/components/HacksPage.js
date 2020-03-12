@@ -6,6 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import axios from "axios";
+import { fetchUsers } from "../store/actions/userActions";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,18 +24,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Hacks = () => {
+const Hacks = ({ dispatch }) => {
   const classes = useStyles();
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      let result = await axios.get(process.env.REACT_APP_API_URL+"hacklist");
+      let result = await axios.get(process.env.REACT_APP_API_URL + "hacklist");
       //console.log(result.data);
       setData([...result.data]);
     };
     fetchData();
-  }, []);
+    dispatch(fetchUsers());
+  }, [dispatch]);
   const renderHacks = () => {
     return data.map(hack => {
       return (
@@ -62,5 +65,6 @@ const Hacks = () => {
     </Container>
   );
 };
-
-export default Hacks;
+const mapState = state => ({ users: state.user.users });
+//const mapDispatch = dispatch => ({ getUsers: () => dispatch(fetchUsers()) });
+export default connect(mapState)(Hacks);
