@@ -58,7 +58,9 @@ export const Login = props => {
   }, []);
   const handleSubmit = e => {
     e.preventDefault();
-    props.auth(email, password);
+    const { history } = props;
+    console.log(history);
+    props.auth(email, password, history);
     setPassword("");
     setEmail("");
   };
@@ -121,7 +123,7 @@ export const Login = props => {
   );
 };
 const mapDispatch = dispatch => ({
-  auth: (email, password) => dispatch(login(email, password))
+  auth: (email, password, history) => dispatch(login(email, password, history))
 });
 export default connect(
   null,
