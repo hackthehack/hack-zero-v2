@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
+import Team from "./subcomponents/team";
 
 // UI imports
 import {
@@ -70,7 +71,12 @@ export function HackDetails(props) {
     if (team !== undefined) {
       if (team.includes(props.userId)) {
         return (
-          <Button variant="contained" color="primary" onClick={joinHack} disabled>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={joinHack}
+            disabled
+          >
             Join Hack
           </Button>
         );
@@ -82,40 +88,17 @@ export function HackDetails(props) {
         );
       }
     }
-    return(
+    return (
       <Button variant="contained" color="primary" onClick={joinHack}>
-            Join Hack
-          </Button>
-    )
-    
-  };
-
-  const showTeam = () => {
-    if (team !== undefined) {
-      return (
-        <Grid item xs={12}>
-          <Typography variant="h6">Team:</Typography>
-          <Grid item xs={10}>
-            {team.map(id => {
-              return (
-                <Chip
-                  key={id}
-                  className={classes.chipMArgin}
-                  icon={<AccountCircleIcon />}
-                  label={id}
-                  color="primary"
-                />
-              );
-            })}
-          </Grid>
-        </Grid>
-      );
-    }
+        Join Hack
+      </Button>
+    );
   };
 
   if (title !== "") {
     return (
       <Grid
+        data-testid="main-container"
         container
         direction="column"
         justify="center"
@@ -155,7 +138,15 @@ export function HackDetails(props) {
             <Grid item xs={10}>
               <Typography variant="body1">{goal}</Typography>
             </Grid>
-            {showTeam()}
+            {team !== undefined ? (
+              <Grid item xs={12}>
+                <Typography variant="h6">Team:</Typography>
+              </Grid>
+            ) : null}
+
+            <Grid item xs={10}>
+              <Team team={team} />
+            </Grid>
           </Grid>
         </Paper>
       </Grid>
@@ -163,6 +154,7 @@ export function HackDetails(props) {
   } else {
     return (
       <Grid
+        data-testid="main-container"
         container
         direction="column"
         justify="center"

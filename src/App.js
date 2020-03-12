@@ -15,7 +15,7 @@ function App() {
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} />
+        <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/createHack" component={CreateHack} />
         <Route path="/hacks" component={HacksPage} />

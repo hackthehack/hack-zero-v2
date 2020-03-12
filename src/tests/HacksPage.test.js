@@ -1,10 +1,11 @@
 import React from "react";
-import { render, getAllByTestId } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import HacksPage from "../components/HacksPage";
 
 test("If a container exists for displayng the hacks", () => {
-  const { container } = render(<HacksPage />);
-  expect(container.firstChild).toHaveClass("MuiContainer-root");
+  const { getByTestId} = render(<HacksPage />);
+  const grid = getByTestId('main-container')
+  expect(grid).toBeInTheDocument();
 });
 
 //further testing need after front end is connected to the backend for fetching the number of hacks, for now, will just test if the components render three hacks that was hardcoded.

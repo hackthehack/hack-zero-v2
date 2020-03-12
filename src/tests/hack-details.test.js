@@ -3,7 +3,8 @@ import { render, fireEvent } from "@testing-library/react";
 import { HackDetails } from "../components/hack-details";
 
 test("If a container exists for displayng the hacks", () => {
-  const { container } = render(<HackDetails />);
-  expect(container.firstChild).toHaveClass("MuiGrid-root");
+  const { getByTestId } = render(<HackDetails />);
+  const grid = getByTestId('main-container')
+  expect(grid).toBeInTheDocument();
 });
 
