@@ -117,7 +117,7 @@ export default function Header(props) {
   const handleDrawerClose = () => {
     setOpenDrawer(false);
   };
-  const links = ["/", "/createHack", "/hacks"];
+  const links = ["/", "/create", "/hacks"];
   const displayLinkIcon = index => {
     switch (index) {
       case 0:
@@ -229,22 +229,33 @@ export default function Header(props) {
         </div>
         <Divider />
         <List data-testid="drawerComponent">
-          {links.map((text, index) => (
-            <ListItem
-              onClick={handleDrawerClose}
-              component={Link}
-              to={`${text}`}
-              button
-              key={text}
-            >
-              <ListItemIcon>{displayLinkIcon(index)}</ListItemIcon>
-              {text === "/" ? (
-                <ListItemText primary={"home"} />
-              ) : (
-                <ListItemText primary={text.substr(1)} />
-              )}
-            </ListItem>
-          ))}
+          {links.map((text, index) => {
+            // dirty fix to capitalize the first letter of the route
+            // *** /create -----> Create in the side nav
+            // **** /hacks ------> Hacks in the side nav
+            let displayLinkText;
+            displayLinkText =
+              text
+                .substr(1)
+                .charAt(0)
+                .toUpperCase() + text.slice(2);
+            return (
+              <ListItem
+                onClick={handleDrawerClose}
+                component={Link}
+                to={`${text}`}
+                button
+                key={text}
+              >
+                <ListItemIcon>{displayLinkIcon(index)}</ListItemIcon>
+                {text === "/" ? (
+                  <ListItemText primary={"Home"} />
+                ) : (
+                  <ListItemText primary={displayLinkText} />
+                )}
+              </ListItem>
+            );
+          })}
         </List>
         <Divider />
       </Drawer>
