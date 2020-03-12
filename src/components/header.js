@@ -227,7 +227,7 @@ export default function Header(props) {
           </IconButton>
         </div>
         <Divider />
-        <List>
+        <List data-testid="drawerComponent">
           {links.map((text, index) => (
             <ListItem
               onClick={handleDrawerClose}
