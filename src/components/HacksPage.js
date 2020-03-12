@@ -28,7 +28,7 @@ const Hacks = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      let result = await axios.get("http://localhost:3001/hacklist");
+      let result = await axios.get(process.env.REACT_APP_API_URL+"hacklist");
       //console.log(result.data);
       setData([...result.data]);
     };
