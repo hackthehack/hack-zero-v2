@@ -29,7 +29,6 @@ const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: "flex",
     flexGrow: 1
   },
   appBar: {
@@ -117,7 +116,7 @@ export default function Header(props) {
   const handleDrawerClose = () => {
     setOpenDrawer(false);
   };
-
+  const links = ["createHack", "hacks"];
   const buttonType = () => {
     if (auth) {
       return (
@@ -216,8 +215,8 @@ export default function Header(props) {
         </div>
         <Divider />
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem button key={text}>
+          {links.map((text, index) => (
+            <ListItem component={Link} to={`/${text}`} button key={text}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
@@ -226,16 +225,6 @@ export default function Header(props) {
           ))}
         </List>
         <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
       </Drawer>
     </div>
   );
