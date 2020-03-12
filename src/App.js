@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import CreateHack from "./components/create-hack";
 import HacksPage from "./components/HacksPage";
 import HackDetails from "./components/hack-details";
+import Login from "./components/Login";
 import Register from "./components/register";
 import Header from "./components/header";
 import Login from "./components/Login"
