@@ -13,7 +13,6 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ErrorOutlineOutlinedIcon from "@material-ui/icons/ErrorOutlineOutlined";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 import { connect } from "react-redux";
 

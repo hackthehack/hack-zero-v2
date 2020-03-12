@@ -1,10 +1,12 @@
 import React from "react";
-import { Grid, Typography, Chip } from "@material-ui/core";
+import { Chip } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   chipMArgin: {
+    marginTop: theme.spacing(1),
     marginRight: theme.spacing(1)
   }
 }));
@@ -15,21 +17,32 @@ export function Team(props) {
     return (
         <>
           {props.team.map(id => {
-            return (
-              <Chip
-                key={id}
-                className={classes.chipMArgin}
-                icon={<AccountCircleIcon />}
-                label={id}
-                color="primary"
-              />
-            );
+            props.users.map((_id,name) => {
+              if(_id === id){
+                return (
+                  <Chip
+                    key={id}
+                    className={classes.chipMArgin}
+                    icon={<AccountCircleIcon />}
+                    label={name}
+                    color="primary"
+                  />
+                );
+              } else {
+                return <></>
+              }
+            })
+            return <></>
           })}
           </>
     );
   } else {
-    return null;
+    return <></>;
   }
 }
 
-export default Team;
+const mapState = state => ({
+  users: state.user.users
+});
+
+export default connect(mapState)(Team);

@@ -87,7 +87,7 @@ const Hacks = () => {
                   <Grid item xs={12} style={{ marginBottom: '1rem', marginTop: '1rem' }}>
                     {hack.description.slice(0, 100) + " ...Read More"}
                   </Grid>
-                  <Grid item xs={10}>
+                  <Grid item xs={12}>
                     <Team team={hack.team}/>
                   </Grid>
                 </Grid>

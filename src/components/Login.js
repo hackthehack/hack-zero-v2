@@ -10,7 +10,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import axios from "axios";
 import { connect } from "react-redux";
 import { login } from "../store/actions/authActions";
 
@@ -59,7 +58,6 @@ export const Login = props => {
   const handleSubmit = e => {
     e.preventDefault();
     const { history } = props;
-    console.log(history);
     props.auth(email, password, history);
     setPassword("");
     setEmail("");

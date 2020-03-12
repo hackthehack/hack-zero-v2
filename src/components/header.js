@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState} from "react";
 import clsx from "clsx";
 import {
   AppBar,
@@ -206,7 +206,7 @@ export function Header(props) {
             variant="h6"
             className={classes.title}
           >
-            Hack Zero
+            
           </Typography>
           {buttonType()}
         </Toolbar>
