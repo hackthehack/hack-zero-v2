@@ -8,6 +8,8 @@ import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 import ErrorOutlineOutlinedIcon from "@material-ui/icons/ErrorOutlineOutlined";
 import Team from "./subcomponents/team";
+import { fetchUsers } from "../store/actions/userActions";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Hacks = () => {
+export const Hacks = ({ dispatch }) => {
   const classes = useStyles();
   const [data, setData] = useState([]);
 
@@ -42,7 +44,8 @@ const Hacks = () => {
       setData([...result.data]);
     };
     fetchData();
-  }, []);
+    dispatch(fetchUsers());
+  }, [dispatch]);
 
   if (data.length > 0) {
     return (
@@ -113,5 +116,6 @@ const Hacks = () => {
     );
   }
 };
-
-export default Hacks;
+const mapState = state => ({ users: state.user.users });
+//const mapDispatch = dispatch => ({ getUsers: () => dispatch(fetchUsers()) });
+export default connect(mapState)(Hacks);

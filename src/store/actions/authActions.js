@@ -12,6 +12,9 @@ export const login = (email, password, history) => {
         email,
         password
       });
+      //let users = await axios.get(devUsersUrl);
+      //users = users.data;
+
       //console.log(result.data);
       const { userId } = result.data;
       //console.log(userId);
