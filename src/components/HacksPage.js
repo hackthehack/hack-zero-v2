@@ -6,8 +6,13 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import axios from "axios";
+
 import ErrorOutlineOutlinedIcon from "@material-ui/icons/ErrorOutlineOutlined";
 import Team from "./subcomponents/team";
+
+import { fetchUsers } from "../store/actions/userActions";
+import { connect } from "react-redux";
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Hacks = () => {
+const Hacks = ({ dispatch }) => {
   const classes = useStyles();
   const [data, setData] = useState([]);
 
@@ -42,7 +47,7 @@ const Hacks = () => {
       setData([...result.data]);
     };
     fetchData();
-  }, []);
+
 
   if (data.length > 0) {
     return (
@@ -56,6 +61,27 @@ const Hacks = () => {
       >
         <Grid className={classes.root} item xs={9}>
           <Typography variant="h4">Hacks</Typography>
+
+    dispatch(fetchUsers());
+  }, [dispatch]);
+  const renderHacks = () => {
+    return data.map(hack => {
+      return (
+        <Grid
+          component={Link}
+          style={{ textDecoration: "none" }}
+          to={`/hack/${hack._id}`}
+          data-testid="hack-idea"
+          key={hack._id}
+          item
+          xs={12}
+        >
+          <Paper className={classes.paper} key={hack.title}>
+            <Typography variant="h2" component="h2">
+              Name: {hack.title}
+            </Typography>
+          </Paper>
+
         </Grid>
         {data.map(hack => {
           return (
@@ -113,5 +139,6 @@ const Hacks = () => {
     );
   }
 };
-
-export default Hacks;
+const mapState = state => ({ users: state.user.users });
+//const mapDispatch = dispatch => ({ getUsers: () => dispatch(fetchUsers()) });
+export default connect(mapState)(Hacks);

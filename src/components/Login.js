@@ -58,7 +58,9 @@ export const Login = props => {
   }, []);
   const handleSubmit = e => {
     e.preventDefault();
-    props.auth(email, password);
+    const { history } = props;
+    console.log(history);
+    props.auth(email, password, history);
     setPassword("");
     setEmail("");
   };
@@ -74,7 +76,7 @@ export const Login = props => {
         </Typography>
         <form onSubmit={handleSubmit} className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 autoComplete="email"
                 name="email"
@@ -87,7 +89,7 @@ export const Login = props => {
                 onChange={e => setEmail(e.target.value)}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
@@ -121,7 +123,7 @@ export const Login = props => {
   );
 };
 const mapDispatch = dispatch => ({
-  auth: (email, password) => dispatch(login(email, password))
+  auth: (email, password, history) => dispatch(login(email, password, history))
 });
 export default connect(
   null,
