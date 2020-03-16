@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Home = ({
+export const Home = ({
   from,
   to,
   dispatch,
@@ -35,7 +35,7 @@ const Home = ({
 }) => {
   const classes = useStyles();
   const scheduleCard = (
-    <Card style={{ width: "100%" }}>
+    <Card data-testid="schedule-card" style={{ width: "100%" }}>
       <CardContent>
         <Typography color="textSecondary" gutterBottom>
           Schedule:
@@ -51,7 +51,7 @@ const Home = ({
     </Card>
   );
   const priceCard = (
-    <Card style={{ width: "100%" }}>
+    <Card data-testid="price-card" style={{ width: "100%" }}>
       <CardContent>
         <Typography color="textSecondary" gutterBottom>
           Price:
@@ -64,7 +64,7 @@ const Home = ({
     </Card>
   );
   const themeCard = (
-    <Card style={{ width: "100%" }}>
+    <Card data-testid="theme-card" style={{ width: "100%" }}>
       <CardContent>
         <Typography color="textSecondary" gutterBottom>
           Theme:
@@ -77,7 +77,7 @@ const Home = ({
     </Card>
   );
   const statusCard = (
-    <Card style={{ width: "100%" }}>
+    <Card data-testid="status-card" style={{ width: "100%" }}>
       <CardContent>
         <Typography color="textSecondary" gutterBottom>
           Status:
@@ -90,7 +90,7 @@ const Home = ({
     </Card>
   );
   const informationCard = (
-    <Card>
+    <Card data-testid="information-card">
       <CardContent>
         <Typography color="textSecondary" gutterBottom>
           Information:
@@ -111,6 +111,7 @@ const Home = ({
       <Container component="main">
         <CssBaseline />
         <Typography
+          data-testid="page-header"
           style={{ textAlign: "center", margin: "2rem" }}
           variant="h2"
           component="h2"
