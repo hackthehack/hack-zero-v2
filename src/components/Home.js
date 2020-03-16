@@ -35,7 +35,7 @@ const Home = ({
 }) => {
   const classes = useStyles();
   const scheduleCard = (
-    <Card>
+    <Card style={{ width: "100%" }}>
       <CardContent>
         <Typography color="textSecondary" gutterBottom>
           Schedule:
@@ -51,7 +51,7 @@ const Home = ({
     </Card>
   );
   const priceCard = (
-    <Card>
+    <Card style={{ width: "100%" }}>
       <CardContent>
         <Typography color="textSecondary" gutterBottom>
           Price:
@@ -64,7 +64,7 @@ const Home = ({
     </Card>
   );
   const themeCard = (
-    <Card>
+    <Card style={{ width: "100%" }}>
       <CardContent>
         <Typography color="textSecondary" gutterBottom>
           Theme:
@@ -77,7 +77,7 @@ const Home = ({
     </Card>
   );
   const statusCard = (
-    <Card>
+    <Card style={{ width: "100%" }}>
       <CardContent>
         <Typography color="textSecondary" gutterBottom>
           Status:
@@ -117,18 +117,21 @@ const Home = ({
         >
           {title}
         </Typography>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            {informationCard}
+        <Grid container spacing={3} alignItems="stretch">
+          <Grid style={{ display: "flex" }} item xs={12} sm={6}>
+            {priceCard}
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid style={{ display: "flex" }} item xs={12} sm={6}>
             {statusCard}
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid style={{ display: "flex" }} item xs={12} sm={6}>
             {themeCard}
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid style={{ display: "flex" }} item xs={12} sm={6}>
             {scheduleCard}
+          </Grid>
+          <Grid item xs={12}>
+            {informationCard}
           </Grid>
         </Grid>
       </Container>
