@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { render, getByTestId, fireEvent } from "@testing-library/react";
-import Header from "../components/header";
+import { Header } from "../components/header";
 
 test("If a container exists for displayng the hacks", () => {
   const { container } = render(
     <BrowserRouter>
-      <Header />
+      <Header auth={{isAuth: false}}/>
     </BrowserRouter>
   );
   expect(container.firstChild).toBeInTheDocument();
@@ -15,7 +15,7 @@ test("If a container exists for displayng the hacks", () => {
 test("if the side drawer is not visible by default", () => {
   const { container } = render(
     <BrowserRouter>
-      <Header />
+      <Header auth={{isAuth: false}}/>
     </BrowserRouter>
   );
   const drawer = getByTestId(container, "drawerComponent");
@@ -25,7 +25,7 @@ test("if the side drawer is not visible by default", () => {
 test("if the side drawer is visible after the button is pressed", () => {
   const { container } = render(
     <BrowserRouter>
-      <Header />
+      <Header auth={{isAuth: false}}/>
     </BrowserRouter>
   );
   const drawer = getByTestId(container, "drawerComponent");
