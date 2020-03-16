@@ -1,12 +1,24 @@
 import React, { useEffect } from "react";
+import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
 import { getHackathonContent } from "../store/actions/hackathonActions";
 
-const Home = ({ dispatch, hackathon }) => {
+const Home = ({ dispatch, hackathon, title }) => {
   useEffect(() => {
     dispatch(getHackathonContent());
   }, [dispatch]);
-  return <h1>Hackathon Home page</h1>;
+  console.log(title);
+  return (
+    <div>
+      <Typography
+        style={{ textAlign: "center", margin: "2rem" }}
+        variant="h2"
+        component="h2"
+      >
+        {title}
+      </Typography>
+    </div>
+  );
 };
-const mapState = state => ({ hackathon: state.hack.hackathon });
+const mapState = state => ({ title: state.hack.items.title });
 export default connect(mapState)(Home);

@@ -1,11 +1,22 @@
 import * as ActionType from "../actions";
 
 const initialState = {
-  hackathon: {}
+  items: {},
+  assets: []
 };
 
 const reducer = (state = initialState, action) => {
-  return state;
+  switch (action.type) {
+    case ActionType.HACK_A_THON:
+      // console.log("in reducer");
+      // console.log(action.payload[0].fields);
+      return {
+        ...state,
+        items: { ...action.payload[0].fields }
+      };
+    default:
+      return state;
+  }
 };
 
 export default reducer;

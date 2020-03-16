@@ -65,7 +65,7 @@ const Hacks = ({ dispatch }) => {
     dispatch(fetchUsers());
   }, [dispatch]);
   const renderHacks = () => {
-    return data.map(hack => {
+    data.map(hack => {
       return (
         <Grid
           component={Link}

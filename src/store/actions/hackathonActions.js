@@ -13,7 +13,7 @@ export const getHackathonContent = () => {
     let result = await axios.get(
       `${contentfulUrl}/spaces/${process.env.REACT_APP_CONTENTFUL_SPACE_ID}/entries?access_token=${process.env.REACT_APP_CONTENTFUL_KEY}&content_type=hackEvent`
     );
-    console.log("calling contentful");
-    console.log(result.data);
+    dispatch(getContentOkay(result.data.items));
+    //console.log(result.data);
   };
 };
