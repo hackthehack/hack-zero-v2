@@ -1,6 +1,8 @@
 import * as ActionType from "./index";
 import axios from "axios";
-const devUrl = "http://localhost:3001/auth";
+
+const devUrl = process.env.REACT_APP_API_URL + "auth";
+
 
 const loginOkay = userId => ({ type: ActionType.LOGIN, payload: userId });
 

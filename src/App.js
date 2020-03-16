@@ -6,6 +6,8 @@ import HackDetails from "./components/hack-details";
 import Login from "./components/Login";
 import Register from "./components/register";
 import Header from "./components/header";
+import Login from "./components/Login"
+import Home from "./components/Home";
 import "./css/main.css";
 
 function App() {
@@ -13,7 +15,7 @@ function App() {
     <BrowserRouter>
       <Header />
       <Switch>
-        {/* <Route exact path="/" component={<h1>This is root</h1>}/> */}
+        <Route exact path="/" component={Home} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/create" component={CreateHack} />
