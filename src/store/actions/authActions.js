@@ -1,8 +1,13 @@
 import * as ActionType from "./index";
 import axios from "axios";
+
 const devUrl = process.env.REACT_APP_API_URL + "auth";
+
+
 const loginOkay = userId => ({ type: ActionType.LOGIN, payload: userId });
+
 export const login = (email, password, history) => {
+
   return async (dispatch, getState) => {
     //console.log("inside async login");
     // console.log("this is inside the async login");
