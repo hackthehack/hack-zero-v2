@@ -6,7 +6,7 @@ import HackDetails from "./components/hack-details";
 import Login from "./components/Login";
 import Register from "./components/register";
 import Header from "./components/header";
-import Login from "./components/Login"
+
 import Home from "./components/Home";
 import "./css/main.css";
 
