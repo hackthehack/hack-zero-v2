@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import authReducer from "./store/reducers/authReducer";
 import userReducer from "./store/reducers/userReducer";
+import hackReducer from "./store/reducers/hackathonReducer";
 
 import thunk from "redux-thunk";
 
@@ -11,7 +12,8 @@ const composeEnhancers =
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  user: userReducer
+  user: userReducer,
+  hack: hackReducer
   //form: quizReducer
   // error: errorReducer
 });
