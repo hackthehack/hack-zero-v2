@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom'
 import { render, fireEvent } from '@testing-library/react';
-import CreateHack from '../components/create-hack'
+import { CreateHack } from '../components/create-hack'
 import axiosMock from 'axios'
 
 // afterEach(cleanup);
