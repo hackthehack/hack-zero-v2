@@ -44,23 +44,16 @@ export function CreateHack(props) {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log(join);
-    const obj = {
-      title: title,
-      description: description,
-      goal: goal
+    const fetchData = async () => {
+      const newHack = { title: title, description: description, goal: goal, team: [] }
+      if(join){
+        newHack.team[0] = props.userId
+      }
+      await Axios.post(UrlJoin(process.env.REACT_APP_API_URL, "addhack"), newHack );
     };
-    Axios.post(UrlJoin(process.env.REACT_APP_API_URL, "addhack"), obj)
-      .then(res => {
-        const obj = {
-          hackId: res._id,
-          userId: props.userId
-        }
-        Axios.post(UrlJoin(process.env.REACT_APP_API_URL,"joinhack"), obj)
-      })
-      .then(() => {
-        props.history.push("/hacks");
-      });
+    fetchData().then(() => {
+      props.history.push("/hacks");
+    });
   };
 
   return (
@@ -81,23 +74,8 @@ export function CreateHack(props) {
               alignContent="center"
               spacing={1}
             >
-              <Grid className={classes.field} item xs={10}>
+              <Grid className={classes.field} item xs={12}>
                 <Typography variant="h4">New Hack Idea</Typography>
-              </Grid>
-              <Grid className={classes.field} item xs={2}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={join}
-                      onChange={event => {
-                        setJoin(event.target.checked);
-                      }}
-                      value="joinHack"
-                      color="primary"
-                    />
-                  }
-                  label="Auto Join Hack"
-                />
               </Grid>
               <Grid className={classes.field} item xs={12}>
                 <FormControl fullWidth variant="outlined">
@@ -151,7 +129,22 @@ export function CreateHack(props) {
                   ></OutlinedInput>
                 </FormControl>
               </Grid>
-              <Grid item xs>
+              <Grid className={classes.field} item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={join}
+                      onChange={event => {
+                        setJoin(event.target.checked);
+                      }}
+                      value="joinHack"
+                      color="primary"
+                    />
+                  }
+                  label="Join this hack idea"
+                />
+              </Grid>
+              <Grid item xs={12}>
                 <Button
                   type="submit"
                   className={classes.button}
