@@ -7,7 +7,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.HACK_A_THON:
+    case ActionType.FETCH_HACK_A_THON:
       // console.log("in reducer");
       // console.log(action.payload[0].fields);
       return {
