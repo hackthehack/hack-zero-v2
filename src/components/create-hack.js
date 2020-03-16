@@ -11,6 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Axios from "axios";
 
+import UrlJoin  from "url-join"
+
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -41,7 +43,7 @@ function CreateHack(props) {
       description: description,
       goal: goal
     };
-    Axios.post(process.env.REACT_APP_API_URL + "addhack", obj).then(res => {
+    Axios.post(UrlJoin(process.env.REACT_APP_API_URL, "addhack"), obj).then(res => {
       console.log(res);
     }).then(()=>{
       props.history.push('/hacks')

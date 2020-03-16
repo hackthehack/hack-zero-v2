@@ -18,7 +18,8 @@
     "react-scripts": "3.4.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "typeface-roboto": "0.0.75"
+    "typeface-roboto": "0.0.75",
+    "url-join": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

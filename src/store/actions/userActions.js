@@ -1,6 +1,7 @@
 import * as ActionType from "./index";
 import axios from "axios";
-const devUsersUrl = "http://localhost:3001/userlist";
+import UrlJoin  from "url-join"
+const devUsersUrl = UrlJoin(process.env.REACT_APP_API_URL,"userlist");
 
 const fetchUserOkay = users => ({
   type: ActionType.FETCH_USERS,

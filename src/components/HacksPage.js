@@ -8,6 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 import ErrorOutlineOutlinedIcon from "@material-ui/icons/ErrorOutlineOutlined";
 import Team from "./subcomponents/team";
+import UrlJoin  from "url-join"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,13 +32,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const Hacks = ({ dispatch }) => {
+export const Hacks = () => {
   const classes = useStyles();
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      let result = await axios.get(process.env.REACT_APP_API_URL + "hacklist");
+      let result = await axios.get(UrlJoin(process.env.REACT_APP_API_URL, "hacklist"));
       setData([...result.data]);
     };
     fetchData();
@@ -112,5 +113,4 @@ export const Hacks = ({ dispatch }) => {
     );
   }
 };
-//const mapDispatch = dispatch => ({ getUsers: () => dispatch(fetchUsers()) });
 export default Hacks;

@@ -1,7 +1,8 @@
 import * as ActionType from "./index";
 import axios from "axios";
+import UrlJoin from "url-join"
 
-const devUrl = process.env.REACT_APP_API_URL + "auth";
+const devUrl = UrlJoin(process.env.REACT_APP_API_URL,"auth");
 
 
 const loginOkay = userId => ({ type: ActionType.LOGIN, payload: userId });

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import Team from "./subcomponents/team";
 import JoinButton from "./subcomponents/join-team-button"
+import UrlJoin  from "url-join"
 
 // UI imports
 import {
@@ -42,20 +43,19 @@ export function HackDetails(props) {
 
     if (props.match !== undefined) {
       Axios.get(
-        process.env.REACT_APP_API_URL + "hackdetail/" + props.match.params.id
+        UrlJoin(process.env.REACT_APP_API_URL,"hackdetail/",props.match.params.id)
       ).then(res => {
         setData(res.data)
-        
       });
     }
-  }, [data, props.match]);
+  }, [props.match]);
 
   const joinHack = event => {
     const object = {
       hackId: props.match.params.id,
       userId: props.userId
     };
-    Axios.post(process.env.REACT_APP_API_URL + "joinhack", object).then(res => {
+    Axios.post(UrlJoin(process.env.REACT_APP_API_URL,"joinhack"), object).then(res => {
       setData(res.data);
     });
   };
