@@ -11,25 +11,23 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export function Team(props) {
-  console.log(props)
+  // console.log(props);
   const classes = useStyles();
-  if (props.team !== undefined) {
-    return (
-        <>
-          {props.team.map(id => {
-            return <Chip
-            key={id}
+  return (
+    <>
+      {props.team.map(member => {
+        return (
+          <Chip
+            key={member._id}
             className={classes.chipMArgin}
             icon={<AccountCircleIcon />}
-            label={id}
+            label={member.name}
             color="primary"
           />
-          })}
-          </>
-    );
-  } else {
-    return <></>;
-  }
+        );
+      })}
+    </>
+  );
 }
 
 export default Team;
