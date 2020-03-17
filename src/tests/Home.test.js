@@ -1,6 +1,13 @@
 import React from "react";
 import { render, getByTestId } from "@testing-library/react";
-import { Home } from "../components/Home";
+import ReduxConnectedHome, { Home } from "../components/Home";
+import {
+  getHackathonContent,
+  getContentOkay
+} from "../store/actions/hackathonActions";
+import configureStore from "redux-mock-store";
+
+const mockStore = configureStore([]);
 
 test("<Home/> component heading should be rendered in the page", () => {
   const dispatch = jest.fn();
