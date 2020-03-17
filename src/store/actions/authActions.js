@@ -1,7 +1,8 @@
 import * as ActionType from "./index";
 import axios from "axios";
+import UrlJoin from "url-join"
 
-const devUrl = process.env.REACT_APP_API_URL + "auth";
+const url = UrlJoin(process.env.REACT_APP_API_URL,"auth");
 
 
 const loginOkay = userId => ({ type: ActionType.LOGIN, payload: userId });
@@ -13,7 +14,7 @@ export const login = (email, password, history) => {
     // console.log("this is inside the async login");
     // console.log(history);
     try {
-      let result = await axios.post(devUrl, {
+      let result = await axios.post(url, {
         email,
         password
       });

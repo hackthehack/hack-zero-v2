@@ -6,13 +6,9 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import axios from "axios";
-
 import ErrorOutlineOutlinedIcon from "@material-ui/icons/ErrorOutlineOutlined";
 import Team from "./subcomponents/team";
-
-import { fetchUsers } from "../store/actions/userActions";
-import { connect } from "react-redux";
-
+import UrlJoin from "url-join";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,18 +32,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Hacks = ({ dispatch }) => {
+export const Hacks = () => {
   const classes = useStyles();
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      let result = await axios.get(process.env.REACT_APP_API_URL + "hacklist");
-      //console.log(result.data);
+      let result = await axios.get(
+        UrlJoin(process.env.REACT_APP_API_URL, "hacklist")
+      );
       setData([...result.data]);
     };
     fetchData();
-
+  }, []);
 
   if (data.length > 0) {
     return (
@@ -61,27 +58,6 @@ const Hacks = ({ dispatch }) => {
       >
         <Grid className={classes.root} item xs={9}>
           <Typography variant="h4">Hacks</Typography>
-
-    dispatch(fetchUsers());
-  }, [dispatch]);
-  const renderHacks = () => {
-    data.map(hack => {
-      return (
-        <Grid
-          component={Link}
-          style={{ textDecoration: "none" }}
-          to={`/hack/${hack._id}`}
-          data-testid="hack-idea"
-          key={hack._id}
-          item
-          xs={12}
-        >
-          <Paper className={classes.paper} key={hack.title}>
-            <Typography variant="h2" component="h2">
-              Name: {hack.title}
-            </Typography>
-          </Paper>
-
         </Grid>
         {data.map(hack => {
           return (
@@ -110,11 +86,15 @@ const Hacks = ({ dispatch }) => {
                       color="secondary"
                     />
                   </Grid>
-                  <Grid item xs={12} style={{ marginBottom: '1rem', marginTop: '1rem' }}>
+                  <Grid
+                    item
+                    xs={12}
+                    style={{ marginBottom: "1rem", marginTop: "1rem" }}
+                  >
                     {hack.description.slice(0, 100) + " ...Read More"}
                   </Grid>
-                  <Grid item xs={10}>
-                    <Team team={hack.team}/>
+                  <Grid item xs={12}>
+                    <Team team={hack.team} />
                   </Grid>
                 </Grid>
               </Paper>
@@ -139,6 +119,4 @@ const Hacks = ({ dispatch }) => {
     );
   }
 };
-const mapState = state => ({ users: state.user.users });
-//const mapDispatch = dispatch => ({ getUsers: () => dispatch(fetchUsers()) });
-export default connect(mapState)(Hacks);
+export default Hacks;

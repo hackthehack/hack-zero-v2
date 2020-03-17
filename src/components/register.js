@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Axios from "axios";
+import UrlJoin  from "url-join"
 
 function Copyright() {
   return (
@@ -70,7 +71,7 @@ export default function Register() {
         email: email,
         password: password
       };
-      Axios.post(process.env.REACT_APP_API_URL + "register", obj)
+      Axios.post(UrlJoin(process.env.REACT_APP_API_URL,"register"), obj)
         .then(res => {
           if (res.statusCode === 200) {
             console.log("Success");
