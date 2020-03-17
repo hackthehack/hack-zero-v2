@@ -13,6 +13,7 @@ const useStyles = makeStyles(theme => ({
 export function Team(props) {
   // console.log(props);
   const classes = useStyles();
+  console.log(props.team)
   return (
     <>
       {props.team.map(member => {

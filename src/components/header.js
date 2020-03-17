@@ -1,10 +1,9 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import {
   AppBar,
   Toolbar,
   Button,
-  Typography,
   IconButton,
   Menu,
   MenuItem,
@@ -26,7 +25,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
-import {connect} from 'react-redux'
+import { connect } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -93,6 +92,9 @@ const useStyles = makeStyles(theme => ({
   link: {
     color: "#ffffff",
     textDecoration: "none"
+  },
+  userLinks: {
+    justifyContent: "space-between"
   }
 }));
 
@@ -132,63 +134,13 @@ export function Header(props) {
         return "/";
     }
   };
-  const buttonType = () => {
-    if (props.auth.isAuth) {
-      return (
-        <div>
-          <IconButton
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleMenu}
-            color="inherit"
-          >
-            <AccountCircle />
-          </IconButton>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right"
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right"
-            }}
-            open={open}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-          </Menu>
-        </div>
-      );
-    } else {
-      return (
-        <>
-          <Link to="/login" className={classes.link}>
-            <Button color="inherit" className={classes.loginbutton}>
-              Login
-            </Button>
-          </Link>
-          <Link to="/register" className={classes.link}>
-            <Button color="inherit" className={classes.loginbutton}>
-              Register
-            </Button>
-          </Link>
-        </>
-      );
-    }
-  };
 
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar className={classes.userLinks}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -199,16 +151,57 @@ export function Header(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
+          {/* <Typography
             component={Link}
             style={{ textDecoration: "none", color: "white" }}
             to="/"
             variant="h6"
             className={classes.title}
-          >
-            
-          </Typography>
-          {buttonType()}
+          ></Typography> */}
+          {props.auth.isAuth ? (
+            <div>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+              </Menu>
+            </div>
+          ) : (
+            <div>
+              <Link to="/login" className={classes.link}>
+                <Button color="inherit" className={classes.loginbutton}>
+                  Login
+                </Button>
+              </Link>
+              <Link to="/register" className={classes.link}>
+                <Button color="inherit" className={classes.loginbutton}>
+                  Register
+                </Button>
+              </Link>
+            </div>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -264,7 +257,6 @@ export function Header(props) {
     </div>
   );
 }
-
 
 const mapState = state => ({
   auth: state.auth

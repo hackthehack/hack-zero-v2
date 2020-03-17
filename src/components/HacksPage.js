@@ -42,7 +42,7 @@ export const Hacks = () => {
       setData([...result.data]);
     };
     fetchData();
-  });
+  }, [ ]);
 
   if (data.length > 0) {
     return (
