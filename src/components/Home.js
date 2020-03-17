@@ -22,6 +22,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const FixedCard = ({ id, title, values }) => {
+  return (
+    <Card data-testid={`${id}-card`} style={{ width: "100%" }}>
+      <CardContent>
+        <Typography color="textSecondary" gutterBottom>
+          {title}
+        </Typography>
+
+        {values.map((value, index) => (
+          <Typography key={index} variant="body2" component="p">
+            {value}
+          </Typography>
+        ))}
+      </CardContent>
+    </Card>
+  );
+};
+
 export const Home = ({
   from,
   to,
@@ -34,24 +52,6 @@ export const Home = ({
   price
 }) => {
   const classes = useStyles();
-
-  const FixedCard = ({ id, title, values }) => {
-    return (
-      <Card data-testid={`${id}-card`} style={{ width: "100%" }}>
-        <CardContent>
-          <Typography color="textSecondary" gutterBottom>
-            {title}
-          </Typography>
-
-          {values.map((value, index) => (
-            <Typography key={index} variant="body2" component="p">
-              {value}
-            </Typography>
-          ))}
-        </CardContent>
-      </Card>
-    );
-  };
 
   useEffect(() => {
     dispatch(getHackathonContent());
