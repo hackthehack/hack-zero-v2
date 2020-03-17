@@ -10,13 +10,18 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Axios from "axios";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-import UrlJoin  from "url-join"
+import UrlJoin from "url-join";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    marginTop: theme.spacing(2)
+    margin: theme.spacing(2),
+    width: "80vw",
+    padding: theme.spacing(1)
   },
   field: {
     padding: theme.spacing(1),
@@ -29,29 +34,30 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function CreateHack(props) {
+export function CreateHack(props) {
   const classes = useStyles();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [goal, setGoal] = useState("");
+  const [join, setJoin] = useState(false);
 
   const handleSubmit = event => {
     event.preventDefault();
-    const obj = {
-      title: title,
-      description: description,
-      goal: goal
+    const fetchData = async () => {
+      const newHack = { title: title, description: description, goal: goal, team: [] }
+      if(join){
+        newHack.team[0] = props.userId
+      }
+      await Axios.post(UrlJoin(process.env.REACT_APP_API_URL, "addhack"), newHack );
     };
-    Axios.post(UrlJoin(process.env.REACT_APP_API_URL, "addhack"), obj).then(res => {
-      console.log(res);
-    }).then(()=>{
-      props.history.push('/hacks')
-    })
+    fetchData().then(() => {
+      props.history.push("/hacks");
+    });
   };
 
   return (
-    <div className={classes.root}>
+    <div>
       <form width={1} noValidate autoComplete="false" onSubmit={handleSubmit}>
         <Grid
           container
@@ -63,10 +69,10 @@ function CreateHack(props) {
           <Paper className={classes.root}>
             <Grid
               container
-              direction="column"
-              justify="center"
-              alignItems="stretch"
+              justify="flex-start"
+              alignItems="center"
               alignContent="center"
+              spacing={1}
             >
               <Grid className={classes.field} item xs={12}>
                 <Typography variant="h4">New Hack Idea</Typography>
@@ -87,7 +93,7 @@ function CreateHack(props) {
                   ></OutlinedInput>
                 </FormControl>
               </Grid>
-              <Grid className={classes.field} item xs>
+              <Grid className={classes.field} item xs={12}>
                 <FormControl fullWidth variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-amount">
                     Hack Description
@@ -105,7 +111,7 @@ function CreateHack(props) {
                   ></OutlinedInput>
                 </FormControl>
               </Grid>
-              <Grid className={classes.field} item xs>
+              <Grid className={classes.field} item xs={12}>
                 <FormControl fullWidth variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-amount">
                     Hack Goal
@@ -123,7 +129,22 @@ function CreateHack(props) {
                   ></OutlinedInput>
                 </FormControl>
               </Grid>
-              <Grid item xs>
+              <Grid className={classes.field} item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={join}
+                      onChange={event => {
+                        setJoin(event.target.checked);
+                      }}
+                      value="joinHack"
+                      color="primary"
+                    />
+                  }
+                  label="Join this hack idea"
+                />
+              </Grid>
+              <Grid item xs={12}>
                 <Button
                   type="submit"
                   className={classes.button}
@@ -141,4 +162,8 @@ function CreateHack(props) {
   );
 }
 
-export default CreateHack;
+const mapState = state => ({
+  userId: state.auth.userId
+});
+
+export default connect(mapState)(CreateHack);
