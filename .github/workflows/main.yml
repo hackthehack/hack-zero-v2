@@ -32,7 +32,7 @@ jobs:
           npm run build
       - name: Unit Tests
         run: |
-          npm run test
+          CI=true npm test
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with:
