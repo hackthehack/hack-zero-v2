@@ -8,7 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 import ErrorOutlineOutlinedIcon from "@material-ui/icons/ErrorOutlineOutlined";
 import Team from "./subcomponents/team";
-import UrlJoin  from "url-join"
+import UrlJoin from "url-join";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,11 +38,13 @@ export const Hacks = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      let result = await axios.get(UrlJoin(process.env.REACT_APP_API_URL, "hacklist"));
+      let result = await axios.get(
+        UrlJoin(process.env.REACT_APP_API_URL, "hacklist")
+      );
       setData([...result.data]);
     };
     fetchData();
-  }, [ ]);
+  }, []);
 
   if (data.length > 0) {
     return (
@@ -84,11 +86,15 @@ export const Hacks = () => {
                       color="secondary"
                     />
                   </Grid>
-                  <Grid item xs={12} style={{ marginBottom: '1rem', marginTop: '1rem' }}>
+                  <Grid
+                    item
+                    xs={12}
+                    style={{ marginBottom: "1rem", marginTop: "1rem" }}
+                  >
                     {hack.description.slice(0, 100) + " ...Read More"}
                   </Grid>
                   <Grid item xs={12}>
-                    <Team team={hack.team}/>
+                    <Team team={hack.team} />
                   </Grid>
                 </Grid>
               </Paper>
