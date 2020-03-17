@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import Team from "./subcomponents/team";
+import JoinButton from "./subcomponents/join-team-button"
+import UrlJoin  from "url-join"
 
 // UI imports
 import {
   Grid,
   Typography,
   Paper,
-  Button,
   Chip,
   CircularProgress
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ErrorOutlineOutlinedIcon from "@material-ui/icons/ErrorOutlineOutlined";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 import { connect } from "react-redux";
 
@@ -36,66 +36,31 @@ const useStyles = makeStyles(theme => ({
 export function HackDetails(props) {
   const classes = useStyles();
 
-  const [data] = useState();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [team, setTeam] = useState();
-  const [goal, setGoal] = useState("");
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     //console.log(props.match.params);
 
     if (props.match !== undefined) {
       Axios.get(
-        process.env.REACT_APP_API_URL + "hackdetail/" + props.match.params.id
+        UrlJoin(process.env.REACT_APP_API_URL,"hackdetail/",props.match.params.id)
       ).then(res => {
-        setTitle(res.data.title);
-        setDescription(res.data.description);
-        setGoal(res.data.goal);
-        setTeam(res.data.team);
+        setData(res.data)
       });
     }
-  }, [data, props.match]);
+  }, [props.match]);
 
   const joinHack = event => {
     const object = {
       hackId: props.match.params.id,
       userId: props.userId
     };
-    Axios.post(process.env.REACT_APP_API_URL + "joinhack", object).then(res => {
-      setTeam(res.data.team);
+    Axios.post(UrlJoin(process.env.REACT_APP_API_URL,"joinhack"), object).then(res => {
+      setData(res.data);
     });
   };
 
-  const joinHackButton = () => {
-    if (team !== undefined) {
-      if (team.includes(props.userId)) {
-        return (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={joinHack}
-            disabled
-          >
-            Join Hack
-          </Button>
-        );
-      } else {
-        return (
-          <Button variant="contained" color="primary" onClick={joinHack}>
-            Join Hack
-          </Button>
-        );
-      }
-    }
-    return (
-      <Button variant="contained" color="primary" onClick={joinHack}>
-        Join Hack
-      </Button>
-    );
-  };
-
-  if (title !== "") {
+  if (data !== null) {
     return (
       <Grid
         data-testid="main-container"
@@ -121,31 +86,31 @@ export function HackDetails(props) {
               />
             </Grid>
             <Grid item xs={3} className={classes.rightFeild}>
-              {joinHackButton()}
+              <JoinButton team={data.team} userId={props.userId} joinHack={joinHack} />
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="h4">{title}</Typography>
+              <Typography variant="h4">{data.title}</Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography variant="h6">Idea:</Typography>
             </Grid>
             <Grid item xs={10}>
-              <Typography variant="body1">{description}</Typography>
+              <Typography variant="body1">{data.description}</Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography variant="h6">Goal:</Typography>
             </Grid>
             <Grid item xs={10}>
-              <Typography variant="body1">{goal}</Typography>
+              <Typography variant="body1">{data.goal}</Typography>
             </Grid>
-            {team !== undefined ? (
+            {data.team !== undefined ? (
               <Grid item xs={12}>
                 <Typography variant="h6">Team:</Typography>
               </Grid>
             ) : null}
 
             <Grid item xs={10}>
-              <Team team={team} />
+              <Team team={data.team} />
             </Grid>
           </Grid>
         </Paper>

@@ -10,7 +10,8 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Axios from "axios";
-import { useHistory } from 'react-router-dom';
+
+import UrlJoin  from "url-join"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,46 +35,19 @@ function CreateHack(props) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [goal, setGoal] = useState("");
-  const [show, setShow] = useState(false);
-
-  const history = props.history
 
   const handleSubmit = event => {
     event.preventDefault();
-    setShow(true);
     const obj = {
       title: title,
       description: description,
       goal: goal
     };
-    Axios.post(process.env.REACT_APP_API_URL + "addhack", obj).then(res => {
+    Axios.post(UrlJoin(process.env.REACT_APP_API_URL, "addhack"), obj).then(res => {
       console.log(res);
+    }).then(()=>{
+      props.history.push('/hacks')
     })
-    // .then(history.goBack());
-  };
-
-  const renderHack = () => {
-    if (show === true) {
-      return (
-        <Grid
-          container
-          direction="column"
-          justify="center"
-          alignItems="stretch"
-          alignContent="center"
-        >
-          <Paper elevation={2}>
-            <Typography alt="title" variant="h2" component="h2">
-              {title}
-            </Typography>
-            <Typography alt="description" variant="h4" component="h4">
-              {description}
-            </Typography>
-          </Paper>
-        </Grid>
-      );
-    }
-    return null;
   };
 
   return (
@@ -163,7 +137,6 @@ function CreateHack(props) {
           </Paper>
         </Grid>
       </form>
-      {renderHack()}
     </div>
   );
 }
