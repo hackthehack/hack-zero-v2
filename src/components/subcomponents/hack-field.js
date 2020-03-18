@@ -1,16 +1,10 @@
 import React from "react";
-import { 
-    FormControl,
-    OutlinedInput,
-    Typography
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { FormControl, OutlinedInput, Typography } from "@material-ui/core";
 
 export function HackField(props) {
-
   if (props.edit) {
     return (
-        <FormControl fullWidth variant="outlined">
+      <FormControl fullWidth variant="outlined">
         <OutlinedInput
           onChange={props.onChange}
           placeholder="Description"
@@ -20,11 +14,8 @@ export function HackField(props) {
         ></OutlinedInput>
       </FormControl>
     );
-  } else {
-    return (
-        <Typography variant={props.variant}>{props.displayText}</Typography>
-    );
   }
+  return <Typography variant={props.variant}>{props.displayText}</Typography>;
 }
 
 export default HackField;

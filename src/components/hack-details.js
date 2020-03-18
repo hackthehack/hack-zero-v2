@@ -48,8 +48,6 @@ export function HackDetails(props) {
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
-    //console.log(props.match.params);
-
     if (props.match !== undefined) {
       Axios.get(
         UrlJoin(
@@ -81,18 +79,17 @@ export function HackDetails(props) {
   };
 
   const onSubmitUpdate = e => {
-    e.preventDefault()
-    Axios.post(
-      UrlJoin(process.env.REACT_APP_API_URL, "edithack"),
-      {...updateData, hackId: displayData._id}
-    ).then(res => {
-      console.log(res)
-      setEdit(false)
+    e.preventDefault();
+    Axios.post(UrlJoin(process.env.REACT_APP_API_URL, "edithack"), {
+      ...updateData,
+      hackId: displayData._id
+    }).then(res => {
+      setEdit(false);
       setDsiplayData(res.data);
     });
   };
 
-  const editHackDetails = event => {
+  const editHackDetails = () => {
     setEdit(true);
   };
 
@@ -137,7 +134,7 @@ export function HackDetails(props) {
                 spacing={1}
                 className={classes.marginFix}
               >
-                <Grid item xs={ edit ? 12 : null }>
+                <Grid item xs={edit ? 12 : null}>
                   <HackField
                     onChange={handleOnChange}
                     edit={edit}
@@ -181,36 +178,36 @@ export function HackDetails(props) {
                   variant={"body1"}
                 />
               </Grid>
-              { edit ?
-              <Grid
-                container
-                justify="flex-start"
-                alignItems="center"
-                className={classes.marginFix}
-                spacing={1}
-              >
-                <Grid item>
-                  <Button
-                    onClick={onSubmitUpdate}
-                    color="primary"
-                    variant="outlined"
-                  >
-                    Update
-                  </Button>
+              {edit ? (
+                <Grid
+                  container
+                  justify="flex-start"
+                  alignItems="center"
+                  className={classes.marginFix}
+                  spacing={1}
+                >
+                  <Grid item>
+                    <Button
+                      onClick={onSubmitUpdate}
+                      color="primary"
+                      variant="outlined"
+                    >
+                      Update
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      onClick={e => {
+                        setEdit(false);
+                      }}
+                      color="secondary"
+                      variant="outlined"
+                    >
+                      Cancel
+                    </Button>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Button
-                    onClick={e => {
-                      setEdit(false);
-                    }}
-                    color="secondary"
-                    variant="outlined"
-                  >
-                    Cancel
-                  </Button>
-                </Grid>
-              </Grid>
-              : null }
+              ) : null}
               {displayData.team !== undefined ? (
                 <Grid item xs={12}>
                   <Typography variant="h6">Team Members:</Typography>
@@ -225,21 +222,20 @@ export function HackDetails(props) {
         </Paper>
       </Grid>
     );
-  } else {
-    return (
-      <Grid
-        data-testid="main-container"
-        container
-        direction="column"
-        justify="center"
-        alignItems="stretch"
-        alignContent="center"
-        className={classes.loading}
-      >
-        <CircularProgress />
-      </Grid>
-    );
   }
+  return (
+    <Grid
+      data-testid="main-container"
+      container
+      direction="column"
+      justify="center"
+      alignItems="stretch"
+      alignContent="center"
+      className={classes.loading}
+    >
+      <CircularProgress />
+    </Grid>
+  );
 }
 
 const mapState = state => ({
