@@ -12,8 +12,6 @@ export function JoinButton(props) {
 
   React.useEffect(() => {
     props.team.forEach(member => {
-      console.log(member._id)
-      console.log(props.userId)
       if(member._id === props.userId || !props.userId){
         setDisable(true)
       }
@@ -22,14 +20,14 @@ export function JoinButton(props) {
 
   if (disable) {
     return (
-      <Button variant="contained" color="primary" disabled>
+      <Button variant="outlined" color="primary" disabled>
         Join
       </Button>
     );
   } else {
     return (
       <Button
-        variant="contained"
+        variant="outlined"
         color="primary"
         onClick={onClick}
       >
