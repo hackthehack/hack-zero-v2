@@ -23,7 +23,8 @@ import { connect } from "react-redux";
 const useStyles = makeStyles(theme => ({
   root: {
     margin: theme.spacing(2),
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    width: "80vw",
   },
   rightFeild: {
     textAlign: "right"
@@ -134,7 +135,7 @@ export function HackDetails(props) {
                 spacing={1}
                 className={classes.marginFix}
               >
-                <Grid item xs={edit ? 12 : null}>
+                <Grid item xs={edit ? 10 : null}>
                   <HackField
                     onChange={handleOnChange}
                     edit={edit}
@@ -154,10 +155,10 @@ export function HackDetails(props) {
                   </Grid>
                 )}
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={10}>
                 <Typography variant="h6">Idea:</Typography>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={10}>
                 <HackField
                   onChange={handleOnChange}
                   edit={edit}
@@ -166,10 +167,10 @@ export function HackDetails(props) {
                   variant={"body1"}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={10}>
                 <Typography variant="h6">Goal:</Typography>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={10}>
                 <HackField
                   onChange={handleOnChange}
                   edit={edit}
@@ -209,7 +210,7 @@ export function HackDetails(props) {
                 </Grid>
               ) : null}
               {displayData.team !== undefined ? (
-                <Grid item xs={12}>
+                <Grid item xs={10}>
                   <Typography variant="h6">Team Members:</Typography>
                 </Grid>
               ) : null}
