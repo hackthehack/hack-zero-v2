@@ -28,17 +28,8 @@ const useStyles = makeStyles(theme => ({
   loading: {
     marginTop: theme.spacing(10)
   },
-  chipMArgin: {
-    marginRight: theme.spacing(1)
-  },
   marginTop: {
     marginTop: theme.spacing(2)
-  },
-  marginFix: {
-    marginLeft: theme.spacing(0.1),
-    marginRight: theme.spacing(0.1),
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1)
   }
 }));
 
