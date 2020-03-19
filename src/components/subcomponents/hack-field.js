@@ -10,6 +10,7 @@ export function HackField(props) {
           placeholder="Description"
           name={props.name}
           multiline
+          rows={props.name !== 'title' ? 3 : 1} 
           defaultValue={props.displayText}
         ></OutlinedInput>
       </FormControl>

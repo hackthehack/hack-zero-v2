@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     margin: theme.spacing(2),
     padding: theme.spacing(2),
-    width: "80vw",
+    width: "80vw"
   },
   rightFeild: {
     textAlign: "right"
@@ -35,9 +35,14 @@ const useStyles = makeStyles(theme => ({
   chipMArgin: {
     marginRight: theme.spacing(1)
   },
+  marginTop: {
+    marginTop: theme.spacing(2)
+  },
   marginFix: {
-    marginLeft: theme.spacing(0.5),
-    marginRight: theme.spacing(0.5)
+    marginLeft: theme.spacing(0.1),
+    marginRight: theme.spacing(0.1),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1)
   }
 }));
 
@@ -111,7 +116,7 @@ export function HackDetails(props) {
               justify="space-between"
               alignItems="center"
               alignContent="center"
-              spacing={2}
+              spacing={1}
             >
               <Grid item xs={9}>
                 <Chip
@@ -127,6 +132,11 @@ export function HackDetails(props) {
                   joinHack={joinHack}
                 />
               </Grid>
+              {edit ? (
+                <Grid item xs={10}>
+                  <Typography variant="h6">Hack Name:</Typography>
+                </Grid>
+              ) : null}
               <Grid
                 container
                 justify="flex-start"
@@ -210,11 +220,10 @@ export function HackDetails(props) {
                 </Grid>
               ) : null}
               {displayData.team !== undefined ? (
-                <Grid item xs={10}>
+                <Grid item xs={10} className={classes.marginTop}>
                   <Typography variant="h6">Team Members:</Typography>
                 </Grid>
               ) : null}
-
               <Grid item xs={10}>
                 <Team team={displayData.team} />
               </Grid>
