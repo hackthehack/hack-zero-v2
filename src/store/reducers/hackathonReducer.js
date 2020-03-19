@@ -2,7 +2,8 @@ import * as ActionType from "../actions";
 
 const initialState = {
   items: {},
-  assets: []
+  assets: [],
+  hackDetails: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -13,6 +14,26 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         items: { ...action.payload[0].fields }
+      };
+    case ActionType.FETCH_HACK_DETAILS:
+      return {
+        ...state,
+        hackDetails: { ...action.payload }
+      };
+    case ActionType.JOIN_HACK:
+      return {
+        ...state,
+        hackDetails: { ...action.payload }
+      };
+    case ActionType.UPDATE_HACK:
+      return {
+        ...state,
+        hackDetails: { ...action.payload }
+      };
+    case ActionType.CLEAR_HACK:
+      return {
+        ...state,
+        hackDetails: null
       };
     default:
       return state;

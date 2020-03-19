@@ -9,6 +9,8 @@ import axios from "axios";
 import ErrorOutlineOutlinedIcon from "@material-ui/icons/ErrorOutlineOutlined";
 import Team from "./subcomponents/team";
 import UrlJoin from "url-join";
+import { clearingHackDetails } from "../store/actions/hackathonActions";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const Hacks = () => {
+export const Hacks = ({ dispatch }) => {
   const classes = useStyles();
   const [data, setData] = useState([]);
 
@@ -44,7 +46,8 @@ export const Hacks = () => {
       setData([...result.data]);
     };
     fetchData();
-  }, []);
+    dispatch(clearingHackDetails())
+  }, [dispatch]);
 
   if (data.length > 0) {
     return (
@@ -119,4 +122,10 @@ export const Hacks = () => {
     );
   }
 };
-export default Hacks;
+
+const mapState = state => ({
+  userId: state.auth.userId,
+  hackDetails: state.hack.hackDetails
+});
+
+export default connect(mapState)(Hacks);

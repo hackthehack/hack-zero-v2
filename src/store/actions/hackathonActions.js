@@ -7,6 +7,10 @@ export const getContentOkay = content => ({
   payload: content
 });
 
+export const clearHackDetails = content => ({
+  type: ActionType.CLEAR_HACK,
+});
+
 export const getHackathonContent = () => {
   return async (dispatch, getState) => {
     //console.log(process.env.REACT_APP_CONTENTFUL_KEY);
@@ -15,5 +19,11 @@ export const getHackathonContent = () => {
     );
     dispatch(getContentOkay(result.data.items));
     //console.log(result.data);
+  };
+};
+
+export const clearingHackDetails = () => {
+  return async (dispatch, getState) => {
+    dispatch(clearHackDetails());
   };
 };

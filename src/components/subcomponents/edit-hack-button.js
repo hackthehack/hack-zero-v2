@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   editButton: {
@@ -14,14 +15,9 @@ export function EditHack(props) {
 
   const [disable, setDisable] = React.useState(true);
 
-  const onClick = event => {
-    event.preventDefault();
-    props.editFunc();
-  };
-
   React.useEffect(() => {
     props.team.forEach(member => {
-      if (member._id === props.userId) {
+      if (member._id === props.userId || !props.userId) {
         setDisable(false);
       }
     });
@@ -31,9 +27,11 @@ export function EditHack(props) {
     return null;
   }
   return (
-    <Button className={classes.editButton} onClick={onClick}>
-      <EditIcon />
-    </Button>
+    <Link to={`${props.match.url}/edit`}>
+      <Button className={classes.editButton}>
+        <EditIcon />
+      </Button>
+    </Link>
   );
 }
 

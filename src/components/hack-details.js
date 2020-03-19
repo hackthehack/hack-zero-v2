@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
-import Axios from "axios";
+import React, { useEffect } from "react";
 import Team from "./subcomponents/team";
 import JoinButton from "./subcomponents/join-team-button";
-import UrlJoin from "url-join";
 import EditHack from "./subcomponents/edit-hack-button";
-import HackField from "./subcomponents/hack-field";
+import { fetchingHackDetails } from "../store/actions/userActions";
+import { connect } from "react-redux";
 
 // UI imports
 import {
@@ -12,13 +11,10 @@ import {
   Typography,
   Paper,
   Chip,
-  CircularProgress,
-  Button
+  CircularProgress
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ErrorOutlineOutlinedIcon from "@material-ui/icons/ErrorOutlineOutlined";
-
-import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -46,60 +42,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function HackDetails(props) {
+export function HackDetails({ match, dispatch, userId, hackDetails }) {
   const classes = useStyles();
 
-  const [displayData, setDisplayData] = useState(null);
-  const [updateData, setUpdateData] = useState({});
-  const [edit, setEdit] = useState(false);
-
   useEffect(() => {
-    if (props.match !== undefined) {
-      Axios.get(
-        UrlJoin(
-          process.env.REACT_APP_API_URL,
-          "hackdetail/",
-          props.match.params.id
-        )
-      ).then(res => {
-        setDisplayData(res.data);
-      });
+    if (!hackDetails || hackDetails._id !== match.params.id) {
+      dispatch(fetchingHackDetails(match.params.id));
     }
-  }, [props.match]);
+  }, [hackDetails, dispatch, match]);
 
-  const joinHack = () => {
-    const object = {
-      hackId: props.match.params.id,
-      userId: props.userId
-    };
-    Axios.post(UrlJoin(process.env.REACT_APP_API_URL, "joinhack"), object).then(
-      res => {
-        setDisplayData(res.data);
-      }
-    );
-  };
-
-  const handleOnChange = e => {
-    const { name, value } = e.target;
-    setUpdateData({ ...updateData, [name]: value });
-  };
-
-  const onSubmitUpdate = e => {
-    e.preventDefault();
-    Axios.post(UrlJoin(process.env.REACT_APP_API_URL, "edithack"), {
-      ...updateData,
-      hackId: displayData._id
-    }).then(res => {
-      setEdit(false);
-      setDisplayData(res.data);
-    });
-  };
-
-  const editHackDetails = () => {
-    setEdit(true);
-  };
-
-  if (displayData !== null) {
+  if (hackDetails) {
     return (
       <Grid
         data-testid="main-container"
@@ -110,125 +62,65 @@ export function HackDetails(props) {
         alignContent="center"
       >
         <Paper className={classes.root}>
-          <form>
+          <Grid
+            container
+            justify="space-between"
+            alignItems="center"
+            alignContent="center"
+            spacing={1}
+          >
+            <Grid item xs={9}>
+              <Chip
+                icon={<ErrorOutlineOutlinedIcon />}
+                label="status"
+                color="secondary"
+              />
+            </Grid>
+            <Grid item xs={3} className={classes.rightFeild}>
+              <JoinButton
+              // team={hackDetails.team}
+              />
+            </Grid>
             <Grid
               container
-              justify="space-between"
+              justify="flex-start"
               alignItems="center"
               alignContent="center"
               spacing={1}
+              className={classes.marginFix}
             >
-              <Grid item xs={9}>
-                <Chip
-                  icon={<ErrorOutlineOutlinedIcon />}
-                  label="status"
-                  color="secondary"
+              <Grid item>
+                <Typography variant="h4">{hackDetails.title}</Typography>
+              </Grid>
+              <Grid item>
+                <EditHack
+                  match={match}
+                  team={hackDetails.team}
+                  userId={userId}
                 />
               </Grid>
-              <Grid item xs={3} className={classes.rightFeild}>
-                <JoinButton
-                  team={displayData.team}
-                  userId={props.userId}
-                  joinHack={joinHack}
-                />
-              </Grid>
-              {edit ? (
-                <Grid item xs={10}>
-                  <Typography variant="h6">Hack Name:</Typography>
-                </Grid>
-              ) : null}
-              <Grid
-                container
-                justify="flex-start"
-                alignItems="center"
-                alignContent="center"
-                spacing={1}
-                className={classes.marginFix}
-              >
-                <Grid item xs={edit ? 10 : null}>
-                  <HackField
-                    onChange={handleOnChange}
-                    edit={edit}
-                    name={"title"}
-                    displayText={displayData.title}
-                    variant={"h4"}
-                  />
-                </Grid>
-                {edit ? null : (
-                  <Grid item>
-                    <EditHack
-                      edit={edit}
-                      team={displayData.team}
-                      userId={props.userId}
-                      editFunc={editHackDetails}
-                    />
-                  </Grid>
-                )}
-              </Grid>
-              <Grid item xs={10}>
-                <Typography variant="h6">Idea:</Typography>
-              </Grid>
-              <Grid item xs={10}>
-                <HackField
-                  onChange={handleOnChange}
-                  edit={edit}
-                  name={"description"}
-                  displayText={displayData.description}
-                  variant={"body1"}
-                />
-              </Grid>
+            </Grid>
+            <Grid item xs={10}>
+              <Typography variant="h6">Idea:</Typography>
+            </Grid>
+            <Grid item xs={10}>
+              <Typography variant="body1">{hackDetails.description}</Typography>
               <Grid item xs={10}>
                 <Typography variant="h6">Goal:</Typography>
               </Grid>
               <Grid item xs={10}>
-                <HackField
-                  onChange={handleOnChange}
-                  edit={edit}
-                  name={"goal"}
-                  displayText={displayData.goal}
-                  variant={"body1"}
-                />
+                <Typography variant="body1">{hackDetails.goal}</Typography>
               </Grid>
-              {edit ? (
-                <Grid
-                  container
-                  justify="flex-start"
-                  alignItems="center"
-                  className={classes.marginFix}
-                  spacing={1}
-                >
-                  <Grid item>
-                    <Button
-                      onClick={onSubmitUpdate}
-                      color="primary"
-                      variant="outlined"
-                    >
-                      Update
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      onClick={e => {
-                        setEdit(false);
-                      }}
-                      color="secondary"
-                      variant="outlined"
-                    >
-                      Cancel
-                    </Button>
-                  </Grid>
-                </Grid>
-              ) : null}
-              {displayData.team !== undefined ? (
+              {hackDetails.team !== undefined ? (
                 <Grid item xs={10} className={classes.marginTop}>
                   <Typography variant="h6">Team Members:</Typography>
                 </Grid>
               ) : null}
               <Grid item xs={10}>
-                <Team team={displayData.team} />
+                <Team team={hackDetails.team} />
               </Grid>
             </Grid>
-          </form>
+          </Grid>
         </Paper>
       </Grid>
     );
@@ -249,7 +141,8 @@ export function HackDetails(props) {
 }
 
 const mapState = state => ({
-  userId: state.auth.userId
+  userId: state.auth.userId,
+  hackDetails: state.hack.hackDetails
 });
 
 export default connect(mapState)(HackDetails);
