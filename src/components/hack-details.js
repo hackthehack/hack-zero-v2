@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 export function HackDetails(props) {
   const classes = useStyles();
 
-  const [displayData, setDsiplayData] = useState(null);
+  const [displayData, setDisplayData] = useState(null);
   const [updateData, setUpdateData] = useState({});
   const [edit, setEdit] = useState(false);
 
@@ -62,7 +62,7 @@ export function HackDetails(props) {
           props.match.params.id
         )
       ).then(res => {
-        setDsiplayData(res.data);
+        setDisplayData(res.data);
       });
     }
   }, [props.match]);
@@ -74,7 +74,7 @@ export function HackDetails(props) {
     };
     Axios.post(UrlJoin(process.env.REACT_APP_API_URL, "joinhack"), object).then(
       res => {
-        setDsiplayData(res.data);
+        setDisplayData(res.data);
       }
     );
   };
@@ -91,7 +91,7 @@ export function HackDetails(props) {
       hackId: displayData._id
     }).then(res => {
       setEdit(false);
-      setDsiplayData(res.data);
+      setDisplayData(res.data);
     });
   };
 
