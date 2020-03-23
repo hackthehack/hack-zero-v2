@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 import ErrorOutlineOutlinedIcon from "@material-ui/icons/ErrorOutlineOutlined";
-import Team from "./subcomponents/team";
+import TeamMembers from "./subcomponents/team-members";
 import UrlJoin from "url-join";
 import { clearingHackDetails } from "../store/actions/hackathonActions";
 import { connect } from "react-redux";
@@ -97,7 +97,7 @@ export const Hacks = ({ dispatch }) => {
                     {hack.description.slice(0, 100) + " ...Read More"}
                   </Grid>
                   <Grid item xs={12}>
-                    <Team team={hack.team} />
+                    <TeamMembers team={hack.team} />
                   </Grid>
                 </Grid>
               </Paper>

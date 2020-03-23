@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Team from "./subcomponents/team";
+import Team from "./subcomponents/hack-team";
 import JoinButton from "./subcomponents/join-team-button";
 import EditHack from "./subcomponents/edit-hack-button";
 import { fetchingHackDetails } from "../store/actions/userActions";
@@ -102,14 +102,9 @@ export function HackDetails({ match, dispatch, userId, hackDetails }) {
               <Grid item xs={10}>
                 <Typography variant="body1">{hackDetails.goal}</Typography>
               </Grid>
-              {hackDetails.team !== undefined ? (
-                <Grid item xs={10} className={classes.marginTop}>
-                  <Typography variant="h6">Team Members:</Typography>
-                </Grid>
+              {hackDetails.team.length !== 0 ? (
+                <Team team={hackDetails.team} name={hackDetails.teamName}/>
               ) : null}
-              <Grid item xs={10}>
-                <Team team={hackDetails.team} />
-              </Grid>
             </Grid>
           </Grid>
         </Paper>
