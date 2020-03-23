@@ -1,20 +1,20 @@
 import React from "react";
 import { Button } from "@material-ui/core";
+import { joiningHackIdea } from "../../store/actions/userActions";
+import { connect } from "react-redux";
 
-export function JoinButton(props) {
+export function JoinButton({ hackDetails, user, dispatch}) {
 
   const [disable, setDisable] = React.useState(false)
 
-  const onClick = event => {
+  const joinHack = event => {
     event.preventDefault();
-    props.joinHack();
+    dispatch(joiningHackIdea(user.userId, hackDetails._id));
   };
 
   React.useEffect(() => {
-    props.team.forEach(member => {
-      console.log(member._id)
-      console.log(props.userId)
-      if(member._id === props.userId || !props.userId){
+    hackDetails.team.forEach(member => {
+      if(member._id === user.userId || !user.userId){
         setDisable(true)
       }
     })
@@ -22,16 +22,16 @@ export function JoinButton(props) {
 
   if (disable) {
     return (
-      <Button variant="contained" color="primary" disabled>
+      <Button variant="outlined" color="primary" disabled>
         Join
       </Button>
     );
   } else {
     return (
       <Button
-        variant="contained"
+        variant="outlined"
         color="primary"
-        onClick={onClick}
+        onClick={joinHack}
       >
         Join
       </Button>
@@ -39,4 +39,9 @@ export function JoinButton(props) {
   }
 }
 
-export default JoinButton;
+const mapState = state => ({
+  user: state.auth,
+  hackDetails: state.hack.hackDetails
+});
+
+export default connect(mapState)(JoinButton);

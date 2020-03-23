@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import Axios from "axios";
+import React, { useEffect } from "react";
 import Team from "./subcomponents/team";
-import JoinButton from "./subcomponents/join-team-button"
-import UrlJoin  from "url-join"
+import JoinButton from "./subcomponents/join-team-button";
+import EditHack from "./subcomponents/edit-hack-button";
+import { fetchingHackDetails } from "../store/actions/userActions";
+import { connect } from "react-redux";
 
 // UI imports
 import {
@@ -15,12 +16,11 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import ErrorOutlineOutlinedIcon from "@material-ui/icons/ErrorOutlineOutlined";
 
-import { connect } from "react-redux";
-
 const useStyles = makeStyles(theme => ({
   root: {
     margin: theme.spacing(2),
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    width: "80vw"
   },
   rightFeild: {
     textAlign: "right"
@@ -28,39 +28,21 @@ const useStyles = makeStyles(theme => ({
   loading: {
     marginTop: theme.spacing(10)
   },
-  chipMArgin: {
-    marginRight: theme.spacing(1)
+  marginTop: {
+    marginTop: theme.spacing(2)
   }
 }));
 
-export function HackDetails(props) {
+export function HackDetails({ match, dispatch, userId, hackDetails }) {
   const classes = useStyles();
 
-  const [data, setData] = useState(null);
-
   useEffect(() => {
-    //console.log(props.match.params);
-
-    if (props.match !== undefined) {
-      Axios.get(
-        UrlJoin(process.env.REACT_APP_API_URL,"hackdetail/",props.match.params.id)
-      ).then(res => {
-        setData(res.data)
-      });
+    if (!hackDetails || hackDetails._id !== match.params.id) {
+      dispatch(fetchingHackDetails(match.params.id));
     }
-  }, [props.match]);
+  }, [hackDetails, dispatch, match]);
 
-  const joinHack = event => {
-    const object = {
-      hackId: props.match.params.id,
-      userId: props.userId
-    };
-    Axios.post(UrlJoin(process.env.REACT_APP_API_URL,"joinhack"), object).then(res => {
-      setData(res.data);
-    });
-  };
-
-  if (data !== null) {
+  if (hackDetails) {
     return (
       <Grid
         data-testid="main-container"
@@ -86,55 +68,72 @@ export function HackDetails(props) {
               />
             </Grid>
             <Grid item xs={3} className={classes.rightFeild}>
-              <JoinButton team={data.team} userId={props.userId} joinHack={joinHack} />
+              <JoinButton
+              // team={hackDetails.team}
+              />
             </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h4">{data.title}</Typography>
+            <Grid
+              container
+              justify="flex-start"
+              alignItems="center"
+              alignContent="center"
+              spacing={1}
+              className={classes.marginFix}
+            >
+              <Grid item>
+                <Typography variant="h4">{hackDetails.title}</Typography>
+              </Grid>
+              <Grid item>
+                <EditHack
+                  match={match}
+                  team={hackDetails.team}
+                  userId={userId}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={10}>
               <Typography variant="h6">Idea:</Typography>
             </Grid>
             <Grid item xs={10}>
-              <Typography variant="body1">{data.description}</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="h6">Goal:</Typography>
-            </Grid>
-            <Grid item xs={10}>
-              <Typography variant="body1">{data.goal}</Typography>
-            </Grid>
-            {data.team !== undefined ? (
-              <Grid item xs={12}>
-                <Typography variant="h6">Team:</Typography>
+              <Typography variant="body1">{hackDetails.description}</Typography>
+              <Grid item xs={10}>
+                <Typography variant="h6">Goal:</Typography>
               </Grid>
-            ) : null}
-
-            <Grid item xs={10}>
-              <Team team={data.team} />
+              <Grid item xs={10}>
+                <Typography variant="body1">{hackDetails.goal}</Typography>
+              </Grid>
+              {hackDetails.team !== undefined ? (
+                <Grid item xs={10} className={classes.marginTop}>
+                  <Typography variant="h6">Team Members:</Typography>
+                </Grid>
+              ) : null}
+              <Grid item xs={10}>
+                <Team team={hackDetails.team} />
+              </Grid>
             </Grid>
           </Grid>
         </Paper>
       </Grid>
     );
-  } else {
-    return (
-      <Grid
-        data-testid="main-container"
-        container
-        direction="column"
-        justify="center"
-        alignItems="stretch"
-        alignContent="center"
-        className={classes.loading}
-      >
-        <CircularProgress />
-      </Grid>
-    );
   }
+  return (
+    <Grid
+      data-testid="main-container"
+      container
+      direction="column"
+      justify="center"
+      alignItems="stretch"
+      alignContent="center"
+      className={classes.loading}
+    >
+      <CircularProgress />
+    </Grid>
+  );
 }
 
 const mapState = state => ({
-  userId: state.auth.userId
+  userId: state.auth.userId,
+  hackDetails: state.hack.hackDetails
 });
 
 export default connect(mapState)(HackDetails);
