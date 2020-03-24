@@ -102,9 +102,7 @@ export function HackDetails({ match, dispatch, userId, hackDetails }) {
               <Grid item xs={10}>
                 <Typography variant="body1">{hackDetails.goal}</Typography>
               </Grid>
-              {hackDetails.team.length !== 0 ? (
                 <Team team={hackDetails.team} name={hackDetails.teamName}/>
-              ) : null}
             </Grid>
           </Grid>
         </Paper>

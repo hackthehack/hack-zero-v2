@@ -37,7 +37,7 @@ export function TeamEdit(props) {
             name="teamName"
             multiline
             rows="1"
-            defaultValue={props.namen}
+            defaultValue={props.name}
           ></OutlinedInput>
         </FormControl>
       </Grid>

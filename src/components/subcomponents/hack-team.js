@@ -21,19 +21,20 @@ export function Team(props) {
       spacing={1}
       className={classes.margin}
     >
-			{props.name? 
-			(<Grid item xs={10} className={classes.marginTop}>
-        <Typography variant="h6">Team Name:</Typography>
-      </Grid>)
-			: null }
-			<Grid item xs={10} className={classes.marginTop}>
+      {props.name ? (
+        <Grid item xs={10} className={classes.marginTop}>
+          <Typography variant="h6">Team Name:</Typography>
+        </Grid>
+      ) : null}
+      <Grid item xs={10} className={classes.marginTop}>
         <Typography variant="body1">{props.name}</Typography>
       </Grid>
       <Grid item xs={10} className={classes.marginTop}>
         <Typography variant="h6">Team Members:</Typography>
       </Grid>
       <Grid item xs={10}>
-        <TeamMembers team={props.team} />
+        {props.team.length !== 0 ? <TeamMembers team={props.team} /> : 
+        (<Typography variant="body1">This team has no members yet! Be the first to join!</Typography>)}
       </Grid>
     </Grid>
   );

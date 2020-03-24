@@ -59,7 +59,7 @@ export function EditHack({ dispatch, hackDetails, history }) {
     e.preventDefault();
     dispatch(editingHackIdea(updateData, hackDetails._id));
     dispatch(clearingHackDetails());
-    history.goBack();
+    history.push((`/hacks/${hackDetails._id}`));
   };
 
   if (hackDetails) {
@@ -160,7 +160,7 @@ export function EditHack({ dispatch, hackDetails, history }) {
                   color="secondary"
                   variant="outlined"
                   onClick={() => {
-                    history.goBack();
+                    history.push((`/hacks/${hackDetails._id}`));
                   }}
                 >
                   Cancel
