@@ -1,5 +1,5 @@
 import React from "react";
-import { render, getByTestId } from "@testing-library/react";
+import { render, getByTestId, act } from "@testing-library/react";
 import ReduxConnectedHome, { Home } from "../components/Home";
 import {
   getHackathonContent,
@@ -8,6 +8,16 @@ import {
 import configureStore from "redux-mock-store";
 
 const mockStore = configureStore([]);
+
+test("<Home/> component should not fetch data to show assigned hacks if user is not logged in", async () => {
+  const mockDispatch = jest.fn();
+  await act(async () => {
+    render(<Home dispatch={mockDispatch} assignedHacks={[]} isAuth={false} />);
+  });
+  //it will always call to get data from Contentful CMS when component mounst
+  //it won't call to fetch user hacks if user not loggedin
+  expect(mockDispatch).toHaveBeenCalledTimes(1);
+});
 
 test("<Home/> component heading should be rendered in the page", () => {
   const dispatch = jest.fn();

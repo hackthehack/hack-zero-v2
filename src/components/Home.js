@@ -133,7 +133,7 @@ export const Home = ({
           variant="h2"
           component="h2"
         >
-          Your are part of:
+          Your are part of: {assignedHacks.length} hacks
         </Typography>
         <Grid container spacing={3} alignItems="stretch">
           {displayUserAssignedHacks(assignedHacks)}
