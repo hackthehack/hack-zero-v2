@@ -15,7 +15,13 @@ test("If <Login/> Component displays a login button", () => {
 });
 
 test("If the <Login/> component calls the login function when submit button is pressed", () => {
+<<<<<<< HEAD
   const mockLogin = jest.fn();
+=======
+  const mockLogin = jest.fn(() => {
+    return Promise.resolve("success");
+  });
+>>>>>>> 7c5077f... did some update on Login.test, removed .catch block
   const { getByTestId } = render(<Login auth={mockLogin} />);
   const button = getByTestId("login-button");
   fireEvent.click(button);
