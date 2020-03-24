@@ -17,10 +17,15 @@ export const getAssignedHacksOkay = hacks => ({
 });
 export const getAssignedHacks = userId => {
   return async (dispatch, getState) => {
-    console.log("user is logged in");
-    console.log("getting user assigned hacks now");
-    let result = await axios.get(`${testUrl}${userId}`);
-    console.log(result.data);
+    // console.log("user is logged in");
+    // console.log("getting user assigned hacks now");
+    try {
+      let result = await axios.get(`${testUrl}${userId}`);
+      console.log(result.data);
+      dispatch(getAssignedHacksOkay(result.data));
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
 
