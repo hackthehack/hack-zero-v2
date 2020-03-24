@@ -15,7 +15,10 @@ export const getAssignedHacksOkay = hacks => ({
   payload: hacks
 });
 export const getAssignedHacks = () => {
-  return async (dispatch, getState) => {};
+  return async (dispatch, getState) => {
+    console.log("user is logged in");
+    console.log("getting user assigned hacks now");
+  };
 };
 
 export const getHackathonContent = () => {

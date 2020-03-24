@@ -51,13 +51,22 @@ export const Home = ({
   information,
   status,
   theme,
-  price
+  price,
+  isAuth
 }) => {
   const classes = useStyles();
 
   useEffect(() => {
     dispatch(getHackathonContent());
   }, [dispatch]);
+  useEffect(() => {
+    if (!isAuth) {
+      console.log("from home page");
+      console.log("user not loggedin");
+      return;
+    }
+    dispatch(getAssignedHacks());
+  }, [dispatch, isAuth]);
   // will show all the hacks that logged in user are assigned to
   // will not show any assiggned hacks if user are not loggedin
   return (
