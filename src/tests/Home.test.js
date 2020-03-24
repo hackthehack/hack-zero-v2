@@ -9,6 +9,10 @@ import configureStore from "redux-mock-store";
 
 const mockStore = configureStore([]);
 
+test("<Home/> component should not fetch user assigned hacks endpoint if user is not loggedin", () => {
+  const dispatch = jest.fn();
+});
+
 test("<Home/> component heading should be rendered in the page", () => {
   const dispatch = jest.fn();
   const { getByTestId } = render(<Home dispatch={dispatch} />);
