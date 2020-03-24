@@ -41,7 +41,25 @@ const FixedCard = ({ id, title, values }) => {
     </Card>
   );
 };
-
+const displayUserAssignedHacks = assignedHacks => {
+  return assignedHacks.map(hack => {
+    return (
+      <Grid style={{ display: "flex" }} key={hack._id} item xs={12} sm={4}>
+        <Card style={{ width: "100%" }}>
+          <CardContent>
+            <Typography color="textPrimary" gutterBottom>
+              Title: {hack.title}
+            </Typography>
+            <Typography color="textSecondary" variant="body2" component="p">
+              <span style={{ color: "dodgerBlue" }}>Description:</span>{" "}
+              {hack.description}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+    );
+  });
+};
 export const Home = ({
   from,
   to,
@@ -108,6 +126,16 @@ export const Home = ({
             />
           </Grid>
         </Grid>
+        <Typography
+          style={{ textAlign: "center", margin: "2rem" }}
+          variant="h2"
+          component="h2"
+        >
+          Your are part of:
+        </Typography>
+        <Grid container spacing={3} alignItems="stretch">
+          {displayUserAssignedHacks(assignedHacks)}
+        </Grid>
       </Container>
     </div>
   );
@@ -122,6 +150,6 @@ const mapState = state => ({
   to: state.hack.items.to,
   isAuth: state.auth.isAuth,
   userId: state.auth.userId,
-  assignedHacks: state.hack.assignHackss
+  assignedHacks: state.hack.assignedHacks
 });
 export default connect(mapState)(Home);
