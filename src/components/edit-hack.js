@@ -63,7 +63,6 @@ export function EditHack({ dispatch, hackDetails, history }) {
   };
 
   if (hackDetails) {
-    console.log(updateData)
     return (
       <Grid
         data-testid="main-container"
