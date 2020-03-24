@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
-
+import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -45,17 +45,19 @@ const displayUserAssignedHacks = assignedHacks => {
   return assignedHacks.map(hack => {
     return (
       <Grid style={{ display: "flex" }} key={hack._id} item xs={12} sm={4}>
-        <Card style={{ width: "100%" }}>
-          <CardContent>
-            <Typography color="textPrimary" gutterBottom>
-              Title: {hack.title}
-            </Typography>
-            <Typography color="textSecondary" variant="body2" component="p">
-              <span style={{ color: "dodgerBlue" }}>Description:</span>{" "}
-              {hack.description}
-            </Typography>
-          </CardContent>
-        </Card>
+        <Link style={{ textDecoration: "none" }} to={`/hack/${hack._id}`}>
+          <Card style={{ widht: "100%" }}>
+            <CardContent>
+              <Typography color="textPrimary" gutterBottom>
+                Title: {hack.title}
+              </Typography>
+              <Typography color="textSecondary" variant="body2" component="p">
+                <span style={{ color: "dodgerBlue" }}>Description:</span>{" "}
+                {hack.description}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Link>
       </Grid>
     );
   });
