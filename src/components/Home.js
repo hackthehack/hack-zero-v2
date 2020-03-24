@@ -52,7 +52,9 @@ export const Home = ({
   status,
   theme,
   price,
-  isAuth
+  isAuth,
+  userId,
+  assignedHacks
 }) => {
   const classes = useStyles();
 
@@ -118,6 +120,8 @@ const mapState = state => ({
   price: state.hack.items.price,
   from: state.hack.items.from,
   to: state.hack.items.to,
-  isAuth: state.auth.isAuth
+  isAuth: state.auth.isAuth,
+  userId: state.auth.userId,
+  assignedHacks: state.hack.assignHackss
 });
 export default connect(mapState)(Home);

@@ -3,7 +3,8 @@ import * as ActionType from "../actions";
 const initialState = {
   items: {},
   assets: [],
-  hackDetails: null
+  hackDetails: null,
+  assignedHacks: []
 };
 
 const reducer = (state = initialState, action) => {
