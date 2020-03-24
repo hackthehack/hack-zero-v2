@@ -5,29 +5,24 @@ import UrlJoin from "url-join"
 const url = UrlJoin(process.env.REACT_APP_API_URL,"auth");
 
 
-const loginOkay = userId => ({ type: ActionType.LOGIN, payload: userId });
+const loginOkay = userId => ({ type: ActionType.LOGIN, payload: { userId: userId, status: "SUCCESS"} });
+const loginingIn = () => ({type: ActionType.LOGINING_IN, payload: "PENDING" })
+const loginFailed = () => ({type: ActionType.LOGINING_IN, payload: "FAILED" })
 
-export const login = (email, password) => {
+export const login = (email, password, history) => {
 
   return async (dispatch, getState) => {
-    //console.log("inside async login");
-    // console.log("this is inside the async login");
-    // console.log(history);
+    dispatch(loginingIn())
     try {
       let result = await axios.post(url, {
         email,
         password
       });
-      //let users = await axios.get(devUsersUrl);
-      //users = users.data;
-
-      //console.log(result.data);
       const { userId } = result.data;
-      //console.log(userId);
       dispatch(loginOkay(userId));
-      return "success"
+      history.push('/hacks')
     } catch (err) {
-      return err
+      dispatch(loginFailed())
     }
   };
 };

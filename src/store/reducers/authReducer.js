@@ -1,5 +1,6 @@
 import * as ActionType from "../actions/index";
 const initialState = {
+  loginStatus: null,
   isAuth: false,
   userId: null
 };
@@ -7,11 +8,18 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.LOGIN:
-      const userId = action.payload;
+      const userId = action.payload.userId;
+      const status = action.payload.status;
       return {
         ...state,
         isAuth: true,
-        userId
+        userId,
+        loginStatus: status
+      };
+      case ActionType.LOGINING_IN:
+      return {
+        ...state,
+        loginStatus: action.payload
       };
     default:
       //console.log("default");
