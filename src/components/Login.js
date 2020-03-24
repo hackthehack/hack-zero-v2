@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -50,17 +51,33 @@ export const Login = props => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
+
   useEffect(() => {
     return () => {
       setPassword("");
     };
   }, []);
+
+
   const handleSubmit = e => {
     e.preventDefault();
+    setError()
     const { history } = props;
-    props.auth(email, password, history);
-    setPassword("");
-    setEmail("");
+    setLoading(true);
+    props.auth(email, password).then(res => {
+      setPassword("");
+      setEmail("");
+      setLoading(false);
+      if (res === "success") {
+        history.push('/hacks')
+      } else {
+        setError("Username or Password is incorrect");
+      }
+    }).catch(err => {
+      console.log(err)
+    });
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -73,10 +90,10 @@ export const Login = props => {
           Login
         </Typography>
         <form onSubmit={handleSubmit} className={classes.form} noValidate>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} justify="center">
             <Grid item xs={12}>
               <TextField
-                autoComplete="email"
+                value={email}
                 name="email"
                 variant="outlined"
                 required
@@ -92,25 +109,34 @@ export const Login = props => {
                 variant="outlined"
                 required
                 fullWidth
+                value={password}
                 type="password"
                 id="password"
                 label="Password"
                 name="password"
-                autoComplete="password"
                 onChange={e => setPassword(e.target.value)}
               />
             </Grid>
+            <Grid item xs={6}>
+              <Button
+                type="submit"
+                fullWidth
+                data-testid="login-button"
+                variant="outlined"
+                color="primary"
+                className={classes.submit}
+              >
+                {loading ? <CircularProgress size='1.5rem'/> : "Login"}
+              </Button>
+            </Grid>
+            {error ? (
+              <Grid item xs={12}>
+                <Typography variant="body2" color="error" align="center">
+                  {error}
+                </Typography>
+              </Grid>
+            ) : null}
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            data-testid="login-button"
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Login
-          </Button>
         </form>
       </div>
 
@@ -123,7 +149,4 @@ export const Login = props => {
 const mapDispatch = dispatch => ({
   auth: (email, password, history) => dispatch(login(email, password, history))
 });
-export default connect(
-  null,
-  mapDispatch
-)(Login);
+export default connect(null, mapDispatch)(Login);

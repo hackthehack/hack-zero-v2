@@ -7,7 +7,7 @@ const url = UrlJoin(process.env.REACT_APP_API_URL,"auth");
 
 const loginOkay = userId => ({ type: ActionType.LOGIN, payload: userId });
 
-export const login = (email, password, history) => {
+export const login = (email, password) => {
 
   return async (dispatch, getState) => {
     //console.log("inside async login");
@@ -25,11 +25,9 @@ export const login = (email, password, history) => {
       const { userId } = result.data;
       //console.log(userId);
       dispatch(loginOkay(userId));
-      history.push("/hacks");
+      return "success"
     } catch (err) {
-      console.log(err);
-      console.log("error");
-      console.log(err.body);
+      return err
     }
   };
 };
