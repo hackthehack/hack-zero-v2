@@ -16,7 +16,7 @@ test("If <Login/> Component displays a login button", () => {
 
 test("If the <Login/> component calls the login function when submit button is pressed", () => {
   const mockLogin = jest.fn(() => {
-    return Promise.resolve('success').then().catch();
+    return Promise.resolve("success");
   });
   const { getByTestId } = render(<Login auth={mockLogin} />);
   const button = getByTestId("login-button");
