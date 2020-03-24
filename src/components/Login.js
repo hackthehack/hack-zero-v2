@@ -126,7 +126,7 @@ export const Login = props => {
                 color="primary"
                 className={classes.submit}
               >
-                {loading ? <CircularProgress /> : "Login"}
+                {loading ? <CircularProgress size='1.5rem'/> : "Login"}
               </Button>
             </Grid>
             {error ? (
