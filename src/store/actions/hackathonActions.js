@@ -32,10 +32,15 @@ export const getAssignedHacks = userId => {
 export const getHackathonContent = () => {
   return async (dispatch, getState) => {
     //console.log(process.env.REACT_APP_CONTENTFUL_KEY);
-    let result = await axios.get(
-      `${process.env.REACT_APP_CONTENTFUL_API}/spaces/${process.env.REACT_APP_CONTENTFUL_SPACE_ID}/entries?access_token=${process.env.REACT_APP_CONTENTFUL_KEY}&content_type=hackEvent`
-    );
-    dispatch(getContentOkay(result.data.items));
+    try {
+      let result = await axios.get(
+        `${process.env.REACT_APP_CONTENTFUL_API}/spaces/${process.env.REACT_APP_CONTENTFUL_SPACE_ID}/entries?access_token=${process.env.REACT_APP_CONTENTFUL_KEY}&content_type=hackEvent`
+      );
+      dispatch(getContentOkay(result.data.items));
+    } catch (err) {
+      console.log(err);
+    }
+
     //console.log(result.data);
   };
 };
