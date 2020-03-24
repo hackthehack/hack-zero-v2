@@ -67,8 +67,8 @@ export const Home = ({
       console.log("user not loggedin");
       return;
     }
-    dispatch(getAssignedHacks());
-  }, [dispatch, isAuth]);
+    dispatch(getAssignedHacks(userId));
+  }, [dispatch, isAuth, userId]);
   // will show all the hacks that logged in user are assigned to
   // will not show any assiggned hacks if user are not loggedin
   return (

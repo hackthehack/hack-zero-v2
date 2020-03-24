@@ -1,6 +1,7 @@
 import * as ActionType from "./index";
 import axios from "axios";
 //const contentfulUrl = "https://cdn.contentful.com";
+const testUrl = "http://localhost:3001/userhacks/";
 
 export const getContentOkay = content => ({
   type: ActionType.FETCH_HACK_A_THON,
@@ -14,10 +15,12 @@ export const getAssignedHacksOkay = hacks => ({
   type: ActionType.FETCH_ASSIGNED_HACKS,
   payload: hacks
 });
-export const getAssignedHacks = () => {
+export const getAssignedHacks = userId => {
   return async (dispatch, getState) => {
     console.log("user is logged in");
     console.log("getting user assigned hacks now");
+    let result = await axios.get(`${testUrl}${userId}`);
+    console.log(result.data);
   };
 };
 
