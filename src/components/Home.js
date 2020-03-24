@@ -6,10 +6,12 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
-
 import CardContent from "@material-ui/core/CardContent";
 import { connect } from "react-redux";
-import { getHackathonContent } from "../store/actions/hackathonActions";
+import {
+  getHackathonContent,
+  getAssignedHacks
+} from "../store/actions/hackathonActions";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -56,7 +58,8 @@ export const Home = ({
   useEffect(() => {
     dispatch(getHackathonContent());
   }, [dispatch]);
-
+  // will show all the hacks that logged in user are assigned to
+  // will not show any assiggned hacks if user are not loggedin
   return (
     <div className={classes.root}>
       <Container component="main">
@@ -105,6 +108,7 @@ const mapState = state => ({
   theme: state.hack.items.theme,
   price: state.hack.items.price,
   from: state.hack.items.from,
-  to: state.hack.items.to
+  to: state.hack.items.to,
+  isAuth: state.auth.isAuth
 });
 export default connect(mapState)(Home);

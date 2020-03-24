@@ -8,8 +8,15 @@ export const getContentOkay = content => ({
 });
 
 export const clearHackDetails = content => ({
-  type: ActionType.CLEAR_HACK,
+  type: ActionType.CLEAR_HACK
 });
+export const getAssignedHacksOkay = hacks => ({
+  type: ActionType.FETCH_ASSIGNED_HACKS,
+  payload: hacks
+});
+export const getAssignedHacks = () => {
+  return async (dispatch, getState) => {};
+};
 
 export const getHackathonContent = () => {
   return async (dispatch, getState) => {
