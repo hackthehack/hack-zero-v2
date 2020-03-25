@@ -51,8 +51,6 @@ export const Login = props => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState();
 
   useEffect(() => {
     return () => {
@@ -60,23 +58,12 @@ export const Login = props => {
     };
   }, []);
 
-
   const handleSubmit = e => {
     e.preventDefault();
-    setError()
     const { history } = props;
-    setLoading(true);
-    props.auth(email, password).then(res => {
+    props.auth(email, password, history).then(() => {
       setPassword("");
       setEmail("");
-      setLoading(false);
-      if (res === "success") {
-        history.push('/hacks')
-      } else {
-        setError("Username or Password is incorrect");
-      }
-    }).catch(err => {
-      console.log(err)
     });
   };
   return (
@@ -126,13 +113,17 @@ export const Login = props => {
                 color="primary"
                 className={classes.submit}
               >
-                {loading ? <CircularProgress size='1.5rem'/> : "Login"}
+                {props.loginStatus === "PENDING" ? (
+                  <CircularProgress size="1.5rem" />
+                ) : (
+                  "Login"
+                )}
               </Button>
             </Grid>
-            {error ? (
+            {props.loginStatus === "FAILED" ? (
               <Grid item xs={12}>
                 <Typography variant="body2" color="error" align="center">
-                  {error}
+                  Username or Password is incorrect
                 </Typography>
               </Grid>
             ) : null}
@@ -149,4 +140,8 @@ export const Login = props => {
 const mapDispatch = dispatch => ({
   auth: (email, password, history) => dispatch(login(email, password, history))
 });
-export default connect(null, mapDispatch)(Login);
+
+const mapState = state => ({
+  loginStatus: state.auth.loginStatus
+});
+export default connect(mapState, mapDispatch)(Login);

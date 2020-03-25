@@ -4,9 +4,10 @@ import { render } from "@testing-library/react";
 import { HackDetails } from "../components/hack-details";
 
 test("If a container exists for displayng the hacks", () => {
+  const mockDispatch = jest.fn();
   const { getByTestId } = render(
     <HackDetails
-      dispatch={() => "nothing"}
+      dispatch={mockDispatch}
       match={{ params: { id: 1 }, isExact: true, path: "", url: "" }}
     />
   );
