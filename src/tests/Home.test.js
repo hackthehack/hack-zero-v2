@@ -28,7 +28,7 @@ test("<Home/> component should have the right number of hacks that user is assig
   );
   const assignedHacks = getAllByTestId("assignedHack");
   //sconsole.log(assignedHacks);
-  expect(assignedHacks.length).toBe(3);
+  expect(assignedHacks.length).toBe(mockAssignedHacks.length);
 });
 
 test("<Home/> component should fetch data to show assigned hacks if user is  logged in", async () => {
