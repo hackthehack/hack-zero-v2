@@ -15,16 +15,17 @@ export const getAssignedHacksOkay = hacks => ({
   type: ActionType.FETCH_ASSIGNED_HACKS,
   payload: hacks
 });
-export const getAssignedHacks = userId => {
+export const getAssignedHacks = () => {
   return async (dispatch, getState) => {
-    // console.log("user is logged in");
-    // console.log("getting user assigned hacks now");
-    try {
-      let result = await axios.get(`${testUrl}${userId}`);
-      //console.log(result.data);
-      dispatch(getAssignedHacksOkay(result.data));
-    } catch (err) {
-      console.log(err);
+    const { auth } = getState();
+    if (auth.isAuth) {
+      try {
+        let result = await axios.get(`${testUrl}${auth.userId}`);
+        //console.log(result.data);
+        dispatch(getAssignedHacksOkay(result.data));
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 };

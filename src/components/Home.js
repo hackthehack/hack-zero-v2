@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
-//import { Link } from "react-router-dom";
+
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -39,34 +39,7 @@ const FixedCard = ({ id, title, values }) => {
     </Card>
   );
 };
-// const displayUserAssignedHacks = assignedHacks => {
-//   return assignedHacks.map(hack => {
-//     return (
-//       <Grid
-//         data-testid="assignedHack"
-//         style={{ display: "flex" }}
-//         key={hack._id}
-//         item
-//         xs={12}
-//         sm={4}
-//       >
-//         <Link style={{ textDecoration: "none" }} to={`/hack/${hack._id}`}>
-//           <Card style={{ widht: "100%" }}>
-//             <CardContent>
-//               <Typography color="textPrimary" gutterBottom>
-//                 Title: {hack.title}
-//               </Typography>
-//               <Typography color="textSecondary" variant="body2" component="p">
-//                 <span style={{ color: "dodgerBlue" }}>Description:</span>{" "}
-//                 {hack.description}
-//               </Typography>
-//             </CardContent>
-//           </Card>
-//         </Link>
-//       </Grid>
-//     );
-//   });
-// };
+
 export const Home = ({
   from,
   to,
@@ -77,9 +50,7 @@ export const Home = ({
   status,
   theme,
   price,
-  //isAuth,
   userId
-  //assignedHacks
 }) => {
   const classes = useStyles();
 
@@ -136,9 +107,6 @@ const mapState = state => ({
   theme: state.hack.items.theme,
   price: state.hack.items.price,
   from: state.hack.items.from,
-  to: state.hack.items.to,
-  //isAuth: state.auth.isAuth,
-  userId: state.auth.userId
-  //assignedHacks: state.hack.assignedHacks
+  to: state.hack.items.to
 });
 export default connect(mapState)(Home);
