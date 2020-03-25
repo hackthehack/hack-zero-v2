@@ -16,7 +16,7 @@ const reducer = (state = initialState, action) => {
         userId,
         loginStatus: status
       };
-      case ActionType.LOGINING_IN:
+      case ActionType.LOGGING_IN:
       return {
         ...state,
         loginStatus: action.payload

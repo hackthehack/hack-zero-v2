@@ -6,8 +6,8 @@ const url = UrlJoin(process.env.REACT_APP_API_URL,"auth");
 
 
 const loginOkay = userId => ({ type: ActionType.LOGIN, payload: { userId: userId, status: "SUCCESS"} });
-const loginingIn = () => ({type: ActionType.LOGINING_IN, payload: "PENDING" })
-const loginFailed = () => ({type: ActionType.LOGINING_IN, payload: "FAILED" })
+const loginingIn = () => ({type: ActionType.LOGGING_IN, payload: "PENDING" })
+const loginFailed = () => ({type: ActionType.LOGGING_IN, payload: "FAILED" })
 
 export const login = (email, password, history) => {
 
