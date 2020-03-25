@@ -1,8 +1,8 @@
 import React from "react";
-import { render, act } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
+import { render } from "@testing-library/react";
+
 import { Provider } from "react-redux";
-import ReduxConnectedHome, { Home } from "../components/Home";
+import ReduxConnectedHome from "../components/Home";
 import thunk from "redux-thunk";
 
 import configureStore from "redux-mock-store";
