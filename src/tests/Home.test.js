@@ -9,6 +9,16 @@ import configureStore from "redux-mock-store";
 
 const mockStore = configureStore([]);
 
+test("<Home/> component should fetch data to show assigned hacks if user is  logged in", async () => {
+  const mockDispatch = jest.fn();
+  await act(async () => {
+    render(<Home dispatch={mockDispatch} assignedHacks={[]} isAuth={true} />);
+  });
+  //first call will be to fetch from CMS
+  //2nd call will fetch the user assigned hacks
+  expect(mockDispatch).toHaveBeenCalledTimes(2);
+});
+
 test("<Home/> component should not fetch data to show assigned hacks if user is not logged in", async () => {
   const mockDispatch = jest.fn();
   await act(async () => {
