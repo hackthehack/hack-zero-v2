@@ -3,28 +3,26 @@ import { render, act } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import ReduxConnectedHome, { Home } from "../components/Home";
-// import {
-//   getHackathonContent,
-//   getContentOkay
-// } from "../store/actions/hackathonActions";
-import configureStore from "redux-mock-store";
-const mockStore = configureStore();
+import thunk from "redux-thunk";
 
-test("<Home/> component heading should be rendered in the page", () => {
-  const initialState = {
-    auth: {
-      isAuth: false
+import configureStore from "redux-mock-store";
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
+const initialState = {
+  auth: {
+    isAuth: false
+  },
+  hack: {
+    items: {
+      title: "a test",
+      information: "a information",
+      status: "active",
+      theme: "a testing theme"
     },
-    hack: {
-      items: {
-        title: "a test",
-        information: "a information",
-        status: "active",
-        theme: "a testing theme"
-      },
-      assignedHacks: []
-    }
-  };
+    assignedHacks: []
+  }
+};
+test("<Home/> component heading should be rendered in the page", () => {
   const store = mockStore(initialState);
   const { getByTestId } = render(
     <Provider store={store}>
@@ -36,20 +34,6 @@ test("<Home/> component heading should be rendered in the page", () => {
 });
 
 test("<Home/> component should have 5 cards, information, schedule, price, theme and status", () => {
-  const initialState = {
-    auth: {
-      isAuth: false
-    },
-    hack: {
-      items: {
-        title: "a test",
-        information: "a information",
-        status: "active",
-        theme: "a testing theme"
-      },
-      assignedHacks: []
-    }
-  };
   const store = mockStore(initialState);
   const { getByTestId } = render(
     <Provider store={store}>
