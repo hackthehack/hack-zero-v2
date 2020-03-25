@@ -90,8 +90,8 @@ export const Home = ({
   }, [dispatch]);
   useEffect(() => {
     if (!isAuth) {
-      console.log("from home page");
-      console.log("user not loggedin");
+      //console.log("from home page");
+      //console.log("user not loggedin");
       return;
     }
     dispatch(getAssignedHacks(userId));

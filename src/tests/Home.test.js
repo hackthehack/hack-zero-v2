@@ -1,26 +1,34 @@
 import React from "react";
-import { render, getByTestId, act } from "@testing-library/react";
+import { render, act } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
 import ReduxConnectedHome, { Home } from "../components/Home";
-import {
-  getHackathonContent,
-  getContentOkay
-} from "../store/actions/hackathonActions";
-import configureStore from "redux-mock-store";
+// import {
+//   getHackathonContent,
+//   getContentOkay
+// } from "../store/actions/hackathonActions";
+// import configureStore from "redux-mock-store";
 
-const mockStore = configureStore([]);
+//const mockStore = configureStore([]);
 
-test("<Home/> component should have the right number of hacks that user is assigned to", async () => {
+test("<Home/> component should have the right number of hacks that user is assigned to", () => {
   const mockDispatch = jest.fn();
-  const mockAssignedHacks = ["hack1", "hack2", "hack3"];
-  await act(async () => {
-    render(
+  const mockAssignedHacks = [
+    { title: "hack1", description: "test", _id: 1 },
+    { title: "hack2", description: "test", _id: 2 },
+    { title: "hack3", description: "test", _id: 3 }
+  ];
+  const { getAllByTestId } = render(
+    <BrowserRouter>
       <Home
         dispatch={mockDispatch}
         assignedHacks={mockAssignedHacks}
         isAuth={true}
       />
-    );
-  });
+    </BrowserRouter>
+  );
+  const assignedHacks = getAllByTestId("assignedHack");
+  //sconsole.log(assignedHacks);
+  expect(assignedHacks.length).toBe(3);
 });
 
 test("<Home/> component should fetch data to show assigned hacks if user is  logged in", async () => {
