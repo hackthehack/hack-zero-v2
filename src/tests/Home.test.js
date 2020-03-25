@@ -9,6 +9,20 @@ import configureStore from "redux-mock-store";
 
 const mockStore = configureStore([]);
 
+test("<Home/> component should have the right number of hacks that user is assigned to", async () => {
+  const mockDispatch = jest.fn();
+  const mockAssignedHacks = ["hack1", "hack2", "hack3"];
+  await act(async () => {
+    render(
+      <Home
+        dispatch={mockDispatch}
+        assignedHacks={mockAssignedHacks}
+        isAuth={true}
+      />
+    );
+  });
+});
+
 test("<Home/> component should fetch data to show assigned hacks if user is  logged in", async () => {
   const mockDispatch = jest.fn();
   await act(async () => {
@@ -21,6 +35,7 @@ test("<Home/> component should fetch data to show assigned hacks if user is  log
 
 test("<Home/> component should not fetch data to show assigned hacks if user is not logged in", async () => {
   const mockDispatch = jest.fn();
+
   await act(async () => {
     render(<Home dispatch={mockDispatch} assignedHacks={[]} isAuth={false} />);
   });

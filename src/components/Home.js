@@ -44,7 +44,14 @@ const FixedCard = ({ id, title, values }) => {
 const displayUserAssignedHacks = assignedHacks => {
   return assignedHacks.map(hack => {
     return (
-      <Grid style={{ display: "flex" }} key={hack._id} item xs={12} sm={4}>
+      <Grid
+        data-testid="assignedHack"
+        style={{ display: "flex" }}
+        key={hack._id}
+        item
+        xs={12}
+        sm={4}
+      >
         <Link style={{ textDecoration: "none" }} to={`/hack/${hack._id}`}>
           <Card style={{ widht: "100%" }}>
             <CardContent>
