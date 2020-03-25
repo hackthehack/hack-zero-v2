@@ -69,7 +69,7 @@ export function HackDetails({ match, dispatch, userId, hackDetails }) {
             </Grid>
             <Grid item xs={3} className={classes.rightFeild}>
               <JoinButton
-              // team={hackDetails.team}
+                team={hackDetails.team}
               />
             </Grid>
             <Grid

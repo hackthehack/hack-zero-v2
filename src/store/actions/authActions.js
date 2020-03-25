@@ -18,9 +18,10 @@ export const login = (email, password, history) => {
         email,
         password
       });
+      console.log(result.data)
       const { userId } = result.data;
       dispatch(loginOkay(userId));
-      history.push('/hacks')
+      history.push('/')
     } catch (err) {
       dispatch(loginFailed())
     }

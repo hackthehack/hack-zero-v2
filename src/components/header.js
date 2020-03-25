@@ -86,8 +86,8 @@ const useStyles = makeStyles(theme => ({
   loginbutton: {
     marginRight: theme.spacing(2)
   },
-  title: {
-    flexGrow: 1
+  userMenu: {
+    right: theme.spacing(1)
   },
   link: {
     color: "#ffffff",
@@ -151,13 +151,6 @@ export function Header(props) {
           >
             <MenuIcon />
           </IconButton>
-          {/* <Typography
-            component={Link}
-            style={{ textDecoration: "none", color: "white" }}
-            to="/"
-            variant="h6"
-            className={classes.title}
-          ></Typography> */}
           {props.auth.isAuth ? (
             <div>
               <IconButton
@@ -172,6 +165,7 @@ export function Header(props) {
               <Menu
                 id="menu-appbar"
                 anchorEl={anchorEl}
+                getContentAnchorEl={null}
                 anchorOrigin={{
                   vertical: "top",
                   horizontal: "right"
@@ -183,6 +177,7 @@ export function Header(props) {
                 }}
                 open={open}
                 onClose={handleClose}
+                className={classes.userMenu}
               >
                 <MenuItem onClick={handleClose}>Logout</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
