@@ -21,7 +21,8 @@ export const getAssignedHacks = () => {
     if (auth.isAuth) {
       try {
         let result = await axios.get(`${testUrl}${auth.userId}`);
-        //console.log(result.data);
+        console.log("inside getAssignedhacks");
+        console.log(result.data);
         dispatch(getAssignedHacksOkay(result.data));
       } catch (err) {
         console.log(err);

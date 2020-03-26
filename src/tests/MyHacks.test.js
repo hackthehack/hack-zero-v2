@@ -4,38 +4,39 @@ import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import configureStore from "redux-mock-store";
 import MyHacks from "../components/MyHacks";
-import {
-  getAssignedHacks,
-  getAssignedHacksOkay
-} from "../store/actions/hackathonActions";
+import { BrowserRouter } from "react-router-dom";
+//import moxios from "moxios";
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
-const initialState = {
-  auth: {
-    isAuth: false
-  },
-  hack: {
-    items: {
-      title: "a test",
-      information: "a information",
-      status: "active",
-      theme: "a testing theme"
-    },
-    assignedHacks: []
-  }
-};
 
-test("<MyHacks/> should not dispatch action getAssignedHacksOkay if user not loggedin", async () => {
+test("<MyHacks/> should contains zero hacks if user not logged in", async () => {
+  const initialState = {
+    auth: {
+      isAuth: false
+    },
+    hack: {
+      items: {
+        title: "a test",
+        information: "a information",
+        status: "active",
+        theme: "a testing theme"
+      },
+      assignedHacks: []
+    }
+  };
   const store = mockStore(initialState);
   const component = (
     <Provider store={store}>
-      <MyHacks />
+      <BrowserRouter>
+        <MyHacks />
+      </BrowserRouter>
     </Provider>
   );
-  await act(async () => {
-    render(component);
-  });
+
+  const { queryByTestId } = render(component);
+  const assignedHacks = queryByTestId("assignedHack");
+  //sconsole.log(assignedHacks);
+  expect(assignedHacks).toBeNull();
   //console.log(store.getState());
-  expect(store.getState().hack.assignedHacks.length).toBe(0);
 });
