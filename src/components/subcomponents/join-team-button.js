@@ -3,13 +3,13 @@ import { Button } from "@material-ui/core";
 import { joiningHackIdea } from "../../store/actions/userActions";
 import { connect } from "react-redux";
 
-export function JoinButton({ hackDetails, user, dispatch}) {
+export function JoinButton({ hackDetails, user, dispatch, history}) {
 
   const [disable, setDisable] = React.useState(false)
 
   const joinHack = event => {
     event.preventDefault();
-    dispatch(joiningHackIdea(user.userId, hackDetails._id));
+    dispatch(joiningHackIdea(user.userId, hackDetails._id, history, user.jwt));
   };
 
   React.useEffect(() => {

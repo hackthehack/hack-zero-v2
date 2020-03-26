@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function HackDetails({ match, dispatch, userId, hackDetails }) {
+export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
   const classes = useStyles();
 
   useEffect(() => {
@@ -70,6 +70,7 @@ export function HackDetails({ match, dispatch, userId, hackDetails }) {
             <Grid item xs={3} className={classes.rightFeild}>
               <JoinButton
                 team={hackDetails.team}
+                history={history}
               />
             </Grid>
             <Grid

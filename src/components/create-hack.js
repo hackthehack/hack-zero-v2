@@ -49,7 +49,12 @@ export function CreateHack(props) {
       if(join){
         newHack.team[0] = props.userId
       }
-      await Axios.post(UrlJoin(process.env.REACT_APP_API_URL, "addhack"), newHack );
+      let config = {
+        headers: {
+          'Authorization': 'Bearer ' + props.token
+        }
+      }
+      await Axios.post(UrlJoin(process.env.REACT_APP_API_URL, "addhack"), newHack, config );
     };
     fetchData().then(() => {
       props.history.push("/hacks");
@@ -163,6 +168,7 @@ export function CreateHack(props) {
 }
 
 const mapState = state => ({
+  token: state.auth.jwt,
   userId: state.auth.userId
 });
 
