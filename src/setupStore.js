@@ -13,7 +13,7 @@ const composeEnhancers =
     : null || compose;
 
 const persistConfig = {
-  key: 'root',
+  key: 'auth',
   storage,
 }
 
@@ -23,7 +23,7 @@ const rootReducer = combineReducers({
   hack: hackReducer
 });
 
-const store = createStore(
+export const store = createStore(
   rootReducer,
   composeEnhancers(applyMiddleware(thunk))
 );

@@ -8,14 +8,14 @@ const loginOkay = (userId, jwt) => ({
   type: ActionType.LOGIN,
   payload: { userId: userId, status: "SUCCESS", jwt: jwt },
 });
-const loginingIn = () => ({ type: ActionType.LOGGING_IN, payload: "PENDING" });
+const loggingIn = () => ({ type: ActionType.LOGGING_IN, payload: "PENDING" });
 const loginFailed = () => ({ type: ActionType.LOGGING_IN, payload: "FAILED" });
 const SessionExpired = () => ({ type: ActionType.LOGGING_IN, payload: "EXPIRED" });
 const logginOut = () => ({ type: ActionType.LOGGING_OUT });
 
 export const login = (email, password, history) => {
   return async (dispatch, getState) => {
-    dispatch(loginingIn());
+    dispatch(loggingIn());
     try {
       let result = await axios.post(url, {
         email,

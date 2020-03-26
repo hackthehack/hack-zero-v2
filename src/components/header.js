@@ -99,7 +99,6 @@ const useStyles = makeStyles(theme => ({
 
 export const Header = props => {
   const [openDrawer, setOpenDrawer] = useState(false);
-  const open = Boolean(false);
   const theme = useTheme();
 
   const handleDrawerOpen = () => {
@@ -140,7 +139,7 @@ export const Header = props => {
             data-testid="toggleButton"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
+            className={clsx(classes.menuButton, false && classes.hide)}
           >
             <MenuIcon />
           </IconButton>
