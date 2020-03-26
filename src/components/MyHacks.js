@@ -35,7 +35,7 @@ const displayUserAssignedHacks = assignedHacks => {
     );
   });
 };
-const MyHacks = ({ isAuth, assignedHacks, userId, dispatch }) => {
+export const MyHacks = ({ isAuth, assignedHacks, userId, dispatch }) => {
   useEffect(() => {
     dispatch(getAssignedHacks());
   }, [dispatch]);

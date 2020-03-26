@@ -3,14 +3,30 @@ import { render, act } from "@testing-library/react";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import configureStore from "redux-mock-store";
-import MyHacks from "../components/MyHacks";
+import ReduxMyHacks, { MyHacks } from "../components/MyHacks";
 import { BrowserRouter } from "react-router-dom";
 //import moxios from "moxios";
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
-test("<MyHacks/> should contains zero hacks if user not logged in", async () => {
+test("<MyHacks/> should dispatch getAssignedHacks on mounting", async () => {
+  const mockDispatch = jest.fn();
+
+  await act(async () => {
+    render(
+      <MyHacks
+        dispatch={mockDispatch}
+        userId={123}
+        isAuth={false}
+        assignedHacks={[]}
+      />
+    );
+  });
+  expect(mockDispatch).toBeCalled();
+});
+
+test("<MyHacks/> should contains zero hacks if user not logged in", () => {
   const initialState = {
     auth: {
       isAuth: false
@@ -29,7 +45,7 @@ test("<MyHacks/> should contains zero hacks if user not logged in", async () => 
   const component = (
     <Provider store={store}>
       <BrowserRouter>
-        <MyHacks />
+        <ReduxMyHacks />
       </BrowserRouter>
     </Provider>
   );
