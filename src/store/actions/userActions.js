@@ -2,6 +2,7 @@ import * as ActionType from "./index";
 import axios from "axios";
 import UrlJoin from "url-join";
 import { logout } from './authActions';
+import store from '../../setupStore';
 const usersUrl = UrlJoin(process.env.REACT_APP_API_URL, "userlist");
 
 const fetchUserOkay = users => ({
@@ -42,16 +43,17 @@ export const fetchingHackDetails = hackId => {
   };
 };
 
-export const joiningHackIdea = (userId, hackId, history, token) => {
+export const joiningHackIdea = (history) => {
+  
   return async (dispatch, getState) => {
     let config = {
       headers: {
-        Authorization: "Bearer " + token
+        Authorization: "Bearer " + store.getState().auth.jwt
       }
     };
     const body = {
-      hackId: hackId,
-      userId: userId
+      hackId: store.getState().hack.hackDetails._id,
+      userId: store.getState().auth.userId
     };
     try {
       let joinedHackIdea = await axios.post(
@@ -69,18 +71,18 @@ export const joiningHackIdea = (userId, hackId, history, token) => {
   };
 };
 
-export const editingHackIdea = (updatedData, hackId, token) => {
+export const editingHackIdea = (updatedData) => {
   return async (dispatch, getState) => {
     let config = {
       headers: {
-        Authorization: "Bearer " + token
+        Authorization: "Bearer " + store.getState().auth.jwt
       }
     };
     let joinedHackIdea = await axios.post(
       UrlJoin(process.env.REACT_APP_API_URL, "edithack"),
       {
         ...updatedData,
-        hackId: hackId
+        hackId: store.getState().hack.hackDetails._id,
       },
       config
     );

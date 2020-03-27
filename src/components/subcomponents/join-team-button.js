@@ -9,7 +9,7 @@ export function JoinButton({ hackDetails, user, dispatch, history}) {
 
   const joinHack = event => {
     event.preventDefault();
-    dispatch(joiningHackIdea(user.userId, hackDetails._id, history, user.jwt));
+    dispatch(joiningHackIdea(history));
   };
 
   React.useEffect(() => {
