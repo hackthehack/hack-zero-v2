@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { getAssignedHacks } from "../store/actions/hackathonActions";
 import { connect } from "react-redux";
 
-const displayUserAssignedHacks = assignedHacks => {
+const UserAssignedHacks = ({ assignedHacks }) => {
   return assignedHacks.map(hack => {
     return (
       <Grid
@@ -49,7 +49,7 @@ export const MyHacks = ({ isAuth, assignedHacks, userId, dispatch }) => {
         Your are part of: {assignedHacks.length} hacks
       </Typography>
       <Grid container spacing={3} alignItems="stretch">
-        {displayUserAssignedHacks(assignedHacks)}
+        <UserAssignedHacks assignedHacks={assignedHacks} />
       </Grid>
     </div>
   );
