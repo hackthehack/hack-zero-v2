@@ -19,7 +19,7 @@ const displayUserAssignedHacks = assignedHacks => {
         sm={4}
       >
         <Link style={{ textDecoration: "none" }} to={`/hack/${hack._id}`}>
-          <Card style={{ widht: "100%" }}>
+          <Card style={{ width: "100%" }}>
             <CardContent>
               <Typography color="textPrimary" gutterBottom>
                 Title: {hack.title}
