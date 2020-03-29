@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
-import { parseISO } from "date-fns";
+
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -85,9 +85,12 @@ export const Home = ({
               id="schedule"
               title="Schedule"
               values={[
-                `From: ${parseISO(from, { additionalDigits: 2 })}`,
-                `To: ${parseISO(to, { additionalDigits: 2 })}`
+                `From: ${
+                  from ? from.substring(0, 10).replace(/\-/g, "/") : null
+                }`,
+                `To: ${to ? to.substring(0, 10).replace(/\-/g, "/") : null}`
               ]}
+              s
             />
           </Grid>
           <Grid item xs={12}>
