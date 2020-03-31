@@ -86,9 +86,9 @@ export const Home = ({
               title="Schedule"
               values={[
                 `From: ${
-                  from ? from.substring(0, 10).replace(/\-/g, "/") : null
+                  from ? from.substring(0, 10).replace(/-/g, "/") : null
                 }`,
-                `To: ${to ? to.substring(0, 10).replace(/\-/g, "/") : null}`
+                `To: ${to ? to.substring(0, 10).replace(/-/g, "/") : null}`
               ]}
               s
             />
