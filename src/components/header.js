@@ -5,8 +5,6 @@ import {
   Toolbar,
   Button,
   IconButton,
-  Menu,
-  MenuItem,
   Drawer,
   CssBaseline,
   ListItemIcon,
@@ -24,8 +22,9 @@ import ViewListIcon from "@material-ui/icons/ViewList";
 import HomeIcon from "@material-ui/icons/Home";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-
+import { logout } from '../store/actions/authActions'
 import { connect } from "react-redux";
+import {withRouter} from 'react-router'
 
 const drawerWidth = 240;
 
@@ -86,8 +85,8 @@ const useStyles = makeStyles(theme => ({
   loginbutton: {
     marginRight: theme.spacing(2)
   },
-  title: {
-    flexGrow: 1
+  userMenu: {
+    right: theme.spacing(1)
   },
   link: {
     color: "#ffffff",
@@ -98,25 +97,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function Header(props) {
-  // eslint-disable-next-line
-  // const [auth, setAuth] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
+export const Header = props => {
   const [openDrawer, setOpenDrawer] = useState(false);
-  const open = Boolean(anchorEl);
   const theme = useTheme();
-
-  const handleMenu = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
   };
+
+  const handleLogout = () =>{
+    const { history } = props;
+    props.logout(history)
+  }
 
   const handleDrawerClose = () => {
     setOpenDrawer(false);
@@ -147,46 +139,23 @@ export function Header(props) {
             data-testid="toggleButton"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
+            className={clsx(classes.menuButton, false && classes.hide)}
           >
             <MenuIcon />
           </IconButton>
-          {/* <Typography
-            component={Link}
-            style={{ textDecoration: "none", color: "white" }}
-            to="/"
-            variant="h6"
-            className={classes.title}
-          ></Typography> */}
           {props.auth.isAuth ? (
             <div>
               <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                onClick={handleMenu}
                 color="inherit"
               >
                 <AccountCircle />
               </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right"
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right"
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-              </Menu>
+              <Button color="inherit" className={classes.loginbutton} onClick={handleLogout}>
+                  Logout
+              </Button>
             </div>
           ) : (
             <div>
@@ -258,8 +227,12 @@ export function Header(props) {
   );
 }
 
+const mapDispatchToProps = dispatch => ({
+  logout: (history) => dispatch(logout(history))
+})
+
 const mapState = state => ({
   auth: state.auth
 });
 
-export default connect(mapState)(Header);
+export default connect(mapState,mapDispatchToProps)(withRouter(Header));

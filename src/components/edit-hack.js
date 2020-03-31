@@ -57,9 +57,9 @@ export function EditHack({ dispatch, hackDetails, history }) {
 
   const onSubmitUpdate = e => {
     e.preventDefault();
-    dispatch(editingHackIdea(updateData, hackDetails._id));
-    dispatch(clearingHackDetails());
-    history.push((`/hacks/${hackDetails._id}`));
+    dispatch(editingHackIdea(updateData))
+    dispatch(clearingHackDetails())
+    history.goBack()
   };
 
   if (hackDetails) {
