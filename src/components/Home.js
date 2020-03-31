@@ -3,13 +3,13 @@ import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
+
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import { connect } from "react-redux";
 import { getHackathonContent } from "../store/actions/hackathonActions";
+import MyHacks from "./MyHacks";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -49,7 +49,8 @@ export const Home = ({
   information,
   status,
   theme,
-  price
+  price,
+  userId
 }) => {
   const classes = useStyles();
 
@@ -83,7 +84,13 @@ export const Home = ({
             <FixedCard
               id="schedule"
               title="Schedule"
-              values={[`From: ${from}`, `To: ${to}`]}
+              values={[
+                `From: ${
+                  from ? from.substring(0, 10).replace(/-/g, "/") : null
+                }`,
+                `To: ${to ? to.substring(0, 10).replace(/-/g, "/") : null}`
+              ]}
+              s
             />
           </Grid>
           <Grid item xs={12}>
@@ -94,6 +101,7 @@ export const Home = ({
             />
           </Grid>
         </Grid>
+        <MyHacks />
       </Container>
     </div>
   );
