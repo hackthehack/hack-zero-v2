@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Team from "./subcomponents/hack-team";
 import JoinButton from "./subcomponents/join-team-button";
 import EditHack from "./subcomponents/edit-hack-button";
+import LikeButton from "./subcomponents/LikeButton";
 import { fetchingHackDetails } from "../store/actions/userActions";
 import { connect } from "react-redux";
 
@@ -68,10 +69,7 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
               />
             </Grid>
             <Grid item xs={3} className={classes.rightFeild}>
-              <JoinButton
-                team={hackDetails.team}
-                history={history}
-              />
+              <JoinButton team={hackDetails.team} history={history} />
             </Grid>
             <Grid
               container
@@ -103,10 +101,11 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
               <Grid item xs={10}>
                 <Typography variant="body1">{hackDetails.goal}</Typography>
               </Grid>
-                <Team team={hackDetails.team} name={hackDetails.teamName}/>
+              <Team team={hackDetails.team} name={hackDetails.teamName} />
             </Grid>
           </Grid>
         </Paper>
+        <LikeButton />
       </Grid>
     );
   }
