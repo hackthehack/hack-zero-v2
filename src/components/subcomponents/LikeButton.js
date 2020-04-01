@@ -1,11 +1,12 @@
 import React from "react";
 import { ThumbUp } from "@material-ui/icons";
+import Button from "@material-ui/core/Button";
 
 const LikeButton = () => {
   return (
-    <div style={{ display: "flex", justifyContent: "flex-end" }}>
+    <Button variant="outlined" color="primary">
       <ThumbUp style={{ color: "dodgerBlue", fontSize: "2rem" }} />
-    </div>
+    </Button>
   );
 };
 

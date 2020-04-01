@@ -105,8 +105,12 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
             </Grid>
           </Grid>
         </Paper>
-
-        <LikeButton />
+        <div
+          className={classes.root}
+          style={{ display: "flex", justifyContent: "flex-end" }}
+        >
+          <LikeButton />
+        </div>
       </Grid>
     );
   }
