@@ -105,6 +105,7 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
             </Grid>
           </Grid>
         </Paper>
+
         <LikeButton />
       </Grid>
     );

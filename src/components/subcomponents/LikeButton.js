@@ -1,9 +1,10 @@
 import React from "react";
+import { ThumbUp } from "@material-ui/icons";
 
 const LikeButton = () => {
   return (
-    <div>
-      <h1 style={{ textAlign: "right" }}>Like</h1>
+    <div style={{ display: "flex", justifyContent: "flex-end" }}>
+      <ThumbUp style={{ color: "dodgerBlue", fontSize: "2rem" }} />
     </div>
   );
 };
