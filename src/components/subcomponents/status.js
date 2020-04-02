@@ -23,37 +23,37 @@ export function Status({ label, style, clickable, onclick }) {
     if (value === "New Hack") {
       return {
         icon: <FiberNewIcon style={{ color: "white" }} />,
-        color: { backgroundColor: "#b2d67c", color: "white" }
+        color: { backgroundColor: "#b2d67c", color: "white", borderRadius: ".5rem" }
       };
     } else if (value === "Looking for members") {
       return {
         icon: <VisibilityIcon style={{ color: "white" }} />,
-        color: { backgroundColor: "#C792EA", color: "white" }
+        color: { backgroundColor: "#C792EA", color: "white", borderRadius: ".5rem"  }
       };
     } else if (value === "In Progress") {
       return {
         icon: <AutorenewIcon style={{ color: "white" }} />,
-        color: { backgroundColor: "#ebbb63", color: "white" }
+        color: { backgroundColor: "#ebbb63", color: "white", borderRadius: ".5rem"  }
       };
     } else if (value === "Team Closed") {
       return {
         icon: <VisibilityOffIcon style={{ color: "white" }} />,
-        color: { backgroundColor: "#80cbc4", color: "white" }
+        color: { backgroundColor: "#80cbc4", color: "white", borderRadius: ".5rem"  }
       };
     } else if (value === "Canceled") {
       return {
         icon: <CancelIcon style={{ color: "white" }} />,
-        color: { backgroundColor: "#d5756c", color: "white" }
+        color: { backgroundColor: "#d5756c", color: "white", borderRadius: ".5rem"  }
       };
     } else if (value === "Submitted") {
       return {
         icon: <PublishIcon style={{ color: "white" }} />,
-        color: { backgroundColor: "#82AAFF", color: "white" }
+        color: { backgroundColor: "#82AAFF", color: "white", borderRadius: ".5rem"  }
       };
     }
     return {
       icon: <NotInterestedIcon style={{ color: "white" }} />,
-      color: { backgroundColor: "grey", color: "white" }
+      color: { backgroundColor: "grey", color: "white", borderRadius: ".5rem"  }
     };
   };
 
