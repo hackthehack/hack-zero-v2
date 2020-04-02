@@ -29,7 +29,12 @@ const LikeButton = ({ jwtToken, userId, hackId }) => {
   };
   console.log(jwtToken, userId, hackId);
   return (
-    <Button variant="outlined" color="primary" onClick={toggleLike}>
+    <Button
+      disabled={!userId ? true : false}
+      variant="outlined"
+      color="primary"
+      onClick={toggleLike}
+    >
       <ThumbUp
         style={{ color: likeStatus ? "dodgerBlue" : "red", fontSize: "2rem" }}
       />
