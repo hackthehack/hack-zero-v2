@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { ThumbUp } from "@material-ui/icons";
-import axios from "axios";
-import urlJoin from "url-join";
+
 import Button from "@material-ui/core/Button";
 import { likeHack } from "../../store/actions/userActions";
 
