@@ -24,6 +24,9 @@ const editHackIdea = updatedHack => ({
   type: ActionType.UPDATE_HACK,
   payload: updatedHack
 });
+const toggleLikeOkay = () => ({
+  type: ActionType.TOGGLE_LIKE
+});
 
 export const fetchUsers = () => {
   return async (dispatch, getState) => {
@@ -32,7 +35,35 @@ export const fetchUsers = () => {
     dispatch(fetchUserOkay(users));
   };
 };
+export const likeHack = () => {
+  return async (dispatch, getState) => {
+    const { auth, hack } = getState();
+    const { jwt, userId } = auth;
 
+    const { hackDetails } = hack;
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + jwt
+      }
+    };
+    const body = {
+      hackId: hackDetails._id,
+      userId
+    };
+    try {
+      let result = await axios.post(
+        UrlJoin(process.env.REACT_APP_API_URL, "likehack"),
+        body,
+        config
+      );
+      dispatch(toggleLikeOkay());
+      console.log(result);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
 export const fetchingHackDetails = (hackId, userId) => {
   return async (dispatch, getState) => {
     let hackDetails = await axios.get(
@@ -42,7 +73,9 @@ export const fetchingHackDetails = (hackId, userId) => {
         `${hackId}?userId=${userId}`
       )
     );
+    console.log(hackDetails);
     hackDetails = hackDetails.data;
+
     dispatch(fetchHackDetails(hackDetails));
   };
 };

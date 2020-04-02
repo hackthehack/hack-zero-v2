@@ -109,7 +109,11 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
           className={classes.root}
           style={{ display: "flex", justifyContent: "flex-end" }}
         >
-          <LikeButton hackId={hackDetails._id} userId={userId} />
+          <LikeButton
+            // hackId={hackDetails._id}
+            userId={userId}
+            hasUserLiked={hackDetails.hasUserLiked}
+          />
         </div>
       </Grid>
     );
