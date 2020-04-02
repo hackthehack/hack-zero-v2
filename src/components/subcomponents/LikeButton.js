@@ -6,34 +6,7 @@ import urlJoin from "url-join";
 import Button from "@material-ui/core/Button";
 import { likeHack } from "../../store/actions/userActions";
 
-const LikeButton = ({ jwtToken, userId, hackId, hasUserLiked, toggleLike }) => {
-  // const [likeStatus, setLikeStatus] = useState(false);
-  //
-  // const toggleLike = () => setLikeStatus(!likeStatus);
-
-  // const likeHack = async () => {
-  //   const config = {
-  //     headers: {
-  //       Authorization: "Bearer " + jwtToken
-  //     }
-  //   };
-  //   const body = {
-  //     hackId,
-  //     userId
-  //   };
-  //   try {
-  //     let result = await axios.post(
-  //       urlJoin(process.env.REACT_APP_API_URL, "likehack"),
-  //       body,
-  //       config
-  //     );
-  //     toggleLike();
-  //     console.log(result);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
+const LikeButton = ({ userId, hasUserLiked, toggleLike }) => {
   return (
     <Button
       disabled={!userId ? true : false}
@@ -47,13 +20,11 @@ const LikeButton = ({ jwtToken, userId, hackId, hasUserLiked, toggleLike }) => {
     </Button>
   );
 };
-const mapState = state => ({
-  jwtToken: state.auth.jwt
-});
+
 const mapDispatch = dispatch => ({
   toggleLike: () => dispatch(likeHack())
 });
 export default connect(
-  mapState,
+  null,
   mapDispatch
 )(LikeButton);
