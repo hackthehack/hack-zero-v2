@@ -10,3 +10,12 @@ test("<LikeButton/> is rendered correctly on the screen", () => {
   const button = getByTestId("likeButton");
   expect(button).toBeInTheDocument();
 });
+
+test("<LikeButton/> is disabled if user hasn't logged in", () => {
+  const mockToggleLike = jest.fn();
+  const { getByTestId } = render(
+    <LikeButton userId="" hasUserliked={true} toggleLike={mockToggleLike} />
+  );
+  const button = getByTestId("likeButton");
+  expect(button).toBeDisabled();
+});
