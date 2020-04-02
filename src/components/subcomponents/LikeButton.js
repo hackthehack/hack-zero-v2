@@ -20,20 +20,25 @@ const LikeButton = ({ jwtToken, userId, hackId }) => {
       hackId,
       userId
     };
-    let result = await axios.post(
-      urlJoin(process.env.REACT_APP_API_URL, "likehack"),
-      body,
-      config
-    );
-    console.log(result);
+    try {
+      let result = await axios.post(
+        urlJoin(process.env.REACT_APP_API_URL, "likehack"),
+        body,
+        config
+      );
+      toggleLike();
+      console.log(result);
+    } catch (err) {
+      console.log(err);
+    }
   };
-  console.log(jwtToken, userId, hackId);
+
   return (
     <Button
       disabled={!userId ? true : false}
       variant="outlined"
       color="primary"
-      onClick={toggleLike}
+      onClick={likeHack}
     >
       <ThumbUp
         style={{ color: likeStatus ? "dodgerBlue" : "red", fontSize: "2rem" }}

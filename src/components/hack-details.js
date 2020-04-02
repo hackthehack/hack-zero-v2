@@ -39,9 +39,9 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
 
   useEffect(() => {
     if (!hackDetails || hackDetails._id !== match.params.id) {
-      dispatch(fetchingHackDetails(match.params.id));
+      dispatch(fetchingHackDetails(match.params.id, userId));
     }
-  }, [hackDetails, dispatch, match]);
+  }, [hackDetails, dispatch, match, userId]);
 
   if (hackDetails) {
     return (

@@ -1,8 +1,8 @@
 import * as ActionType from "./index";
 import axios from "axios";
 import UrlJoin from "url-join";
-import { logout } from './authActions';
-import store from '../../setupStore';
+import { logout } from "./authActions";
+import store from "../../setupStore";
 const usersUrl = UrlJoin(process.env.REACT_APP_API_URL, "userlist");
 
 const fetchUserOkay = users => ({
@@ -33,18 +33,21 @@ export const fetchUsers = () => {
   };
 };
 
-export const fetchingHackDetails = hackId => {
+export const fetchingHackDetails = (hackId, userId) => {
   return async (dispatch, getState) => {
     let hackDetails = await axios.get(
-      UrlJoin(process.env.REACT_APP_API_URL, `hackdetail`, hackId)
+      UrlJoin(
+        process.env.REACT_APP_API_URL,
+        `hackdetail`,
+        `${hackId}?userId=${userId}`
+      )
     );
     hackDetails = hackDetails.data;
     dispatch(fetchHackDetails(hackDetails));
   };
 };
 
-export const joiningHackIdea = (history) => {
-  
+export const joiningHackIdea = history => {
   return async (dispatch, getState) => {
     let config = {
       headers: {
@@ -64,14 +67,14 @@ export const joiningHackIdea = (history) => {
       joinedHackIdea = joinedHackIdea.data;
       dispatch(joinHackIdea(joinedHackIdea));
     } catch (err) {
-      if(err.response.status === 401){
-        dispatch(logout(history, true))
+      if (err.response.status === 401) {
+        dispatch(logout(history, true));
       }
     }
   };
 };
 
-export const editingHackIdea = (updatedData) => {
+export const editingHackIdea = updatedData => {
   return async (dispatch, getState) => {
     let config = {
       headers: {
@@ -82,7 +85,7 @@ export const editingHackIdea = (updatedData) => {
       UrlJoin(process.env.REACT_APP_API_URL, "edithack"),
       {
         ...updatedData,
-        hackId: store.getState().hack.hackDetails._id,
+        hackId: store.getState().hack.hackDetails._id
       },
       config
     );
