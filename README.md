@@ -1,8 +1,7 @@
 # Hack Zero
 > Hackathon management web application <br>use in tandem with [Hack-Zero-Backend](https://github.com/hackthehack/hack-zero-v2-backend)
 
-[![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
+[![Build Status]][https://github.com/hackthehack/hack-zero-v2/workflows/Build_and_Deploy/badge.svg]
 
 Hack Zero is a serverless hackathon management system. It allows entities to create a single location to share
 and update participates on the details and happenings of a hackathon event.
@@ -15,7 +14,13 @@ Participates are also able to sign up to gain access to a range of features.
  * Join Hack Idea Team
  * Editing Hacks
 
-![](header.png)
+### Planned Features
+ * Hack Status
+ * Liking Hack Ideas
+ * Commenting on Hacks
+ * Judge Voting
+ * Submit Hacks for Judging
+ * Upload Files to Hack
 
 ## Installation
 
@@ -34,7 +39,7 @@ npm install
 
 ## Usage
 
-Hack Zero hack can be loaded into an S3 bucket for simple and quick deployment. An entity can deploy the application ahead of a hackathon event and request users to sign up. Once the user has signed up they can create ideas for the upcoming hackathon and create teams. The entity can then use contentful to push updates about the event to the users home page.
+Hack Zero hack can be loaded into an S3 bucket for simple and quick deployment. An entity (A Company, Not for Profit or individual) can deploy the application ahead of a hackathon event and request users to sign up. Once the user has signed up they can create ideas for the upcoming hackathon and create teams. The entity can then use contentful to push updates about the event to the users home page.
 
 ## Development setup
 
