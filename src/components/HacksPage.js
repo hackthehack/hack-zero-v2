@@ -57,7 +57,7 @@ export const Hacks = ({ dispatch }) => {
         alignContent="center"
       >
         <Grid className={classes.root} item xs={9}>
-          <Typography variant="h4">Hacks</Typography>
+          <Typography variant="h4">Hackathon Teams</Typography>
         </Grid>
         {data.map(hack => {
           return (
@@ -76,7 +76,7 @@ export const Hacks = ({ dispatch }) => {
                   spacing={1}
                 >
                   <Grid item>
-                    <Typography variant="h4">{hack.title}</Typography>
+                    <Typography variant="h5">{hack.title}</Typography>
                   </Grid>
                   <Grid item xs={4}>
                     <HackStatus status={hack.status}/>

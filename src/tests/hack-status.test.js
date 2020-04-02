@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import HackStatus from "../components/subcomponents/hack-status";
 
 test("Status component render with props", () => {
-  const { container } = render(<HackStatus status={[0]} />);
+  const { container } = render(<HackStatus status={"New Hack"} />);
   expect(container.firstChild).toBeInTheDocument();
 });
 
@@ -13,7 +13,7 @@ test("Status component render without props", () => {
 });
 
 test("Status component rerender", () => {
-  let status = []
+  let status = ""
   const { container, rerender } = render(<HackStatus status={status}/>);
   expect(container.firstChild).toBeNull();
   status = "New Hack"
