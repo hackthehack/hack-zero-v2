@@ -2,13 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import App from "./App";
-import store from "./setupStore";
+import { store, persistor } from "./setupStore";
 import * as serviceWorker from "./serviceWorker";
 import "typeface-roboto";
+import { PersistGate } from "redux-persist/lib/integration/react";
 
 const app = (
   <Provider store={store}>
-    <App />
+    <PersistGate persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>
 );
 ReactDOM.render(app, document.getElementById("root"));

@@ -78,6 +78,13 @@ export const Login = props => {
         </Typography>
         <form onSubmit={handleSubmit} className={classes.form} noValidate>
           <Grid container spacing={2} justify="center">
+          {props.loginStatus === "EXPIRED" ? (
+              <Grid item xs={12}>
+                <Typography variant="h6" align="center">
+                  Your Session has expired please login agin
+                </Typography>
+              </Grid>
+              ) : null}
             <Grid item xs={12}>
               <TextField
                 value={email}

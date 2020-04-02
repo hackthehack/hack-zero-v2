@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Team from "./subcomponents/team";
+import Team from "./subcomponents/hack-team";
 import JoinButton from "./subcomponents/join-team-button";
 import EditHack from "./subcomponents/edit-hack-button";
 import { fetchingHackDetails } from "../store/actions/userActions";
@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function HackDetails({ match, dispatch, userId, hackDetails }) {
+export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
   const classes = useStyles();
 
   useEffect(() => {
@@ -74,7 +74,8 @@ export function HackDetails({ match, dispatch, userId, hackDetails }) {
             </Grid>
             <Grid item xs={3} className={classes.rightFeild}>
               <JoinButton
-              // team={hackDetails.team}
+                team={hackDetails.team}
+                history={history}
               />
             </Grid>
             <Grid
@@ -110,14 +111,7 @@ export function HackDetails({ match, dispatch, userId, hackDetails }) {
               <Grid item xs={10}>
                 <Typography variant="body1">{hackDetails.goal}</Typography>
               </Grid>
-              {hackDetails.team !== undefined ? (
-                <Grid item xs={10} className={classes.marginTop}>
-                  <Typography variant="h6">Team Members:</Typography>
-                </Grid>
-              ) : null}
-              <Grid item xs={10}>
-                <Team team={hackDetails.team} />
-              </Grid>
+                <Team team={hackDetails.team} name={hackDetails.teamName}/>
             </Grid>
           </Grid>
         </Paper>

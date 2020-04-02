@@ -17,7 +17,7 @@ export function EditHack(props) {
 
   React.useEffect(() => {
     props.team.forEach(member => {
-      if (member._id === props.userId || !props.userId) {
+      if (member._id === props.userId) {
         setDisable(false);
       }
     });
