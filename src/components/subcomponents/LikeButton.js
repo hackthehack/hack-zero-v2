@@ -5,9 +5,10 @@ import { ThumbUp } from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
 import { likeHack } from "../../store/actions/userActions";
 
-const LikeButton = ({ userId, hasUserLiked, toggleLike }) => {
+export const LikeButton = ({ userId, hasUserLiked, toggleLike }) => {
   return (
     <Button
+      data-testid="likeButton"
       disabled={!userId ? true : false}
       variant="outlined"
       color="primary"
