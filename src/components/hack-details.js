@@ -21,7 +21,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     margin: theme.spacing(2),
     padding: theme.spacing(2),
-    width: "80vw"
+    width: "80vw",
+    position: "relative"
   },
   rightFeild: {
     textAlign: "right"
@@ -115,15 +116,13 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
               <Grid item xs={10}>
                 <Typography variant="body1">{hackDetails.goal}</Typography>
               </Grid>
-              <Grid item xs={8}>
-                <Team team={hackDetails.team} name={hackDetails.teamName} />
-              </Grid>
-              <Grid item xs={4}>
-                <LikeButton
-                  userId={userId}
-                  hasUserLiked={hackDetails.hasUserLiked}
-                />
-              </Grid>
+
+              <Team team={hackDetails.team} name={hackDetails.teamName} />
+
+              <LikeButton
+                userId={userId}
+                hasUserLiked={hackDetails.hasUserLiked}
+              />
             </Grid>
           </Grid>
         </Paper>

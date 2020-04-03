@@ -13,9 +13,13 @@ export const LikeButton = ({ userId, hasUserLiked, toggleLike }) => {
       variant="outlined"
       color="primary"
       onClick={toggleLike}
+      style={{ position: "absolute", bottom: "0.75rem", right: "1rem" }}
     >
       <ThumbUp
-        style={{ color: hasUserLiked ? "dodgerBlue" : "red", fontSize: "2rem" }}
+        style={{
+          color: hasUserLiked ? "dodgerBlue" : "d3d3d3",
+          fontSize: "1.25rem"
+        }}
       />
     </Button>
   );
