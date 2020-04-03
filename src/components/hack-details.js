@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   creator: {
     height: theme.spacing(3),
     color: "red",
-    fontStyle: "italic",
+    fontStyle: "italic"
   }
 }));
 
@@ -94,26 +94,40 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                   userId={userId}
                 />
               </Grid>
-            </Grid>
-            <Grid item xs={10} className={classes.creator}>
-              <Typography variant="body1">Created by: {hackDetails.creator ? hackDetails.creator.name : "Unknown"}</Typography>
-            </Grid>
-            <Grid item xs={10}>
-              <Typography variant="h6">Idea:</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="body1">{hackDetails.description}</Typography>
+
+              <Grid item xs={10} className={classes.creator}>
+                <Typography variant="body1">
+                  Created by:{" "}
+                  {hackDetails.creator ? hackDetails.creator.name : "Unknown"}
+                </Typography>
+              </Grid>
               <Grid item xs={10}>
-                <Typography variant="h6">Goal:</Typography>
+                <Typography variant="h6">Idea:</Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="body1">
+                  {hackDetails.description}
+                </Typography>
+                <Grid item xs={10}>
+                  <Typography variant="h6">Goal:</Typography>
+                </Grid>
               </Grid>
               <Grid item xs={10}>
                 <Typography variant="body1">{hackDetails.goal}</Typography>
               </Grid>
-              <Team team={hackDetails.team} name={hackDetails.teamName} />
+              <Grid item xs={8}>
+                <Team team={hackDetails.team} name={hackDetails.teamName} />
+              </Grid>
+              <Grid item xs={4}>
+                <LikeButton
+                  userId={userId}
+                  hasUserLiked={hackDetails.hasUserLiked}
+                />
+              </Grid>
             </Grid>
           </Grid>
         </Paper>
-        <div
+        {/*<div
           className={classes.root}
           style={{ display: "flex", justifyContent: "flex-end" }}
         >
@@ -122,7 +136,7 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
             userId={userId}
             hasUserLiked={hackDetails.hasUserLiked}
           />
-        </div>
+        </div>*/}
       </Grid>
     );
   }
