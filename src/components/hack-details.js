@@ -31,6 +31,11 @@ const useStyles = makeStyles(theme => ({
   },
   marginTop: {
     marginTop: theme.spacing(2)
+  },
+  creator: {
+    height: theme.spacing(3),
+    color: "red",
+    fontStyle: "italic",
   }
 }));
 
@@ -90,10 +95,13 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                 />
               </Grid>
             </Grid>
+            <Grid item xs={10} className={classes.creator}>
+              <Typography variant="body1">Created by: {hackDetails.creator ? hackDetails.creator.name : "Unknown"}</Typography>
+            </Grid>
             <Grid item xs={10}>
               <Typography variant="h6">Idea:</Typography>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={12}>
               <Typography variant="body1">{hackDetails.description}</Typography>
               <Grid item xs={10}>
                 <Typography variant="h6">Goal:</Typography>
