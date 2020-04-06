@@ -5,7 +5,13 @@ import { ThumbUp } from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
 import { likeHack, dislikeHack } from "../../store/actions/userActions";
 
-export const LikeButton = ({ userId, hasUserLiked, upVote, downVote }) => {
+export const LikeButton = ({
+  userId,
+  hasUserLiked,
+  upVote,
+  downVote,
+  numberLikes
+}) => {
   return (
     <Button
       data-testid="likeButton"
@@ -21,6 +27,7 @@ export const LikeButton = ({ userId, hasUserLiked, upVote, downVote }) => {
           fontSize: "1.25rem"
         }}
       />
+      <span style={{ marginLeft: "0.5rem" }}> {numberLikes}</span>
     </Button>
   );
 };
@@ -31,7 +38,8 @@ const mapDispatch = dispatch => ({
 });
 const mapState = state => ({
   userId: state.auth.userId,
-  hasUserLiked: state.hack.hackDetails.hasUserLiked
+  hasUserLiked: state.hack.hackDetails.hasUserLiked,
+  numberLikes: state.hack.hackDetails.numberLikes
 });
 export default connect(
   mapState,

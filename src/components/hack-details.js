@@ -45,10 +45,8 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
 
   useEffect(() => {
     if (!hackDetails || hackDetails._id !== match.params.id) {
-      console.log("need to update hack detail");
       dispatch(fetchingHackDetails(match.params.id, userId));
     }
-    console.log("no need to update for hack details");
   }, [dispatch, hackDetails, match, userId]);
 
   if (hackDetails) {
