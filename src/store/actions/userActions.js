@@ -24,8 +24,9 @@ const editHackIdea = updatedHack => ({
   type: ActionType.UPDATE_HACK,
   payload: updatedHack
 });
-const toggleLikeOkay = () => ({
-  type: ActionType.TOGGLE_LIKE
+const toggleLikeOkay = numberLikes => ({
+  type: ActionType.TOGGLE_LIKE,
+  payload: numberLikes
 });
 
 export const fetchUsers = () => {
@@ -57,8 +58,9 @@ export const likeHack = () => {
         body,
         config
       );
-      dispatch(toggleLikeOkay());
-      console.log(result);
+      //console.log(result.data);
+      dispatch(toggleLikeOkay(result.data.numberLikes));
+      //console.log(result);
     } catch (err) {
       console.log(err);
     }

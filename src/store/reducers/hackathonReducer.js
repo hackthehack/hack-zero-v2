@@ -10,11 +10,13 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.TOGGLE_LIKE:
+      console.log(action);
       return {
         ...state,
         hackDetails: {
           ...state.hackDetails,
-          hasUserLiked: !state.hackDetails.hasUserLiked
+          hasUserLiked: !state.hackDetails.hasUserLiked,
+          numberLikes: action.payload
         }
       };
     case ActionType.FETCH_ASSIGNED_HACKS:
