@@ -24,8 +24,12 @@ const editHackIdea = updatedHack => ({
   type: ActionType.UPDATE_HACK,
   payload: updatedHack
 });
-const toggleLikeOkay = numberLikes => ({
-  type: ActionType.TOGGLE_LIKE,
+const likeOkay = numberLikes => ({
+  type: ActionType.LIKE_HACK,
+  payload: numberLikes
+});
+const dislikeOkay = numberLikes => ({
+  type: ActionType.DISLIKE_HACK,
   payload: numberLikes
 });
 
@@ -35,6 +39,9 @@ export const fetchUsers = () => {
     users = users.data;
     dispatch(fetchUserOkay(users));
   };
+};
+export const dislikeHack = () => {
+  return async (dispatch, getState) => {};
 };
 export const likeHack = () => {
   return async (dispatch, getState) => {
@@ -59,7 +66,7 @@ export const likeHack = () => {
         config
       );
       //console.log(result.data);
-      dispatch(toggleLikeOkay(result.data.numberLikes));
+      dispatch(likeOkay(result.data.numberLikes));
       //console.log(result);
     } catch (err) {
       console.log(err);

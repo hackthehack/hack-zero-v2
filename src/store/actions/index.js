@@ -11,4 +11,5 @@ export const FETCH_ASSIGNED_HACKS = "FETCH_ASSIGNED_HACKS";
 export const LOGGING_IN = "LOGGING_IN";
 export const LOGGING_OUT = "LOGGING_OUT";
 
-export const TOGGLE_LIKE = "TOGGLE_LIKE";
+export const LIKE_HACK = "LIKE_HACK";
+export const DISLIKE_HACK = "DISLIKE_HACK";
