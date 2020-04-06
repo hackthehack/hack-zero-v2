@@ -12,7 +12,7 @@ const reducer = (state = initialState, action) => {
     case ActionType.DISLIKE_HACK:
       return {
         ...state.hackDetails,
-        hasUserLiked: !state.hackDetails.hasUserLiked,
+        hasUserLiked: false,
         numberLikes: action.payload
       };
     case ActionType.LIKE_HACK:
@@ -21,7 +21,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         hackDetails: {
           ...state.hackDetails,
-          hasUserLiked: !state.hackDetails.hasUserLiked,
+          hasUserLiked: true,
           numberLikes: action.payload
         }
       };

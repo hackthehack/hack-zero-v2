@@ -45,9 +45,11 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
 
   useEffect(() => {
     if (!hackDetails || hackDetails._id !== match.params.id) {
+      console.log("need to update hack detail");
       dispatch(fetchingHackDetails(match.params.id, userId));
     }
-  }, [hackDetails, dispatch, match, userId]);
+    console.log("no need to update for hack details");
+  }, [dispatch, hackDetails, match, userId]);
 
   if (hackDetails) {
     return (
@@ -123,16 +125,6 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
             </Grid>
           </Grid>
         </Paper>
-        {/*<div
-          className={classes.root}
-          style={{ display: "flex", justifyContent: "flex-end" }}
-        >
-          <LikeButton
-            // hackId={hackDetails._id}
-            userId={userId}
-            hasUserLiked={hackDetails.hasUserLiked}
-          />
-        </div>*/}
       </Grid>
     );
   }
