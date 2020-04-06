@@ -41,7 +41,35 @@ export const fetchUsers = () => {
   };
 };
 export const dislikeHack = () => {
-  return async (dispatch, getState) => {};
+  return async (dispatch, getState) => {
+    console.log("dislike hack");
+    const { auth, hack } = getState();
+    const { jwt, userId } = auth;
+
+    const { hackDetails } = hack;
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + jwt
+      }
+    };
+    const body = {
+      hackId: hackDetails._id,
+      userId
+    };
+    try {
+      let result = await axios.post(
+        UrlJoin(process.env.REACT_APP_API_URL, "dislikehack"),
+        body,
+        config
+      );
+      //console.log(result.data);
+      dispatch(dislikeOkay(result.data.numberLikes));
+      //console.log(result);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 };
 export const likeHack = () => {
   return async (dispatch, getState) => {
@@ -82,7 +110,7 @@ export const fetchingHackDetails = (hackId, userId) => {
         `${hackId}?userId=${userId}`
       )
     );
-    console.log(hackDetails);
+    //console.log(hackDetails);
     hackDetails = hackDetails.data;
 
     dispatch(fetchHackDetails(hackDetails));

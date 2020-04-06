@@ -9,6 +9,12 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.DISLIKE_HACK:
+      return {
+        ...state.hackDetails,
+        hasUserLiked: !state.hackDetails.hasUserLiked,
+        numberLikes: action.payload
+      };
     case ActionType.LIKE_HACK:
       //console.log(action);
       return {

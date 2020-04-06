@@ -3,16 +3,16 @@ import { connect } from "react-redux";
 import { ThumbUp } from "@material-ui/icons";
 
 import Button from "@material-ui/core/Button";
-import { likeHack } from "../../store/actions/userActions";
+import { likeHack, dislikeHack } from "../../store/actions/userActions";
 
-export const LikeButton = ({ userId, hasUserLiked, toggleLike }) => {
+export const LikeButton = ({ userId, hasUserLiked, upVote, downVote }) => {
   return (
     <Button
       data-testid="likeButton"
       disabled={!userId ? true : false}
       variant="outlined"
       color="primary"
-      onClick={toggleLike}
+      onClick={!hasUserLiked ? upVote : downVote}
       style={{ position: "absolute", bottom: "0.75rem", right: "1rem" }}
     >
       <ThumbUp
@@ -26,9 +26,14 @@ export const LikeButton = ({ userId, hasUserLiked, toggleLike }) => {
 };
 
 const mapDispatch = dispatch => ({
-  toggleLike: () => dispatch(likeHack())
+  upVote: () => dispatch(likeHack()),
+  downVote: () => dispatch(dislikeHack())
+});
+const mapState = state => ({
+  userId: state.auth.userId,
+  hasUserLiked: state.hack.hackDetails.hasUserLiked
 });
 export default connect(
-  null,
+  mapState,
   mapDispatch
 )(LikeButton);

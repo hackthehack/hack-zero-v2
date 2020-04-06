@@ -119,10 +119,7 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
 
               <Team team={hackDetails.team} name={hackDetails.teamName} />
 
-              <LikeButton
-                userId={userId}
-                hasUserLiked={hackDetails.hasUserLiked}
-              />
+              <LikeButton />
             </Grid>
           </Grid>
         </Paper>
