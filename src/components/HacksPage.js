@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgress, Chip } from "@material-ui/core";
+import { ThumbUp } from "@material-ui/icons";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
@@ -17,6 +18,7 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1),
     padding: theme.spacing(1),
     width: "80vw"
+    //display: "relative"
   },
   paper: {
     padding: theme.spacing(3),
@@ -46,7 +48,7 @@ export const Hacks = ({ dispatch }) => {
       setData([...result.data]);
     };
     fetchData();
-    dispatch(clearingHackDetails())
+    dispatch(clearingHackDetails());
   }, [dispatch]);
 
   if (data.length > 0) {
@@ -96,8 +98,30 @@ export const Hacks = ({ dispatch }) => {
                   >
                     {hack.description.slice(0, 100) + " ...Read More"}
                   </Grid>
-                  <Grid item xs={12}>
-                    <TeamMembers team={hack.team} />
+                  <Grid
+                    item
+                    xs={12}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap"
+                    }}
+                  >
+                    <div>
+                      <TeamMembers team={hack.team} />
+                    </div>
+                    <div>
+                      <ThumbUp
+                        style={{
+                          color: "dodgerBlue",
+                          fontSize: "1.5rem",
+
+                          display: "inline-block",
+                          marginTop: "1rem"
+                        }}
+                      />
+                      <span>{hack.likes}</span>
+                    </div>
                   </Grid>
                 </Grid>
               </Paper>
