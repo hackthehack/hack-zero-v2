@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { CircularProgress, Chip } from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import axios from "axios";
-import ErrorOutlineOutlinedIcon from "@material-ui/icons/ErrorOutlineOutlined";
 import TeamMembers from "./subcomponents/team-members";
 import UrlJoin from "url-join";
 import { clearingHackDetails } from "../store/actions/hackathonActions";
 import { connect } from "react-redux";
+import HackStatus from './subcomponents/hack-status'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,9 +28,6 @@ const useStyles = makeStyles(theme => ({
   hacklist: {
     flexGrow: 1,
     marginTop: theme.spacing(5)
-  },
-  chipMArgin: {
-    marginRight: theme.spacing(1)
   }
 }));
 
@@ -60,7 +57,7 @@ export const Hacks = ({ dispatch }) => {
         alignContent="center"
       >
         <Grid className={classes.root} item xs={9}>
-          <Typography variant="h4">Hacks</Typography>
+          <Typography variant="h4">Hackathon Teams</Typography>
         </Grid>
         {data.map(hack => {
           return (
@@ -79,15 +76,10 @@ export const Hacks = ({ dispatch }) => {
                   spacing={1}
                 >
                   <Grid item>
-                    <Typography variant="h4">{hack.title}</Typography>
+                    <Typography variant="h5">{hack.title}</Typography>
                   </Grid>
                   <Grid item xs={4}>
-                    <Chip
-                      className={classes.chipMArgin}
-                      icon={<ErrorOutlineOutlinedIcon />}
-                      label="Open"
-                      color="secondary"
-                    />
+                    <HackStatus status={hack.status}/>
                   </Grid>
                   <Grid
                     item

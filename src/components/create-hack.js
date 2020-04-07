@@ -45,7 +45,7 @@ export function CreateHack(props) {
   const handleSubmit = event => {
     event.preventDefault();
     const fetchData = async () => {
-      const newHack = { title: title, description: description, goal: goal, team: [] }
+      const newHack = { title: title, description: description, goal: goal, team: [], creator: props.userId}
       if(join){
         newHack.team[0] = props.userId
       }

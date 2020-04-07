@@ -18,19 +18,21 @@ const UserAssignedHacks = ({ assignedHacks }) => {
         xs={12}
         sm={4}
       >
-        <Link style={{ textDecoration: "none" }} to={`/hack/${hack._id}`}>
-          <Card style={{ width: "100%" }}>
-            <CardContent>
-              <Typography color="textPrimary" gutterBottom>
-                Title: {hack.title}
-              </Typography>
-              <Typography color="textSecondary" variant="body2" component="p">
-                <span style={{ color: "dodgerBlue" }}>Description:</span>{" "}
-                {hack.description}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Link>
+        <Card
+          style={{ width: "100%", textDecoration: "none" }}
+          component={Link}
+          to={`/hack/${hack._id}`}
+        >
+          <CardContent>
+            <Typography color="textPrimary" gutterBottom>
+              Title: {hack.title}
+            </Typography>
+            <Typography color="textSecondary" variant="body2" component="p">
+              <span style={{ color: "dodgerBlue" }}>Description:</span>{" "}
+              {hack.description}
+            </Typography>
+          </CardContent>
+        </Card>
       </Grid>
     );
   });

@@ -2,20 +2,19 @@ import React, { useState } from "react";
 import TeamEdit from "./subcomponents/hack-team-edit";
 import { editingHackIdea } from "../store/actions/userActions";
 import { clearingHackDetails } from "../store/actions/hackathonActions";
+import EditHackStatus from './subcomponents/edit-status'
 
 // UI imports
 import {
   Grid,
   Typography,
   Paper,
-  Chip,
   CircularProgress,
   Button,
   FormControl,
   OutlinedInput
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import ErrorOutlineOutlinedIcon from "@material-ui/icons/ErrorOutlineOutlined";
 
 import { connect } from "react-redux";
 
@@ -25,14 +24,11 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     width: "80vw"
   },
-  rightFeild: {
+  rightFelid: {
     textAlign: "right"
   },
   loading: {
     marginTop: theme.spacing(10)
-  },
-  chipMArgin: {
-    marginRight: theme.spacing(1)
   },
   marginTop: {
     marginTop: theme.spacing(2)
@@ -54,6 +50,11 @@ export function EditHack({ dispatch, hackDetails, history }) {
     const { name, value } = e.target;
     setUpdateData({ ...updateData, [name]: value });
   };
+
+  const updateStatus = (statusValue) => {
+    setUpdateData({ ...updateData, status: statusValue });
+    console.log(updateData)
+  }
 
   const onSubmitUpdate = e => {
     e.preventDefault();
@@ -80,12 +81,8 @@ export function EditHack({ dispatch, hackDetails, history }) {
             alignContent="center"
             spacing={1}
           >
-            <Grid item xs={9}>
-              <Chip
-                icon={<ErrorOutlineOutlinedIcon />}
-                label="status"
-                color="secondary"
-              />
+            <Grid item xs={12}>
+              <EditHackStatus status={hackDetails.status} handleUpdate={updateStatus}/>
             </Grid>
             <Grid item xs={10}>
               <Typography variant="h6">Hack Name:</Typography>
