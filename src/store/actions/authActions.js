@@ -10,7 +10,7 @@ const loginOkay = (userId, jwt) => ({
 });
 const loggingIn = () => ({ type: ActionType.LOGGING_IN, payload: "PENDING" });
 const loginFailed = () => ({ type: ActionType.LOGGING_IN, payload: "FAILED" });
-const SessionExpired = () => ({
+const sessionExpired = () => ({
   type: ActionType.LOGGING_IN,
   payload: "EXPIRED"
 });
@@ -36,13 +36,14 @@ export const login = (email, password, history) => {
 
 export const logout = (history, expired) => {
   return async (dispatch, getState) => {
-    const { auth } = getState();
-    const { jwt } = auth;
+    const {
+      auth: { jwt }
+    } = getState();
     const body = {
       token: jwt
     };
     if (expired) {
-      dispatch(SessionExpired());
+      dispatch(sessionExpired());
     }
     try {
       await axios.post(UrlJoin(process.env.REACT_APP_API_URL, "logout"), body);
