@@ -32,7 +32,7 @@ export function UploadFiles(props) {
       <Grid item xs={12}>
         <Typography variant="body1">[Upload instructions Here]</Typography>
       </Grid>
-      <Grid item xs={12} style={{ textAlign:"center" }}>
+      <Grid item xs={12}>
         <Button variant="outlined" color="primary">
           Upload
         </Button>
