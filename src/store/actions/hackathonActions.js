@@ -18,7 +18,7 @@ export const getAssignedHacksOkay = hacks => ({
   payload: hacks
 });
 export const submissionData = submission => ({
-  type: ActionType.SUB_DATA,
+  type: ActionType.SET_SUBMISSION_DATA,
   payload: submission
 })
 

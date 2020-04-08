@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Team from "./subcomponents/hack-team";
 import {
   submitHackIdea
 } from "../store/actions/userActions";

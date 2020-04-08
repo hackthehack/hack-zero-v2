@@ -7,8 +7,6 @@ import Login from "./components/Login";
 import Register from "./components/register";
 import Header from "./components/header";
 import Home from "./components/Home";
-import EditHack from './components/edit-hack'
-import SubmitHack from './components/submit-hack'
 import "./css/main.css";
 
 function App() {
@@ -21,9 +19,7 @@ function App() {
         <Route path="/register" component={Register} />
         <Route path="/create" component={CreateHack} />
         <Route path="/hacks" component={HacksPage} />
-        <Route exact path="/hack/:id" component={HackDetails} />
-        <Route path="/hack/:id/edit" component={EditHack} />
-        <Route path="/hack/:id/submit" component={SubmitHack} />
+        <Route path="/hack/:id" component={HackDetails} />
       </Switch>
     </BrowserRouter>
   );
