@@ -1,10 +1,40 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import { LikeButton } from "../components/subcomponents/LikeButton";
 
-test("Clicking on <LikeButton/> calls dislike function when the the hack was liked", () => {});
+test("Clicking on <LikeButton/> calls downVote function when the the hack was liked", () => {
+  const mockUpVote = jest.fn();
+  const mockDownVote = jest.fn();
+  const { getByTestId } = render(
+    <LikeButton
+      userId="123"
+      numberLikes={22}
+      hasUserliked={true}
+      upVote={mockUpVote}
+      downVote={mockDownVote}
+    />
+  );
+  const button = getByTestId("likeButton");
+  fireEvent.click(button);
+  expect(mockDownVote).toHaveBeenCalled();
+});
 
-test("Clicking on <LikeButton/> calls like when the hack was not liked", () => {});
+test("Clicking on <LikeButton/> calls upVote function when the hack was not liked", () => {
+  const mockUpVote = jest.fn();
+  const mockDownVote = jest.fn();
+  const { getByTestId } = render(
+    <LikeButton
+      userId="123"
+      numberLikes={22}
+      hasUserliked={false}
+      upVote={mockUpVote}
+      downVote={mockDownVote}
+    />
+  );
+  const button = getByTestId("likeButton");
+  fireEvent.click(button);
+  expect(mockUpVote).toHaveBeenCalled();
+});
 
 test("<LikeButton/> is rendered correctly on the screen", () => {
   const mockToggleLike = jest.fn();
