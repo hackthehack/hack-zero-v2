@@ -2,6 +2,10 @@ import React from "react";
 import { render } from "@testing-library/react";
 import { LikeButton } from "../components/subcomponents/LikeButton";
 
+test("Clicking on <LikeButton/> calls dislike function when the the hack was liked", () => {});
+
+test("Clicking on <LikeButton/> calls like when the hack was not liked", () => {});
+
 test("<LikeButton/> is rendered correctly on the screen", () => {
   const mockToggleLike = jest.fn();
   const { getByTestId } = render(
