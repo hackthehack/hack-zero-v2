@@ -3,6 +3,8 @@ import { Grid, Typography, Button, Paper, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import Axios from "axios";
+import UrlJoin from "url-join";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     top: "-0.5rem"
   },
   attachIco: {
-    height: "5rem",
+    height: "5rem"
   },
   overflow: {
     whiteSpace: "nowrap",
@@ -44,10 +46,16 @@ export function UploadFiles(props) {
   const [files, setFiles] = useState([]);
 
   const onUpload = e => {
+    console.log(e.target.files)
     setFiles([...files, ...e.target.files]);
   };
 
   const onDelete = () => {};
+
+  const handelSubmit = () => {
+    const response = Axios.post(UrlJoin(process.env.REACT_APP_API_URL, `upload`),{ fileName: files[0].name })
+    console.log(response)
+  };
   const classes = useStyles();
   return (
     <Grid
@@ -57,7 +65,7 @@ export function UploadFiles(props) {
       alignContent="center"
       spacing={1}
       className={classes.root}
-      style={{width: "inherit" ,margin: "2rem"}}
+      style={{ width: "inherit", margin: "2rem" }}
     >
       <Grid item xs={12}>
         <Typography variant="h6">Attach Files</Typography>
@@ -95,7 +103,11 @@ export function UploadFiles(props) {
                   >
                     <HighlightOffIcon />
                   </IconButton>
-                  <AttachFileIcon className={classes.attachIco} fontSize="large" disabled/>
+                  <AttachFileIcon
+                    className={classes.attachIco}
+                    fontSize="large"
+                    disabled
+                  />
                   <Typography variant="body1" className={classes.overflow}>
                     {file.name}
                   </Typography>
@@ -106,6 +118,11 @@ export function UploadFiles(props) {
               </Grid>
             );
           })}
+        </Grid>
+        <Grid item xs={4} style={{ marginTop: "1rem" }}>
+          <Button variant="outlined" color="primary" component="span" onClick={handelSubmit}>
+            Upload
+          </Button>
         </Grid>
       </Grid>
     </Grid>
