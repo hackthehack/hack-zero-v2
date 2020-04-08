@@ -5,17 +5,19 @@ import { LikeButton } from "../components/subcomponents/LikeButton";
 test("Clicking on <LikeButton/> calls downVote function when the the hack was liked", () => {
   const mockUpVote = jest.fn();
   const mockDownVote = jest.fn();
+
   const { getByTestId } = render(
     <LikeButton
       userId="123"
       numberLikes={22}
-      hasUserliked={true}
+      hasUserLiked={true}
       upVote={mockUpVote}
       downVote={mockDownVote}
     />
   );
   const button = getByTestId("likeButton");
   fireEvent.click(button);
+
   expect(mockDownVote).toHaveBeenCalled();
 });
 
@@ -26,7 +28,7 @@ test("Clicking on <LikeButton/> calls upVote function when the hack was not like
     <LikeButton
       userId="123"
       numberLikes={22}
-      hasUserliked={false}
+      hasUserLiked={false}
       upVote={mockUpVote}
       downVote={mockDownVote}
     />
