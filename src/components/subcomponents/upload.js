@@ -46,15 +46,31 @@ export function UploadFiles(props) {
   const [files, setFiles] = useState([]);
 
   const onUpload = e => {
-    console.log(e.target.files)
+    console.log(e.target.files);
     setFiles([...files, ...e.target.files]);
   };
 
   const onDelete = () => {};
 
   const handelSubmit = () => {
-    const response = Axios.post(UrlJoin(process.env.REACT_APP_API_URL, `upload`),{ fileName: files[0].name })
-    console.log(response)
+    const fileUpload = Axios.post(
+      UrlJoin(process.env.REACT_APP_API_URL, `upload`),
+      { fileName: files[0].name }
+    );
+    fileUpload.then(res => {
+      const url = res.data.fileUploadURL;
+      console.log(url)
+      Axios({
+        method: "PUT",
+        url: url,
+        data: files[0],
+        headers: { "Content-Type": "multipart/form-data"}
+      }).then(res =>{
+        console.log(res)
+      }).catch(error => {
+        console.log(error)
+      })
+    });
   };
   const classes = useStyles();
   return (
@@ -120,7 +136,12 @@ export function UploadFiles(props) {
           })}
         </Grid>
         <Grid item xs={4} style={{ marginTop: "1rem" }}>
-          <Button variant="outlined" color="primary" component="span" onClick={handelSubmit}>
+          <Button
+            variant="outlined"
+            color="primary"
+            component="span"
+            onClick={handelSubmit}
+          >
             Upload
           </Button>
         </Grid>
