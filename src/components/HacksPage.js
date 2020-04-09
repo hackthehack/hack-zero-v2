@@ -10,7 +10,7 @@ import TeamMembers from "./subcomponents/team-members";
 import UrlJoin from "url-join";
 import { clearingHackDetails } from "../store/actions/hackathonActions";
 import { connect } from "react-redux";
-import HackStatus from './subcomponents/hack-status'
+import HackStatus from "./subcomponents/hack-status";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,7 +43,7 @@ export const Hacks = ({ dispatch }) => {
       setData([...result.data]);
     };
     fetchData();
-    dispatch(clearingHackDetails())
+    dispatch(clearingHackDetails());
   }, [dispatch]);
 
   if (data.length > 0) {
@@ -79,14 +79,16 @@ export const Hacks = ({ dispatch }) => {
                     <Typography variant="h5">{hack.title}</Typography>
                   </Grid>
                   <Grid item xs={4}>
-                    <HackStatus status={hack.status}/>
+                    <HackStatus status={hack.status} />
                   </Grid>
                   <Grid
                     item
                     xs={12}
                     style={{ marginBottom: "1rem", marginTop: "1rem" }}
                   >
-                    {hack.description.slice(0, 100) + " ...Read More"}
+                    <Typography variant="body1" component="p">
+                      {hack.description.slice(0, 100) + " ...Read More"}
+                    </Typography>
                   </Grid>
                   <Grid item xs={12}>
                     <TeamMembers team={hack.team} />
