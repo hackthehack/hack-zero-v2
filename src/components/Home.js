@@ -31,7 +31,7 @@ const FixedCard = ({ id, title, values }) => {
         </Typography>
 
         {values.map((value, index) => (
-          <Typography key={index} variant="body2" component="p">
+          <Typography key={index} variant="body1" component="p">
             {value}
           </Typography>
         ))}
