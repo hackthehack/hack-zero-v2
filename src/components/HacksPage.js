@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     margin: theme.spacing(1),
     padding: theme.spacing(1),
-    width: "80vw"
+    width: "50vw"
   },
   paper: {
     padding: theme.spacing(3),
@@ -75,12 +75,21 @@ export const Hacks = ({ dispatch }) => {
                   alignContent="center"
                   spacing={1}
                 >
-                  <Grid item>
-                    <Typography variant="h5">{hack.title}</Typography>
+                  <Grid
+                    container
+                    justify="space-between"
+                    alignItems="center"
+                    alignContent="center"
+                    spacing={3}
+                  >
+                    <Grid item>
+                      <Typography variant="h5">{hack.title}</Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <HackStatus status={hack.status} />
+                    </Grid>
                   </Grid>
-                  <Grid item xs={4}>
-                    <HackStatus status={hack.status} />
-                  </Grid>
+
                   <Grid
                     item
                     xs={12}
