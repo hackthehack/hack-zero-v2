@@ -1,7 +1,7 @@
 # Hack Zero
 > Hackathon management web application <br>use in tandem with [Hack-Zero-Backend](https://github.com/hackthehack/hack-zero-v2-backend)
 
-[![Build Status]][https://github.com/hackthehack/hack-zero-v2/workflows/Build_and_Deploy/badge.svg]
+![Build Status](https://github.com/hackthehack/hack-zero-v2/workflows/Build%20and%20Deploy/badge.svg)
 
 Hack Zero is a serverless hackathon management system. It allows entities to create a single location to share
 and update participates on the details and happenings of a hackathon event.
