@@ -2,7 +2,11 @@ import React, { useEffect } from "react";
 import Team from "./subcomponents/hack-team";
 import JoinButton from "./subcomponents/join-team-button";
 import EditHack from "./subcomponents/edit-hack-button";
+
+import LikeButton from "./subcomponents/LikeButton";
+
 import HackStatus from './subcomponents/hack-status';
+
 import { fetchingHackDetails } from "../store/actions/userActions";
 import { connect } from "react-redux";
 
@@ -19,7 +23,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     margin: theme.spacing(2),
     padding: theme.spacing(2),
-    width: "80vw"
+    width: "80vw",
+    position: "relative"
   },
   rightField: {
     textAlign: "right"
@@ -33,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   creator: {
     height: theme.spacing(3),
     color: "red",
-    fontStyle: "italic",
+    fontStyle: "italic"
   }
 }));
 
@@ -42,9 +47,9 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
 
   useEffect(() => {
     if (!hackDetails || hackDetails._id !== match.params.id) {
-      dispatch(fetchingHackDetails(match.params.id));
+      dispatch(fetchingHackDetails(match.params.id, userId));
     }
-  }, [hackDetails, dispatch, match]);
+  }, [dispatch, hackDetails, match, userId]);
 
   if (hackDetails) {
     return (
@@ -67,11 +72,13 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
             <Grid item xs={9}>
               <HackStatus status={hackDetails.status}/>
             </Grid>
+
             <Grid item xs={3} className={classes.rightField}>
               <JoinButton
                 team={hackDetails.team}
                 history={history}
               />
+
             </Grid>
             <Grid
               container
@@ -91,22 +98,31 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                   userId={userId}
                 />
               </Grid>
-            </Grid>
-            <Grid item xs={10} className={classes.creator}>
-              <Typography variant="body1">Created by: {hackDetails.creator ? hackDetails.creator.name : "Unknown"}</Typography>
-            </Grid>
-            <Grid item xs={10}>
-              <Typography variant="h6">Idea:</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="body1">{hackDetails.description}</Typography>
+
+              <Grid item xs={10} className={classes.creator}>
+                <Typography variant="body1">
+                  Created by:{" "}
+                  {hackDetails.creator ? hackDetails.creator.name : "Unknown"}
+                </Typography>
+              </Grid>
               <Grid item xs={10}>
-                <Typography variant="h6">Goal:</Typography>
+                <Typography variant="h6">Idea:</Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="body1">
+                  {hackDetails.description}
+                </Typography>
+                <Grid item xs={10}>
+                  <Typography variant="h6">Goal:</Typography>
+                </Grid>
               </Grid>
               <Grid item xs={10}>
                 <Typography variant="body1">{hackDetails.goal}</Typography>
               </Grid>
-                <Team team={hackDetails.team} name={hackDetails.teamName}/>
+
+              <Team team={hackDetails.team} name={hackDetails.teamName} />
+
+              <LikeButton />
             </Grid>
           </Grid>
         </Paper>
