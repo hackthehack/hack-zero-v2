@@ -77,7 +77,7 @@ export const Hacks = ({ dispatch }) => {
                 >
                   <Grid
                     container
-                    justify="space-between"
+                    justify="space-around"
                     alignItems="center"
                     alignContent="center"
                     spacing={3}
