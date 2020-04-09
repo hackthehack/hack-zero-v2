@@ -65,8 +65,8 @@ export const Home = ({
         <Typography
           data-testid="page-header"
           style={{ textAlign: "center", margin: "2rem" }}
-          variant="h2"
-          component="h2"
+          variant="h3"
+          component="h3"
         >
           {title}
         </Typography>
