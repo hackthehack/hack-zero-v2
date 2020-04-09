@@ -81,11 +81,12 @@ export const Hacks = ({ dispatch }) => {
                     alignItems="center"
                     alignContent="center"
                     spacing={3}
+                    style={{ margin: "0 auto" }}
                   >
-                    <Grid item>
+                    <Grid item xs={12} lg={8}>
                       <Typography variant="h5">{hack.title}</Typography>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={12} lg={4}>
                       <HackStatus status={hack.status} />
                     </Grid>
                   </Grid>

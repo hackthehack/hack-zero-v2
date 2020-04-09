@@ -21,13 +21,10 @@ export function HackStatus({ status }) {
       alignItems="center"
       alignContent="center"
       spacing={1}
+      style={{ textAlign: "right" }}
     >
       <Grid item xs={10} className={classes.marginTop}>
-        <Status
-          label={status}
-          style={status}
-          clickable={false}
-        />
+        <Status label={status} style={status} clickable={false} />
       </Grid>
     </Grid>
   );
