@@ -49,8 +49,9 @@ export const Home = ({
   information,
   status,
   theme,
-  prize,
-  userId
+
+  userId,
+  prizeList
 }) => {
   const classes = useStyles();
 
@@ -72,7 +73,19 @@ export const Home = ({
         </Typography>
         <Grid container spacing={3} alignItems="stretch">
           <Grid style={{ display: "flex" }} item xs={12} sm={6}>
-            <FixedCard id="prize" title="Prize" values={[prize]} />
+            <FixedCard
+              id="prize"
+              title="Prize"
+              values={
+                prizeList
+                  ? [
+                      `1st ${prizeList[0]}`,
+                      `2nd ${prizeList[1]}`,
+                      `3rd ${prizeList[2]}`
+                    ]
+                  : []
+              }
+            />
           </Grid>
           <Grid style={{ display: "flex" }} item xs={12} sm={6}>
             <FixedCard id="status" title="Status" values={[status]} />
@@ -111,8 +124,9 @@ const mapState = state => ({
   information: state.hack.items.information,
   status: state.hack.items.status,
   theme: state.hack.items.theme,
-  prize: state.hack.items.prize,
+
   from: state.hack.items.from,
-  to: state.hack.items.to
+  to: state.hack.items.to,
+  prizeList: state.hack.items.prizeList
 });
 export default connect(mapState)(Home);
