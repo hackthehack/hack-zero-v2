@@ -3,7 +3,8 @@ import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
-
+import EventBusyIcon from "@material-ui/icons/EventBusy";
+import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -31,7 +32,7 @@ const FixedCard = ({ id, title, values }) => {
         </Typography>
 
         {values.map((value, index) => (
-          <Typography key={index} variant="body1" component="p">
+          <Typography key={index} variant="body1" component="div">
             {value}
           </Typography>
         ))}
@@ -39,7 +40,24 @@ const FixedCard = ({ id, title, values }) => {
     </Card>
   );
 };
+const CoolDates = ({ status, time }) => {
+  //  console.log(Icon);
+  return (
+    <div style={{ position: "relative" }}>
+      {status === "startDate" ? (
+        <EventAvailableIcon color="primary" />
+      ) : (
+        <EventBusyIcon color="error" />
+      )}
 
+      <span
+        style={{ marginLeft: "1rem", position: "absolute", bottom: "0.25rem" }}
+      >
+        {time ? time.substring(0, 10).replace(/-/g, "/") : null}
+      </span>
+    </div>
+  );
+};
 export const Home = ({
   from,
   to,
@@ -98,10 +116,8 @@ export const Home = ({
               id="schedule"
               title="Schedule"
               values={[
-                `From: ${
-                  from ? from.substring(0, 10).replace(/-/g, "/") : null
-                }`,
-                `To: ${to ? to.substring(0, 10).replace(/-/g, "/") : null}`
+                <CoolDates status="startDate" time={from} />,
+                <CoolDates status="endDate" time={to} />
               ]}
               s
             />
