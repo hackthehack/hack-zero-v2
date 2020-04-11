@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
+
+import { ThumbUp } from "@material-ui/icons";
+
 import { CircularProgress } from "@material-ui/core";
+
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
@@ -100,8 +104,30 @@ export const Hacks = ({ dispatch }) => {
                       {hack.description.slice(0, 100) + " ...Read More"}
                     </Typography>
                   </Grid>
-                  <Grid item xs={12}>
-                    <TeamMembers team={hack.team} />
+                  <Grid
+                    item
+                    xs={12}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap"
+                    }}
+                  >
+                    <div>
+                      <TeamMembers team={hack.team} />
+                    </div>
+                    <div>
+                      <ThumbUp
+                        style={{
+                          color: "dodgerBlue",
+                          fontSize: "1.5rem",
+
+                          display: "inline-block",
+                          marginTop: "1rem"
+                        }}
+                      />
+                      <span>{hack.likes}</span>
+                    </div>
                   </Grid>
                 </Grid>
               </Paper>
