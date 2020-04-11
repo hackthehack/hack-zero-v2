@@ -51,7 +51,7 @@ const CoolDates = ({ status, time }) => {
       )}
 
       <span
-        style={{ marginLeft: "1rem", position: "absolute", bottom: "0.25rem" }}
+        style={{ marginLeft: "1rem", position: "absolute", bottom: "0.35rem" }}
       >
         {time ? time.substring(0, 10).replace(/-/g, "/") : null}
       </span>
