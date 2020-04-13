@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { CircularProgress, Chip } from "@material-ui/core";
+
+import { ThumbUp } from "@material-ui/icons";
+
+import { CircularProgress } from "@material-ui/core";
+
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import axios from "axios";
-import ErrorOutlineOutlinedIcon from "@material-ui/icons/ErrorOutlineOutlined";
 import TeamMembers from "./subcomponents/team-members";
 import UrlJoin from "url-join";
 import { clearingHackDetails } from "../store/actions/hackathonActions";
 import { connect } from "react-redux";
+import HackStatus from './subcomponents/hack-status'
 
 const useStyles = makeStyles(theme => ({
   root: {
     margin: theme.spacing(1),
     padding: theme.spacing(1),
     width: "80vw"
+    //display: "relative"
   },
   paper: {
     padding: theme.spacing(3),
@@ -28,9 +33,6 @@ const useStyles = makeStyles(theme => ({
   hacklist: {
     flexGrow: 1,
     marginTop: theme.spacing(5)
-  },
-  chipMArgin: {
-    marginRight: theme.spacing(1)
   }
 }));
 
@@ -46,7 +48,7 @@ export const Hacks = ({ dispatch }) => {
       setData([...result.data]);
     };
     fetchData();
-    dispatch(clearingHackDetails())
+    dispatch(clearingHackDetails());
   }, [dispatch]);
 
   if (data.length > 0) {
@@ -60,7 +62,7 @@ export const Hacks = ({ dispatch }) => {
         alignContent="center"
       >
         <Grid className={classes.root} item xs={9}>
-          <Typography variant="h4">Hacks</Typography>
+          <Typography variant="h4">Hackathon Teams</Typography>
         </Grid>
         {data.map(hack => {
           return (
@@ -79,15 +81,10 @@ export const Hacks = ({ dispatch }) => {
                   spacing={1}
                 >
                   <Grid item>
-                    <Typography variant="h4">{hack.title}</Typography>
+                    <Typography variant="h5">{hack.title}</Typography>
                   </Grid>
                   <Grid item xs={4}>
-                    <Chip
-                      className={classes.chipMArgin}
-                      icon={<ErrorOutlineOutlinedIcon />}
-                      label="Open"
-                      color="secondary"
-                    />
+                    <HackStatus status={hack.status}/>
                   </Grid>
                   <Grid
                     item
@@ -96,8 +93,30 @@ export const Hacks = ({ dispatch }) => {
                   >
                     {hack.description.slice(0, 100) + " ...Read More"}
                   </Grid>
-                  <Grid item xs={12}>
-                    <TeamMembers team={hack.team} />
+                  <Grid
+                    item
+                    xs={12}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap"
+                    }}
+                  >
+                    <div>
+                      <TeamMembers team={hack.team} />
+                    </div>
+                    <div>
+                      <ThumbUp
+                        style={{
+                          color: "dodgerBlue",
+                          fontSize: "1.5rem",
+
+                          display: "inline-block",
+                          marginTop: "1rem"
+                        }}
+                      />
+                      <span>{hack.likes}</span>
+                    </div>
                   </Grid>
                 </Grid>
               </Paper>

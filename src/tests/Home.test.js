@@ -33,7 +33,7 @@ test("<Home/> component heading should be rendered in the page", () => {
   expect(header).toBeInTheDocument();
 });
 
-test("<Home/> component should have 5 cards, information, schedule, price, theme and status", () => {
+test("<Home/> component should have 5 cards, information, schedule, prize, theme and status", () => {
   const store = mockStore(initialState);
   const { getByTestId } = render(
     <Provider store={store}>
@@ -42,10 +42,10 @@ test("<Home/> component should have 5 cards, information, schedule, price, theme
   );
   const schedule = getByTestId("schedule-card");
   const status = getByTestId("status-card");
-  const price = getByTestId("price-card");
+  const prize = getByTestId("prize-card");
   const theme = getByTestId("theme-card");
   const info = getByTestId("information-card");
-  expect(price).toBeInTheDocument();
+  expect(prize).toBeInTheDocument();
   expect(status).toBeInTheDocument();
   expect(info).toBeInTheDocument();
   expect(theme).toBeInTheDocument();
