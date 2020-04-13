@@ -23,7 +23,6 @@ function App() {
         <Route path="/hacks" component={HacksPage} />
         <Route exact path="/hack/:id" component={HackDetails} />
         <Route path="/hack/:id/edit" component={EditHack} />
-        <Route path="/upload" component={Upload}/>
       </Switch>
     </BrowserRouter>
   );

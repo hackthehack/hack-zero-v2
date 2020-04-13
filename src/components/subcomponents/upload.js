@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Grid, Typography, Button, Paper, IconButton } from "@material-ui/core";
+import {
+  Grid,
+  Typography,
+  Button,
+  Paper,
+  IconButton,
+  LinearProgress
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
@@ -15,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   },
   attachment: {
     position: "relative",
-    height: "10rem",
+    minHeight: "10rem",
     width: "9rem",
     display: "flex",
     flexFlow: "column",
@@ -38,41 +45,68 @@ const useStyles = makeStyles(theme => ({
     textOverflow: "ellipsis",
     width: "inherit",
     padding: "0.5rem"
+  },
+  loading: {
+    width: " 100%",
+    height: ".5rem"
   }
 }));
 
 export function UploadFiles(props) {
-  // console.log(props);
   const [files, setFiles] = useState([]);
 
-  const onUpload = e => {
-    console.log(e.target.files);
-    setFiles([...files, ...e.target.files]);
+  const onAddFile = e => {
+    const toUpload = [];
+    Array.from(e.target.files).forEach(file => {
+      toUpload.push({ data: file, upload: "PENDING" });
+    });
+    setFiles([...files, ...toUpload]);
+    e.target.files = null
+  };
+  const onDelete = (file) => {
+    let delete_Array = files
+    delete_Array.splice(files.indexOf(file),1)
+    setFiles([...delete_Array])
   };
 
-  const onDelete = () => {};
-
-  const handelSubmit = () => {
-    const fileUpload = Axios.post(
-      UrlJoin(process.env.REACT_APP_API_URL, `upload`),
-      { fileName: files[0].name }
-    );
-    fileUpload.then(res => {
-      const url = res.data.fileUploadURL;
-      console.log(url)
-      Axios({
-        method: "PUT",
-        url: url,
-        data: files[0],
-        headers: { "Content-Type": "multipart/form-data"}
-      }).then(res =>{
-        console.log(res)
-      }).catch(error => {
-        console.log(error)
-      })
+  const handelSubmit = e => {
+    e.preventDefault()
+    files.map((file, index) => {
+      if (file.upload !== "UPLOADED") {
+        file.upload = "UPLOADING";
+        setFiles([...files]);
+        const fileUpload = Axios.post(
+          UrlJoin(process.env.REACT_APP_API_URL, `upload`),
+          { fileName: file.data.name }
+        );
+        fileUpload.then(res => {
+          const url = res.data.fileUploadURL;
+          Axios({
+            method: "PUT",
+            url: url,
+            data: file.data,
+            headers: { "Content-Type": "multipart/form-data" }
+          })
+            .then(res => {
+              file.upload = "UPLOADED";
+              setFiles([...files]);
+            })
+            .catch(error => {
+              console.log(error);
+              file.upload = "FAILED";
+              setFiles([...files]);
+            });
+        }).catch(error => {
+          console.log(error);
+          file.upload = "FAILED";
+          setFiles([...files]);
+        });
+      }
     });
   };
+
   const classes = useStyles();
+
   return (
     <Grid
       container
@@ -96,7 +130,7 @@ export function UploadFiles(props) {
           id="upload-field"
           name="uploadFiles"
           multiple
-          onChange={onUpload}
+          onChange={onAddFile}
         />
         <label htmlFor="upload-field">
           <Button variant="outlined" color="primary" component="span">
@@ -107,7 +141,6 @@ export function UploadFiles(props) {
       <Grid item xs={12}>
         <Grid container spacing={2}>
           {files.map((file, index) => {
-            console.log(index + "  " + file);
             return (
               <Grid item key={index}>
                 <Paper className={classes.attachment}>
@@ -116,6 +149,10 @@ export function UploadFiles(props) {
                     color="secondary"
                     component="span"
                     size="small"
+                    onClick={e => {
+                      e.preventDefault()
+                      onDelete(file)
+                    }}
                   >
                     <HighlightOffIcon />
                   </IconButton>
@@ -125,11 +162,33 @@ export function UploadFiles(props) {
                     disabled
                   />
                   <Typography variant="body1" className={classes.overflow}>
-                    {file.name}
+                    {file.data.name}
                   </Typography>
                   <Typography variant="body1">
-                    {(file.size / 1000000).toFixed(2) + "MB"}
+                    {(file.data.size / 1000000).toFixed(2) + "MB"}
                   </Typography>
+                  {(() => {
+                    switch (file.upload) {
+                      case "UPLOADING":
+                        return <LinearProgress className={classes.loading} />;
+                      case "UPLOADED":
+                        return (
+                          <LinearProgress
+                            variant="determinate"
+                            value={100}
+                            className={classes.loading}
+                          />
+                        );
+                      case "FAILED":
+                        return (
+                          <Typography variant="body2" color="secondary">
+                            Upload Failed
+                          </Typography>
+                        );
+                      default:
+                        return null;
+                    }
+                  })()}
                 </Paper>
               </Grid>
             );
