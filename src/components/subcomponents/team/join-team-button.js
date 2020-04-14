@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import { joiningHackIdea } from "../../store/actions/userActions";
+import { joiningHackIdea } from "../../../store/actions/userActions";
 import { connect } from "react-redux";
 
 export function JoinButton({ hackDetails, user, dispatch, history}) {

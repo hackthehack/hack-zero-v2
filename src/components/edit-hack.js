@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import TeamEdit from "./subcomponents/hack-team-edit";
+import TeamEdit from "./subcomponents/team/hack-team-edit";
 import { editingHackIdea } from "../store/actions/userActions";
 import { clearingHackDetails } from "../store/actions/hackathonActions";
-import EditHackStatus from './subcomponents/edit-status'
+import EditHackStatus from './subcomponents/edit/edit-status'
 
 // UI imports
 import {
@@ -157,7 +157,7 @@ export function EditHack({ dispatch, hackDetails, history }) {
                   color="secondary"
                   variant="outlined"
                   onClick={() => {
-                    history.push((`/hacks/${hackDetails._id}`));
+                    history.push((`/hack/${hackDetails._id}`));
                   }}
                 >
                   Cancel
