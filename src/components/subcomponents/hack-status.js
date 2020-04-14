@@ -17,17 +17,14 @@ export function HackStatus({ status }) {
   return (
     <Grid
       container
-      justify="space-between"
+      justify="flex-end"
       alignItems="center"
       alignContent="center"
       spacing={1}
+      style={{ textAlign: "right" }}
     >
-      <Grid item xs={10} className={classes.marginTop}>
-        <Status
-          label={status}
-          style={status}
-          clickable={false}
-        />
+      <Grid item xs={12} className={classes.marginTop}>
+        <Status label={status} style={status} clickable={false} />
       </Grid>
     </Grid>
   );

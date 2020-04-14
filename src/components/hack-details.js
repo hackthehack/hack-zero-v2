@@ -12,12 +12,9 @@ import { connect } from "react-redux";
 import LikeButton from './subcomponents/LikeButton'
 
 // UI imports
-import {
-  Grid,
-  Typography,
-  Paper,
-  CircularProgress,
-} from "@material-ui/core";
+
+import { Grid, Typography, Paper, CircularProgress } from "@material-ui/core";
+
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
@@ -64,17 +61,6 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
             alignItems="stretch"
             alignContent="center"
           >
-            <Grid item xs={9}>
-              <HackStatus status={hackDetails.status}/>
-            </Grid>
-
-            <Grid item xs={3} className={classes.rightField}>
-              <JoinButton
-                team={hackDetails.team}
-                history={history}
-              />
-
-            </Grid>
             <Grid
               container
               justify="flex-start"
@@ -83,9 +69,15 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
               spacing={1}
               className={classes.marginFix}
             >
-              <Grid item>
-                <Typography variant="h4">{hackDetails.title}</Typography>
+              <Grid container justify="space-between">
+                <Grid item xs={12} sm={9}>
+                  <Typography variant="h4">{hackDetails.title}</Typography>
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                  <HackStatus status={hackDetails.status} />
+                </Grid>
               </Grid>
+
               <Grid item>
                 <EditHack
                   match={match}
@@ -120,11 +112,19 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
               <LikeButton />
             </Grid>
           </Grid>
+
+        </Paper>
+        <div style={{ width: "20vw", marginLeft: "1rem" }}>
+          <JoinButton team={hackDetails.team} history={history} />
+        </div>
+      </Grid>
+
           );
         </Route>
         <Route path="/hack/:id/edit" component={EditHack} />
         <Route path="/hack/:id/submit" component={SubmitHack} />
       </Switch>
+
     );
   }
   return (

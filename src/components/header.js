@@ -22,9 +22,9 @@ import ViewListIcon from "@material-ui/icons/ViewList";
 import HomeIcon from "@material-ui/icons/Home";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-import { logout } from '../store/actions/authActions'
+import { logout } from "../store/actions/authActions";
 import { connect } from "react-redux";
-import {withRouter} from 'react-router'
+import { withRouter } from "react-router";
 
 const drawerWidth = 240;
 
@@ -99,16 +99,17 @@ const useStyles = makeStyles(theme => ({
 
 export const Header = props => {
   const [openDrawer, setOpenDrawer] = useState(false);
+  const classes = useStyles();
   const theme = useTheme();
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
   };
 
-  const handleLogout = () =>{
+  const handleLogout = () => {
     const { history } = props;
-    props.logout(history)
-  }
+    props.logout(history);
+  };
 
   const handleDrawerClose = () => {
     setOpenDrawer(false);
@@ -126,8 +127,69 @@ export const Header = props => {
         return "/";
     }
   };
+  const LogoutLinks = () => (
+    <div>
+      <Link to="/" className={classes.link}>
+        <Button color="inherit" className={classes.loginbutton}>
+          Home
+        </Button>
+      </Link>
+      <Link to="/hacks" className={classes.link}>
+        <Button color="inherit" className={classes.loginbutton}>
+          Hacks
+        </Button>
+      </Link>
 
-  const classes = useStyles();
+      <Link to="/login" className={classes.link}>
+        <Button color="inherit" className={classes.loginbutton}>
+          Login
+        </Button>
+      </Link>
+      <Link to="/register" className={classes.link}>
+        <Button color="inherit" className={classes.loginbutton}>
+          Register
+        </Button>
+      </Link>
+    </div>
+  );
+  const LoginLinks = () => (
+    <div>
+      <Link to="/" className={classes.link}>
+        <Button color="inherit" className={classes.loginbutton}>
+          Home
+        </Button>
+      </Link>
+      <Link to="/hacks" className={classes.link}>
+        {" "}
+        <Button color="inherit" className={classes.loginbutton}>
+          Hacks
+        </Button>
+      </Link>
+      <Link to="/create" className={classes.link}>
+        {" "}
+        <Button color="inherit" className={classes.loginbutton}>
+          Create
+        </Button>
+      </Link>
+
+      <Button
+        color="inherit"
+        className={classes.loginbutton}
+        onClick={handleLogout}
+      >
+        Logout
+      </Button>
+      <IconButton
+        aria-label="account of current user"
+        aria-controls="menu-appbar"
+        aria-haspopup="true"
+        color="inherit"
+      >
+        <AccountCircle />
+      </IconButton>
+    </div>
+  );
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -143,34 +205,9 @@ export const Header = props => {
           >
             <MenuIcon />
           </IconButton>
-          {props.auth.isAuth ? (
-            <div>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Button color="inherit" className={classes.loginbutton} onClick={handleLogout}>
-                  Logout
-              </Button>
-            </div>
-          ) : (
-            <div>
-              <Link to="/login" className={classes.link}>
-                <Button color="inherit" className={classes.loginbutton}>
-                  Login
-                </Button>
-              </Link>
-              <Link to="/register" className={classes.link}>
-                <Button color="inherit" className={classes.loginbutton}>
-                  Register
-                </Button>
-              </Link>
-            </div>
-          )}
+          <div className="LinksMobileView">
+            {props.auth.isAuth ? <LoginLinks /> : <LogoutLinks />}
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -225,14 +262,17 @@ export const Header = props => {
       </Drawer>
     </div>
   );
-}
+};
 
 const mapDispatchToProps = dispatch => ({
-  logout: (history) => dispatch(logout(history))
-})
+  logout: history => dispatch(logout(history))
+});
 
 const mapState = state => ({
   auth: state.auth
 });
 
-export default connect(mapState,mapDispatchToProps)(withRouter(Header));
+export default connect(
+  mapState,
+  mapDispatchToProps
+)(withRouter(Header));

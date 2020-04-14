@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
-
+import CoolDates from "./subcomponents/CoolDates";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -31,7 +31,7 @@ const FixedCard = ({ id, title, values }) => {
         </Typography>
 
         {values.map((value, index) => (
-          <Typography key={index} variant="body2" component="p">
+          <Typography key={index} variant="body1" component="div">
             {value}
           </Typography>
         ))}
@@ -49,8 +49,9 @@ export const Home = ({
   information,
   status,
   theme,
-  prize,
-  userId
+
+  userId,
+  prizeList
 }) => {
   const classes = useStyles();
 
@@ -65,14 +66,26 @@ export const Home = ({
         <Typography
           data-testid="page-header"
           style={{ textAlign: "center", margin: "2rem" }}
-          variant="h2"
-          component="h2"
+          variant="h3"
+          component="h3"
         >
           {title}
         </Typography>
         <Grid container spacing={3} alignItems="stretch">
           <Grid style={{ display: "flex" }} item xs={12} sm={6}>
-            <FixedCard id="prize" title="Prize" values={[prize]} />
+            <FixedCard
+              id="prize"
+              title="Prize"
+              values={
+                prizeList
+                  ? [
+                      `1st ${prizeList[0]}`,
+                      `2nd ${prizeList[1]}`,
+                      `3rd ${prizeList[2]}`
+                    ]
+                  : []
+              }
+            />
           </Grid>
           <Grid style={{ display: "flex" }} item xs={12} sm={6}>
             <FixedCard id="status" title="Status" values={[status]} />
@@ -85,10 +98,8 @@ export const Home = ({
               id="schedule"
               title="Schedule"
               values={[
-                `From: ${
-                  from ? from.substring(0, 10).replace(/-/g, "/") : null
-                }`,
-                `To: ${to ? to.substring(0, 10).replace(/-/g, "/") : null}`
+                <CoolDates status="startDate" time={from} />,
+                <CoolDates status="endDate" time={to} />
               ]}
               s
             />
@@ -111,8 +122,9 @@ const mapState = state => ({
   information: state.hack.items.information,
   status: state.hack.items.status,
   theme: state.hack.items.theme,
-  prize: state.hack.items.prize,
+
   from: state.hack.items.from,
-  to: state.hack.items.to
+  to: state.hack.items.to,
+  prizeList: state.hack.items.prizeList
 });
 export default connect(mapState)(Home);
