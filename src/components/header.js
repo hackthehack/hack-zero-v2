@@ -205,7 +205,9 @@ export const Header = props => {
           >
             <MenuIcon />
           </IconButton>
-          {props.auth.isAuth ? <LoginLinks /> : <LogoutLinks />}
+          <div className="LinksMobileView">
+            {props.auth.isAuth ? <LoginLinks /> : <LogoutLinks />}
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
