@@ -11,7 +11,17 @@ test("Auth reducer returns default initialState", () => {
   };
   expect(authReducer(undefined, action)).toEqual(initialState);
 });
+test("Auth reduer returns correct state after user logged out", () => {
+  const action = { type: ActionType.LOGGING_OUT };
+  const expectedState = {
+    loginStatus: null,
+    isAuth: false,
+    userId: null,
+    jwt: null
+  };
 
+  expect(authReducer(undefined, action)).toEqual(expectedState);
+});
 test("Auth reducer returns correct state after user is login", () => {
   const action = {
     type: ActionType.LOGIN,
