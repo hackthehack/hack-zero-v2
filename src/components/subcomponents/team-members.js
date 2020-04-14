@@ -23,6 +23,7 @@ export function Team(props) {
             icon={<AccountCircleIcon />}
             label={member.name}
             color="primary"
+            variant="outlined"
           />
         );
       })}

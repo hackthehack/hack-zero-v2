@@ -14,14 +14,13 @@ import TeamMembers from "./subcomponents/team-members";
 import UrlJoin from "url-join";
 import { clearingHackDetails } from "../store/actions/hackathonActions";
 import { connect } from "react-redux";
-import HackStatus from './subcomponents/hack-status'
+import HackStatus from "./subcomponents/hack-status";
 
 const useStyles = makeStyles(theme => ({
   root: {
     margin: theme.spacing(1),
     padding: theme.spacing(1),
-    width: "80vw"
-    //display: "relative"
+    width: "50vw"
   },
   paper: {
     padding: theme.spacing(3),
@@ -80,18 +79,30 @@ export const Hacks = ({ dispatch }) => {
                   alignContent="center"
                   spacing={1}
                 >
-                  <Grid item>
-                    <Typography variant="h5">{hack.title}</Typography>
+                  <Grid
+                    container
+                    justify="space-around"
+                    alignItems="center"
+                    alignContent="center"
+                    spacing={3}
+                    style={{ margin: "0 auto" }}
+                  >
+                    <Grid item xs={12} lg={8}>
+                      <Typography variant="h5">{hack.title}</Typography>
+                    </Grid>
+                    <Grid item xs={12} lg={4}>
+                      <HackStatus status={hack.status} />
+                    </Grid>
                   </Grid>
-                  <Grid item xs={4}>
-                    <HackStatus status={hack.status}/>
-                  </Grid>
+
                   <Grid
                     item
                     xs={12}
                     style={{ marginBottom: "1rem", marginTop: "1rem" }}
                   >
-                    {hack.description.slice(0, 100) + " ...Read More"}
+                    <Typography variant="body1" component="p">
+                      {hack.description.slice(0, 100) + " ...Read More"}
+                    </Typography>
                   </Grid>
                   <Grid
                     item

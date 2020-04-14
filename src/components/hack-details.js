@@ -12,7 +12,9 @@ import { connect } from "react-redux";
 import LikeButton from "./subcomponents/LikeButton";
 
 // UI imports
+
 import { Grid, Typography, Paper, CircularProgress } from "@material-ui/core";
+
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
@@ -61,20 +63,12 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
           >
             <Paper className={classes.root}>
               <Grid
-                data-testid="main-container"
                 container
                 direction="column"
                 justify="center"
                 alignItems="stretch"
                 alignContent="center"
               >
-                <Grid item xs={9}>
-                  <HackStatus status={hackDetails.status} />
-                </Grid>
-
-                <Grid item xs={3} className={classes.rightField}>
-                  <JoinButton team={hackDetails.team} history={history} />
-                </Grid>
                 <Grid
                   container
                   justify="flex-start"
@@ -83,15 +77,17 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                   spacing={1}
                   className={classes.marginFix}
                 >
-                  <Grid item>
+                  
+                  <Grid item xs={12} sm={8} style={{display: "flex", flexWrap: "wrap"}}>
                     <Typography variant="h4">{hackDetails.title}</Typography>
-                  </Grid>
-                  <Grid item>
                     <EditHackButton
                       match={match}
                       team={hackDetails.team}
                       userId={userId}
                     />
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <HackStatus status={hackDetails.status} />
                   </Grid>
 
                   <Grid item xs={10} className={classes.creator}>
@@ -102,27 +98,32 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                         : "Unknown"}
                     </Typography>
                   </Grid>
+                </Grid>
+                <Grid item xs={10} style={{marginTop:"1rem"}}>
+                  <Typography variant="h6">Idea:</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography variant="body1">
+                    {hackDetails.description}
+                  </Typography>
                   <Grid item xs={10}>
-                    <Typography variant="h6">Idea:</Typography>
+                    <Typography variant="h6">Goal:</Typography>
                   </Grid>
-                  <Grid item xs={12}>
-                    <Typography variant="body1">
-                      {hackDetails.description}
-                    </Typography>
-                    <Grid item xs={10}>
-                      <Typography variant="h6">Goal:</Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={10}>
-                    <Typography variant="body1">{hackDetails.goal}</Typography>
-                  </Grid>
-
+                </Grid>
+                <Grid item xs={10}>
+                  <Typography variant="body1">{hackDetails.goal}</Typography>
+                </Grid>
+                <Grid item xs={10}>
                   <Team team={hackDetails.team} name={hackDetails.teamName} />
-
+                </Grid>
+                <Grid item xs={12}>
                   <LikeButton />
                 </Grid>
               </Grid>
             </Paper>
+            <div style={{ width: "20vw", marginLeft: "1rem" }}>
+              <JoinButton team={hackDetails.team} history={history} />
+            </div>
           </Grid>
         </Route>
         <Route exact path="/hack/:id/edit" component={EditHack} />
