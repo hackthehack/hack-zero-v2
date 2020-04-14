@@ -1,6 +1,5 @@
 import React from "react";
 import { Button } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
@@ -10,29 +9,29 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function EditHackButton(props) {
+export function SubmitButton(props) {
   const classes = useStyles();
 
-  const [disable, setDisable] = React.useState(true);
+  const [visible, setVisible] = React.useState(true);
 
   React.useEffect(() => {
     props.team.forEach(member => {
       if (member._id === props.userId) {
-        setDisable(false);
+        setVisible(false);
       }
     });
   });
 
-  if (disable) {
+  if (visible) {
     return null;
   }
   return (
-    <Link to={`${props.match.url}/edit`}>
-      <Button className={classes.editButton}>
-        <EditIcon />
+    <Link to={`${props.match.url}/submit`} style={{ textDecoration: "none" }}>
+      <Button variant="outlined" color="primary" className={classes.editButton}>
+        Submit
       </Button>
     </Link>
   );
 }
 
-export default EditHackButton;
+export default SubmitButton;

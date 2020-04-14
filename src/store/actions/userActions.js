@@ -163,3 +163,21 @@ export const editingHackIdea = updatedData => {
     dispatch(editHackIdea(joinedHackIdea));
   };
 };
+
+export const submitHackIdea = (submitData) => {
+  return async (dispatch, getState) => {
+    let config = {
+      headers: {
+        Authorization: "Bearer " + store.getState().auth.jwt
+      }
+    }
+    await axios.post(
+      UrlJoin(process.env.REACT_APP_API_URL, "submit"),
+      {
+        ...submitData,
+        hackId: store.getState().hack.hackDetails._id,
+      },
+      config
+    );
+  }
+}
