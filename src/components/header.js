@@ -99,6 +99,7 @@ const useStyles = makeStyles(theme => ({
 
 export const Header = props => {
   const [openDrawer, setOpenDrawer] = useState(false);
+  const classes = useStyles();
   const theme = useTheme();
 
   const handleDrawerOpen = () => {
@@ -126,8 +127,19 @@ export const Header = props => {
         return "/";
     }
   };
-  const logOutLinks = () => (
+  const LogoutLinks = () => (
     <div>
+      <Link to="/" className={classes.link}>
+        <Button color="inherit" className={classes.loginbutton}>
+          Home
+        </Button>
+      </Link>
+      <Link to="/hacks" className={classes.link}>
+        <Button color="inherit" className={classes.loginbutton}>
+          Hacks
+        </Button>
+      </Link>
+
       <Link to="/login" className={classes.link}>
         <Button color="inherit" className={classes.loginbutton}>
           Login
@@ -140,8 +152,33 @@ export const Header = props => {
       </Link>
     </div>
   );
-  const logInLinks = () => (
+  const LoginLinks = () => (
     <div>
+      <Link to="/" className={classes.link}>
+        <Button color="inherit" className={classes.loginbutton}>
+          Home
+        </Button>
+      </Link>
+      <Link to="/hacks" className={classes.link}>
+        {" "}
+        <Button color="inherit" className={classes.loginbutton}>
+          Hacks
+        </Button>
+      </Link>
+      <Link to="/create" className={classes.link}>
+        {" "}
+        <Button color="inherit" className={classes.loginbutton}>
+          Create
+        </Button>
+      </Link>
+
+      <Button
+        color="inherit"
+        className={classes.loginbutton}
+        onClick={handleLogout}
+      >
+        Logout
+      </Button>
       <IconButton
         aria-label="account of current user"
         aria-controls="menu-appbar"
@@ -150,17 +187,9 @@ export const Header = props => {
       >
         <AccountCircle />
       </IconButton>
-      <Button
-        color="inherit"
-        className={classes.loginbutton}
-        onClick={handleLogout}
-      >
-        Logout
-      </Button>
     </div>
   );
 
-  const classes = useStyles();
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -176,7 +205,7 @@ export const Header = props => {
           >
             <MenuIcon />
           </IconButton>
-          {props.auth.isAuth ? logInLinks() : logOutLinks()}
+          {props.auth.isAuth ? <LoginLinks /> : <LogoutLinks />}
         </Toolbar>
       </AppBar>
       <Drawer
