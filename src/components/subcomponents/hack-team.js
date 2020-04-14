@@ -33,8 +33,13 @@ export function Team(props) {
         <Typography variant="h6">Team Members:</Typography>
       </Grid>
       <Grid item xs={10}>
-        {props.team.length !== 0 ? <TeamMembers team={props.team} /> : 
-        (<Typography variant="body1">This team has no members yet! Be the first to join!</Typography>)}
+        {props.team.length !== 0 ? (
+          <TeamMembers team={props.team} />
+        ) : (
+          <Typography variant="body1">
+            This team has no members yet! Be the first to join!
+          </Typography>
+        )}
       </Grid>
     </Grid>
   );

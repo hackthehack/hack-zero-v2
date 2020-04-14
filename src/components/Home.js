@@ -49,7 +49,7 @@ export const Home = ({
   information,
   status,
   theme,
-  price,
+  prize,
   userId
 }) => {
   const classes = useStyles();
@@ -72,7 +72,7 @@ export const Home = ({
         </Typography>
         <Grid container spacing={3} alignItems="stretch">
           <Grid style={{ display: "flex" }} item xs={12} sm={6}>
-            <FixedCard id="price" title="Price" values={[price]} />
+            <FixedCard id="prize" title="Prize" values={[prize]} />
           </Grid>
           <Grid style={{ display: "flex" }} item xs={12} sm={6}>
             <FixedCard id="status" title="Status" values={[status]} />
@@ -111,7 +111,7 @@ const mapState = state => ({
   information: state.hack.items.information,
   status: state.hack.items.status,
   theme: state.hack.items.theme,
-  price: state.hack.items.price,
+  prize: state.hack.items.prize,
   from: state.hack.items.from,
   to: state.hack.items.to
 });

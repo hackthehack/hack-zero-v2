@@ -9,6 +9,7 @@ import SubmitHack from "./submit-hack";
 import SubmitButton from "./subcomponents/submit-button";
 import { fetchingHackDetails } from "../store/actions/userActions";
 import { connect } from "react-redux";
+import LikeButton from './subcomponents/LikeButton'
 
 // UI imports
 import {
@@ -23,7 +24,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     margin: theme.spacing(2),
     padding: theme.spacing(2),
-    width: "80vw"
+    width: "80vw",
+    position: "relative"
   },
   rightField: {
     textAlign: "right"
@@ -46,9 +48,9 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
 
   useEffect(() => {
     if (!hackDetails || hackDetails._id !== match.params.id) {
-      dispatch(fetchingHackDetails(match.params.id));
+      dispatch(fetchingHackDetails(match.params.id, userId));
     }
-  }, [hackDetails, dispatch, match]);
+  }, [dispatch, hackDetails, match, userId]);
 
   if (hackDetails) {
     return (
@@ -62,63 +64,61 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
             alignItems="stretch"
             alignContent="center"
           >
-            <Paper className={classes.root}>
-              <Grid
-                container
-                justify="space-between"
-                alignItems="center"
-                alignContent="center"
-                spacing={1}
-              >
-                <Grid item xs={9}>
-                  <HackStatus status={hackDetails.status} />
-                </Grid>
-                <Grid item xs={3} className={classes.rightField}>
-                  <JoinButton team={hackDetails.team} history={history} />
-                  <SubmitButton match={match} team={hackDetails.team} userId={userId} />
-                </Grid>
-                <Grid
-                  container
-                  justify="flex-start"
-                  alignItems="center"
-                  alignContent="center"
-                  spacing={1}
-                  className={classes.marginFix}
-                >
-                  <Grid item>
-                    <Typography variant="h4">{hackDetails.title}</Typography>
-                  </Grid>
-                  <Grid item>
-                    <EditHackButton
-                      match={match}
-                      team={hackDetails.team}
-                      userId={userId}
-                    />
-                  </Grid>
-                </Grid>
-                <Grid item xs={10} className={classes.creator}>
-                  <Typography variant="body1">
-                    Created by:{" "}
-                    {hackDetails.creator ? hackDetails.creator.name : "Unknown"}
-                  </Typography>
-                </Grid>
+            <Grid item xs={9}>
+              <HackStatus status={hackDetails.status}/>
+            </Grid>
+
+            <Grid item xs={3} className={classes.rightField}>
+              <JoinButton
+                team={hackDetails.team}
+                history={history}
+              />
+
+            </Grid>
+            <Grid
+              container
+              justify="flex-start"
+              alignItems="center"
+              alignContent="center"
+              spacing={1}
+              className={classes.marginFix}
+            >
+              <Grid item>
+                <Typography variant="h4">{hackDetails.title}</Typography>
+              </Grid>
+              <Grid item>
+                <EditHack
+                  match={match}
+                  team={hackDetails.team}
+                  userId={userId}
+                />
+              </Grid>
+
+              <Grid item xs={10} className={classes.creator}>
+                <Typography variant="body1">
+                  Created by:{" "}
+                  {hackDetails.creator ? hackDetails.creator.name : "Unknown"}
+                </Typography>
+              </Grid>
+              <Grid item xs={10}>
+                <Typography variant="h6">Idea:</Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="body1">
+                  {hackDetails.description}
+                </Typography>
                 <Grid item xs={10}>
-                  <Typography variant="h6">Idea:</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="body1">
-                    {hackDetails.description}
-                  </Typography>
-                  <Grid item xs={10}>
-                    <Typography variant="h6">Goal:</Typography>
-                  </Grid>
-                  <Grid item xs={10}>
-                    <Typography variant="body1">{hackDetails.goal}</Typography>
-                  </Grid>
-                  <Team team={hackDetails.team} name={hackDetails.teamName} />
+                  <Typography variant="h6">Goal:</Typography>
                 </Grid>
               </Grid>
-            </Paper>
+              <Grid item xs={10}>
+                <Typography variant="body1">{hackDetails.goal}</Typography>
+              </Grid>
+
+              <Team team={hackDetails.team} name={hackDetails.teamName} />
+
+              <LikeButton />
+            </Grid>
           </Grid>
           );
         </Route>
