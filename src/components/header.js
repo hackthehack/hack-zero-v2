@@ -22,9 +22,9 @@ import ViewListIcon from "@material-ui/icons/ViewList";
 import HomeIcon from "@material-ui/icons/Home";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-import { logout } from '../store/actions/authActions'
+import { logout } from "../store/actions/authActions";
 import { connect } from "react-redux";
-import {withRouter} from 'react-router'
+import { withRouter } from "react-router";
 
 const drawerWidth = 240;
 
@@ -105,10 +105,10 @@ export const Header = props => {
     setOpenDrawer(true);
   };
 
-  const handleLogout = () =>{
+  const handleLogout = () => {
     const { history } = props;
-    props.logout(history)
-  }
+    props.logout(history);
+  };
 
   const handleDrawerClose = () => {
     setOpenDrawer(false);
@@ -126,6 +126,39 @@ export const Header = props => {
         return "/";
     }
   };
+  const logOutLinks = () => (
+    <div>
+      <Link to="/login" className={classes.link}>
+        <Button color="inherit" className={classes.loginbutton}>
+          Login
+        </Button>
+      </Link>
+      <Link to="/register" className={classes.link}>
+        <Button color="inherit" className={classes.loginbutton}>
+          Register
+        </Button>
+      </Link>
+    </div>
+  );
+  const logInLinks = () => (
+    <div>
+      <IconButton
+        aria-label="account of current user"
+        aria-controls="menu-appbar"
+        aria-haspopup="true"
+        color="inherit"
+      >
+        <AccountCircle />
+      </IconButton>
+      <Button
+        color="inherit"
+        className={classes.loginbutton}
+        onClick={handleLogout}
+      >
+        Logout
+      </Button>
+    </div>
+  );
 
   const classes = useStyles();
   return (
@@ -143,34 +176,7 @@ export const Header = props => {
           >
             <MenuIcon />
           </IconButton>
-          {props.auth.isAuth ? (
-            <div>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Button color="inherit" className={classes.loginbutton} onClick={handleLogout}>
-                  Logout
-              </Button>
-            </div>
-          ) : (
-            <div>
-              <Link to="/login" className={classes.link}>
-                <Button color="inherit" className={classes.loginbutton}>
-                  Login
-                </Button>
-              </Link>
-              <Link to="/register" className={classes.link}>
-                <Button color="inherit" className={classes.loginbutton}>
-                  Register
-                </Button>
-              </Link>
-            </div>
-          )}
+          {props.auth.isAuth ? logInLinks() : logOutLinks()}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -225,14 +231,17 @@ export const Header = props => {
       </Drawer>
     </div>
   );
-}
+};
 
 const mapDispatchToProps = dispatch => ({
-  logout: (history) => dispatch(logout(history))
-})
+  logout: history => dispatch(logout(history))
+});
 
 const mapState = state => ({
   auth: state.auth
 });
 
-export default connect(mapState,mapDispatchToProps)(withRouter(Header));
+export default connect(
+  mapState,
+  mapDispatchToProps
+)(withRouter(Header));
