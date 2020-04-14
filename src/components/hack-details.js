@@ -64,10 +64,6 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
             alignContent="center"
             spacing={1}
           >
-            <Grid item xs={9}>
-              <HackStatus status={hackDetails.status} />
-            </Grid>
-
             <Grid
               container
               justify="flex-start"
@@ -76,9 +72,15 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
               spacing={1}
               className={classes.marginFix}
             >
-              <Grid item>
-                <Typography variant="h4">{hackDetails.title}</Typography>
+              <Grid container justify="space-between">
+                <Grid item xs={12} sm={9}>
+                  <Typography variant="h4">{hackDetails.title}</Typography>
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                  <HackStatus status={hackDetails.status} />
+                </Grid>
               </Grid>
+
               <Grid item>
                 <EditHack
                   match={match}
