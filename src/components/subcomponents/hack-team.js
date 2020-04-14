@@ -5,7 +5,8 @@ import TeamMembers from "./team-members";
 
 const useStyles = makeStyles(theme => ({
   margin: {
-    marginTop: theme.spacing(5)
+    marginTop: theme.spacing(5),
+    marginBottom: theme.spacing(1)
   }
 }));
 

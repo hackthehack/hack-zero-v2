@@ -6,7 +6,7 @@ import EditHackButton from "./subcomponents/edit-hack-button";
 import HackStatus from "./subcomponents/hack-status";
 import EditHack from "./edit-hack";
 import SubmitHack from "./submit-hack";
-import SubmitButton from "./subcomponents/submit-button";
+import SubmitButton from "./subcomponents/submit/submit-button";
 import { fetchingHackDetails } from "../store/actions/userActions";
 import { connect } from "react-redux";
 import LikeButton from "./subcomponents/LikeButton";
@@ -64,8 +64,8 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
             <Paper className={classes.root}>
               <Grid
                 container
-                direction="column"
-                justify="center"
+                // direction="column"
+                justify="flex-start"
                 alignItems="stretch"
                 alignContent="center"
               >
@@ -77,8 +77,12 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                   spacing={1}
                   className={classes.marginFix}
                 >
-                  
-                  <Grid item xs={12} sm={8} style={{display: "flex", flexWrap: "wrap"}}>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={8}
+                    style={{ display: "flex", flexWrap: "wrap" }}
+                  >
                     <Typography variant="h4">{hackDetails.title}</Typography>
                     <EditHackButton
                       match={match}
@@ -99,7 +103,7 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                     </Typography>
                   </Grid>
                 </Grid>
-                <Grid item xs={10} style={{marginTop:"1rem"}}>
+                <Grid item xs={10} style={{ marginTop: "1rem" }}>
                   <Typography variant="h6">Idea:</Typography>
                 </Grid>
                 <Grid item xs={12}>
@@ -116,14 +120,26 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                 <Grid item xs={10}>
                   <Team team={hackDetails.team} name={hackDetails.teamName} />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={4} sm={2}>
                   <LikeButton />
+                </Grid>
+                <Grid
+                  container
+                  justify="flex-start"
+                  alignItems="center"
+                  alignContent="center"
+                  spacing={1}
+                  className={classes.marginFix}
+                >
+                  <Grid item xs={4} sm={2}>
+                    <JoinButton team={hackDetails.team} history={history} />
+                  </Grid>
+                  <Grid item xs={4} sm={2}>
+                    <SubmitButton team={hackDetails.team} history={history} />
+                  </Grid>
                 </Grid>
               </Grid>
             </Paper>
-            <div style={{ width: "20vw", marginLeft: "1rem" }}>
-              <JoinButton team={hackDetails.team} history={history} />
-            </div>
           </Grid>
         </Route>
         <Route exact path="/hack/:id/edit" component={EditHack} />

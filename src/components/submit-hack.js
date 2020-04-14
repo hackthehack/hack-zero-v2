@@ -5,7 +5,7 @@ import {
 import { getSubmissionData } from "../store/actions/hackathonActions"
 import { connect } from "react-redux";
 import SubmitDetails from "./subcomponents/submit/submit-details";
-import Upload from "./subcomponents/submit/upload";
+import Upload from "./subcomponents/upload/upload";
 
 // UI imports
 import {
