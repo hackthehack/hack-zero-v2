@@ -1,6 +1,5 @@
 import React from "react";
 import { Chip } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 
 import NewReleasesIcon from "@material-ui/icons/NewReleases";
 import VisibilityIcon from "@material-ui/icons/Visibility";
@@ -10,14 +9,7 @@ import NotInterestedIcon from "@material-ui/icons/NotInterested";
 import CancelIcon from "@material-ui/icons/Cancel";
 import PublishIcon from "@material-ui/icons/Publish";
 
-const useStyles = makeStyles(theme => ({
-  chip: {
-    marginRight: theme.spacing(1)
-  }
-}));
-
 export function Status({ label, style, clickable, onclick }) {
-  const classes = useStyles();
 
   const type = value => {
     switch (value) {
@@ -90,7 +82,6 @@ export function Status({ label, style, clickable, onclick }) {
   return (
     <Chip
       label={label}
-      //className={classes.chip}
       style={style ? type(style).color : type(style).color}
       clickable={clickable}
       onClick={clickable ? onclick : null}

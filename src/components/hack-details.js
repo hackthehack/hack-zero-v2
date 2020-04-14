@@ -6,7 +6,7 @@ import EditHackButton from "./subcomponents/edit-hack-button";
 import HackStatus from "./subcomponents/hack-status";
 import EditHack from "./edit-hack";
 import SubmitHack from "./submit-hack";
-import SubmitButton from "./subcomponents/submit-button";
+// import SubmitButton from "./subcomponents/submit-button";
 import { fetchingHackDetails } from "../store/actions/userActions";
 import { connect } from "react-redux";
 import LikeButton from "./subcomponents/LikeButton";
