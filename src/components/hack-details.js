@@ -9,7 +9,7 @@ import SubmitHack from "./submit-hack";
 import SubmitButton from "./subcomponents/submit-button";
 import { fetchingHackDetails } from "../store/actions/userActions";
 import { connect } from "react-redux";
-import LikeButton from './subcomponents/LikeButton'
+import LikeButton from "./subcomponents/LikeButton";
 
 // UI imports
 
@@ -61,70 +61,74 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
             alignItems="stretch"
             alignContent="center"
           >
-            <Grid
-              container
-              justify="flex-start"
-              alignItems="center"
-              alignContent="center"
-              spacing={1}
-              className={classes.marginFix}
-            >
-              <Grid container justify="space-between">
-                <Grid item xs={12} sm={9}>
-                  <Typography variant="h4">{hackDetails.title}</Typography>
-                </Grid>
-                <Grid item xs={12} sm={3}>
-                  <HackStatus status={hackDetails.status} />
-                </Grid>
-              </Grid>
+            <Paper className={classes.root}>
+              <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="stretch"
+                alignContent="center"
+              >
+                <Grid
+                  container
+                  justify="flex-start"
+                  alignItems="center"
+                  alignContent="center"
+                  spacing={1}
+                  className={classes.marginFix}
+                >
+                  
+                  <Grid item xs={12} sm={8} style={{display: "flex", flexWrap: "wrap"}}>
+                    <Typography variant="h4">{hackDetails.title}</Typography>
+                    <EditHackButton
+                      match={match}
+                      team={hackDetails.team}
+                      userId={userId}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <HackStatus status={hackDetails.status} />
+                  </Grid>
 
-              <Grid item>
-                <EditHack
-                  match={match}
-                  team={hackDetails.team}
-                  userId={userId}
-                />
-              </Grid>
-
-              <Grid item xs={10} className={classes.creator}>
-                <Typography variant="body1">
-                  Created by:{" "}
-                  {hackDetails.creator ? hackDetails.creator.name : "Unknown"}
-                </Typography>
-              </Grid>
-              <Grid item xs={10}>
-                <Typography variant="h6">Idea:</Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="body1">
-                  {hackDetails.description}
-                </Typography>
+                  <Grid item xs={10} className={classes.creator}>
+                    <Typography variant="body1">
+                      Created by:{" "}
+                      {hackDetails.creator
+                        ? hackDetails.creator.name
+                        : "Unknown"}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid item xs={10} style={{marginTop:"1rem"}}>
+                  <Typography variant="h6">Idea:</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography variant="body1">
+                    {hackDetails.description}
+                  </Typography>
+                  <Grid item xs={10}>
+                    <Typography variant="h6">Goal:</Typography>
+                  </Grid>
+                </Grid>
                 <Grid item xs={10}>
-                  <Typography variant="h6">Goal:</Typography>
+                  <Typography variant="body1">{hackDetails.goal}</Typography>
+                </Grid>
+                <Grid item xs={10}>
+                  <Team team={hackDetails.team} name={hackDetails.teamName} />
+                </Grid>
+                <Grid item xs={12}>
+                  <LikeButton />
                 </Grid>
               </Grid>
-              <Grid item xs={10}>
-                <Typography variant="body1">{hackDetails.goal}</Typography>
-              </Grid>
-
-              <Team team={hackDetails.team} name={hackDetails.teamName} />
-
-              <LikeButton />
-            </Grid>
+            </Paper>
+            <div style={{ width: "20vw", marginLeft: "1rem" }}>
+              <JoinButton team={hackDetails.team} history={history} />
+            </div>
           </Grid>
-
-        </Paper>
-        <div style={{ width: "20vw", marginLeft: "1rem" }}>
-          <JoinButton team={hackDetails.team} history={history} />
-        </div>
-      </Grid>
-
-          );
         </Route>
-        <Route path="/hack/:id/edit" component={EditHack} />
-        <Route path="/hack/:id/submit" component={SubmitHack} />
+        <Route exact path="/hack/:id/edit" component={EditHack} />
+        <Route exact path="/hack/:id/submit" component={SubmitHack} />
       </Switch>
-
     );
   }
   return (
