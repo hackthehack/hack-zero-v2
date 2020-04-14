@@ -4,7 +4,8 @@ const initialState = {
   items: {},
   assets: [],
   hackDetails: null,
-  assignedHacks: []
+  assignedHacks: [],
+  submission: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -60,6 +61,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         hackDetails: null
       };
+    case ActionType.SET_SUBMISSION_DATA:
+      return{
+        ...state,
+        submission: { ...action.payload }
+      }
     default:
       return state;
   }

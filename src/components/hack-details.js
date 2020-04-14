@@ -1,17 +1,20 @@
 import React, { useEffect } from "react";
+import { Switch, Route } from "react-router-dom";
 import Team from "./subcomponents/hack-team";
 import JoinButton from "./subcomponents/join-team-button";
-import EditHack from "./subcomponents/edit-hack-button";
-
-import LikeButton from "./subcomponents/LikeButton";
-
+import EditHackButton from "./subcomponents/edit-hack-button";
 import HackStatus from "./subcomponents/hack-status";
-
+import EditHack from "./edit-hack";
+import SubmitHack from "./submit-hack";
+import SubmitButton from "./subcomponents/submit-button";
 import { fetchingHackDetails } from "../store/actions/userActions";
 import { connect } from "react-redux";
+import LikeButton from './subcomponents/LikeButton'
 
 // UI imports
+
 import { Grid, Typography, Paper, CircularProgress } from "@material-ui/core";
+
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
@@ -48,21 +51,15 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
 
   if (hackDetails) {
     return (
-      <Grid
-        data-testid="main-container"
-        container
-        direction="column"
-        justify="center"
-        alignItems="stretch"
-        alignContent="center"
-      >
-        <Paper className={classes.root}>
+      <Switch>
+        <Route exact path="/hack/:id">
           <Grid
+            data-testid="main-container"
             container
-            justify="space-between"
-            alignItems="center"
+            direction="column"
+            justify="center"
+            alignItems="stretch"
             alignContent="center"
-            spacing={1}
           >
             <Grid
               container
@@ -115,11 +112,19 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
               <LikeButton />
             </Grid>
           </Grid>
+
         </Paper>
         <div style={{ width: "20vw", marginLeft: "1rem" }}>
           <JoinButton team={hackDetails.team} history={history} />
         </div>
       </Grid>
+
+          );
+        </Route>
+        <Route path="/hack/:id/edit" component={EditHack} />
+        <Route path="/hack/:id/submit" component={SubmitHack} />
+      </Switch>
+
     );
   }
   return (
