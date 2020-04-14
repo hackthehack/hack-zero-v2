@@ -5,18 +5,13 @@ import EditHack from "./subcomponents/edit-hack-button";
 
 import LikeButton from "./subcomponents/LikeButton";
 
-import HackStatus from './subcomponents/hack-status';
+import HackStatus from "./subcomponents/hack-status";
 
 import { fetchingHackDetails } from "../store/actions/userActions";
 import { connect } from "react-redux";
 
 // UI imports
-import {
-  Grid,
-  Typography,
-  Paper,
-  CircularProgress
-} from "@material-ui/core";
+import { Grid, Typography, Paper, CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
@@ -70,16 +65,9 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
             spacing={1}
           >
             <Grid item xs={9}>
-              <HackStatus status={hackDetails.status}/>
+              <HackStatus status={hackDetails.status} />
             </Grid>
 
-            <Grid item xs={3} className={classes.rightField}>
-              <JoinButton
-                team={hackDetails.team}
-                history={history}
-              />
-
-            </Grid>
             <Grid
               container
               justify="flex-start"
@@ -126,6 +114,9 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
             </Grid>
           </Grid>
         </Paper>
+        <div style={{ width: "20vw", marginLeft: "1rem" }}>
+          <JoinButton team={hackDetails.team} history={history} />
+        </div>
       </Grid>
     );
   }
