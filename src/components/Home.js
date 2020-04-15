@@ -105,10 +105,16 @@ export const Home = ({
               id="theme"
               title="Theme"
               values={[
-                <div>
-                  {theme}
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <p>{theme}</p>
                   {assets[2] ? (
-                    <img src={`https:${assets[2].fields.file.url}`} />
+                    <img
+                      alt="hack-event-thumbnail"
+                      className="imageFrame"
+                      src={`https:${assets[2].fields.file.url}`}
+                    />
                   ) : null}
                 </div>,
               ]}
