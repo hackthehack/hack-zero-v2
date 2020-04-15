@@ -10,17 +10,18 @@ const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 const initialState = {
   auth: {
-    isAuth: false
+    isAuth: false,
   },
   hack: {
     items: {
       title: "a test",
       information: "a information",
       status: "active",
-      theme: "a testing theme"
+      theme: "a testing theme",
     },
-    assignedHacks: []
-  }
+    assignedHacks: [],
+    assets: [],
+  },
 };
 test("<Home/> component heading should be rendered in the page", () => {
   const store = mockStore(initialState);

@@ -109,7 +109,7 @@ export const Home = ({
                   style={{ display: "flex", justifyContent: "space-between" }}
                 >
                   <p>{theme}</p>
-                  {assets[2] ? (
+                  {assets.length !== 0 ? (
                     <img
                       alt="hack-event-thumbnail"
                       className="imageFrame"
