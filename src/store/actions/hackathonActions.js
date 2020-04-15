@@ -5,23 +5,25 @@ import urlJoin from "url-join";
 //const testUrl = "http://localhost:3001/userhacks/";
 import store from "../../setupStore";
 
-export const getContentOkay = content => ({
+export const getContentOkay = (content) => ({
   type: ActionType.FETCH_HACK_A_THON,
-  payload: content
+  payload: content,
 });
-
-export const clearHackDetails = content => ({
-  type: ActionType.CLEAR_HACK
+export const getContentAssetOkay = (asset) => ({
+  type: ActionType.FETCH_ASSET,
+  payload: asset,
 });
-export const getAssignedHacksOkay = hacks => ({
+export const clearHackDetails = (content) => ({
+  type: ActionType.CLEAR_HACK,
+});
+export const getAssignedHacksOkay = (hacks) => ({
   type: ActionType.FETCH_ASSIGNED_HACKS,
-  payload: hacks
+  payload: hacks,
 });
-export const submissionData = submission => ({
+export const submissionData = (submission) => ({
   type: ActionType.SET_SUBMISSION_DATA,
-  payload: submission
-})
-
+  payload: submission,
+});
 
 export const getAssignedHacks = () => {
   return async (dispatch, getState) => {
@@ -48,6 +50,9 @@ export const getHackathonContent = () => {
       let result = await axios.get(
         `${process.env.REACT_APP_CONTENTFUL_API}/spaces/${process.env.REACT_APP_CONTENTFUL_SPACE_ID}/entries?access_token=${process.env.REACT_APP_CONTENTFUL_KEY}&content_type=hackEvent`
       );
+      console.log(result.data.includes.Asset[2]);
+      console.log(result.data.includes.Asset[2].fields.file.url);
+
       dispatch(getContentOkay(result.data.items));
     } catch (err) {
       console.log(err);
@@ -72,7 +77,7 @@ export const getSubmissionData = () => {
           `submissionDetails/${store.getState().hack.hackDetails}`
         )
       );
-      dispatch(submissionData(result))
+      dispatch(submissionData(result));
     } catch (err) {
       console.log(err);
     }
