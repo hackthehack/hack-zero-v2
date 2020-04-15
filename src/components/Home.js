@@ -81,15 +81,15 @@ export const Home = ({
                 prizeList
                   ? [
                       <div>
-                        <FaMedal />
+                        <FaMedal style={{ color: "#FFD700" }} />
                         {prizeList[0]}
                       </div>,
                       <div>
-                        <FaMedal />
+                        <FaMedal style={{ color: "#C0C0C0" }} />
                         {prizeList[1]}
                       </div>,
                       <div>
-                        <FaMedal />
+                        <FaMedal style={{ color: "#CD7F32" }} />
                         {prizeList[2]}
                       </div>,
                     ]
