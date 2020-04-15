@@ -9,17 +9,18 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { connect } from "react-redux";
 import { getHackathonContent } from "../store/actions/hackathonActions";
+import { FaMedal } from "react-icons/fa";
 import MyHacks from "./MyHacks";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
-    color: theme.palette.text.secondary
-  }
+    color: theme.palette.text.secondary,
+  },
 }));
 
 const FixedCard = ({ id, title, values }) => {
@@ -51,7 +52,7 @@ export const Home = ({
   theme,
 
   userId,
-  prizeList
+  prizeList,
 }) => {
   const classes = useStyles();
 
@@ -79,9 +80,18 @@ export const Home = ({
               values={
                 prizeList
                   ? [
-                      `1st ${prizeList[0]}`,
-                      `2nd ${prizeList[1]}`,
-                      `3rd ${prizeList[2]}`
+                      <div>
+                        <FaMedal />
+                        {prizeList[0]}
+                      </div>,
+                      <div>
+                        <FaMedal />
+                        {prizeList[1]}
+                      </div>,
+                      <div>
+                        <FaMedal />
+                        {prizeList[2]}
+                      </div>,
                     ]
                   : []
               }
@@ -99,7 +109,7 @@ export const Home = ({
               title="Schedule"
               values={[
                 <CoolDates status="startDate" time={from} />,
-                <CoolDates status="endDate" time={to} />
+                <CoolDates status="endDate" time={to} />,
               ]}
               s
             />
@@ -117,7 +127,7 @@ export const Home = ({
     </div>
   );
 };
-const mapState = state => ({
+const mapState = (state) => ({
   title: state.hack.items.title,
   information: state.hack.items.information,
   status: state.hack.items.status,
@@ -125,6 +135,6 @@ const mapState = state => ({
 
   from: state.hack.items.from,
   to: state.hack.items.to,
-  prizeList: state.hack.items.prizeList
+  prizeList: state.hack.items.prizeList,
 });
 export default connect(mapState)(Home);
