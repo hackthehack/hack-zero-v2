@@ -43,13 +43,15 @@ export const MyHacks = ({ isAuth, assignedHacks, userId, dispatch }) => {
   }, [dispatch]);
   return (
     <div>
-      <Typography
-        style={{ textAlign: "center", margin: "2rem" }}
-        variant="h3"
-        component="h3"
-      >
-        My hacks: {assignedHacks.length} hacks
-      </Typography>
+      {isAuth ? (
+        <Typography
+          style={{ textAlign: "center", margin: "2rem" }}
+          variant="h3"
+          component="h3"
+        >
+          My hacks: {assignedHacks.length} hacks
+        </Typography>
+      ) : null}
       <Grid container spacing={3} alignItems="stretch">
         <UserAssignedHacks assignedHacks={assignedHacks} />
       </Grid>
