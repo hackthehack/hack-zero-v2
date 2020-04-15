@@ -9,6 +9,7 @@ export const SET_SUBMISSION_DATA = "SET_SUBMISSION_DATA";
 
 export const FETCH_ASSIGNED_HACKS = "FETCH_ASSIGNED_HACKS";
 export const FETCH_ASSET = "FETCH_ASSET";
+export const FETCH_LOADING = "FETCH_LOADING";
 
 export const LOGGING_IN = "LOGGING_IN";
 export const LOGGING_OUT = "LOGGING_OUT";

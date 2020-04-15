@@ -6,10 +6,16 @@ const initialState = {
   hackDetails: null,
   assignedHacks: [],
   submission: null,
+  loading: false,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.FETCH_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
     case ActionType.FETCH_ASSET:
       //console.log(action.payload);
       return {
@@ -51,6 +57,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         items: { ...action.payload[0].fields },
+        loading: false,
       };
     case ActionType.FETCH_HACK_DETAILS:
       return {
