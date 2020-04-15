@@ -50,10 +50,11 @@ export const getHackathonContent = () => {
       let result = await axios.get(
         `${process.env.REACT_APP_CONTENTFUL_API}/spaces/${process.env.REACT_APP_CONTENTFUL_SPACE_ID}/entries?access_token=${process.env.REACT_APP_CONTENTFUL_KEY}&content_type=hackEvent`
       );
-      console.log(result.data.includes.Asset[2]);
-      console.log(result.data.includes.Asset[2].fields.file.url);
+      // console.log(result.data.includes.Asset[2]);
+      // console.log(result.data.includes.Asset[2].fields.file.url);
 
       dispatch(getContentOkay(result.data.items));
+      dispatch(getContentAssetOkay(result.data.includes.Asset));
     } catch (err) {
       console.log(err);
     }

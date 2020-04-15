@@ -10,6 +10,12 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.FETCH_ASSET:
+      //console.log(action.payload);
+      return {
+        ...state,
+        assets: [...action.payload],
+      };
     case ActionType.LOGGING_OUT:
       return {
         ...state,

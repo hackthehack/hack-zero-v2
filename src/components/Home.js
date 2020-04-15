@@ -50,7 +50,7 @@ export const Home = ({
   information,
   status,
   theme,
-
+  assets,
   userId,
   prizeList,
 }) => {
@@ -101,7 +101,18 @@ export const Home = ({
             <FixedCard id="status" title="Status" values={[status]} />
           </Grid>
           <Grid style={{ display: "flex" }} item xs={12} sm={6}>
-            <FixedCard id="theme" title="Theme" values={[theme]} />
+            <FixedCard
+              id="theme"
+              title="Theme"
+              values={[
+                <div>
+                  {theme}
+                  {assets[2] ? (
+                    <img src={`https:${assets[2].fields.file.url}`} />
+                  ) : null}
+                </div>,
+              ]}
+            />
           </Grid>
           <Grid style={{ display: "flex" }} item xs={12} sm={6}>
             <FixedCard
@@ -132,7 +143,7 @@ const mapState = (state) => ({
   information: state.hack.items.information,
   status: state.hack.items.status,
   theme: state.hack.items.theme,
-
+  assets: state.hack.assets,
   from: state.hack.items.from,
   to: state.hack.items.to,
   prizeList: state.hack.items.prizeList,
