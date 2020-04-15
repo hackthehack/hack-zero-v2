@@ -7,7 +7,8 @@ test("hackathon reducer returns correct initialState", () => {
     assets: [],
     hackDetails: null,
     assignedHacks: [],
-    submission: null
+    submission: null,
+    loading: false,
   };
   const action = { type: "dummy_action" };
   expect(hackathonReducer(undefined, action)).toEqual(initialState);
@@ -22,9 +23,10 @@ test("hackathon reducer to return correct state after user dislike a hack", () =
     assignedHacks: [],
     hackDetails: {
       hasUserLiked: false,
-      numberLikes: 2
+      numberLikes: 2,
     },
-    submission: null
+    submission: null,
+    loading: false,
   };
   expect(hackathonReducer(undefined, action)).toEqual(expectedState);
 });
@@ -38,9 +40,10 @@ test("hackathon reducer to return correct state after user like a hack", () => {
     assignedHacks: [],
     hackDetails: {
       hasUserLiked: true,
-      numberLikes: 3
+      numberLikes: 3,
     },
-    submission: null
+    submission: null,
+    loading: false,
   };
   expect(hackathonReducer(undefined, action)).toEqual(expectedState);
 });
