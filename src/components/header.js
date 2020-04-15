@@ -168,18 +168,24 @@ export const Header = (props) => {
       <CssBaseline />
       <AppBar position="static">
         <Toolbar className={classes.userLinks}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            data-testid="toggleButton"
-            edge="start"
-            className={clsx(classes.menuButton, false && classes.hide)}
-          >
-            <MenuIcon onClick={handleDrawerOpen} />
-            <div className="LinksMobileView">
+          <div>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              data-testid="toggleButton"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, false && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
+            <div
+              style={{ display: "inline-block" }}
+              className="LinksMobileView"
+            >
               {props.auth.isAuth ? <LoginLinks /> : <LogoutLinks />}
             </div>
-          </IconButton>
+          </div>
 
           {!props.auth.isAuth ? (
             <div className="LinksMobileView">
