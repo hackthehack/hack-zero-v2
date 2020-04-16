@@ -17,20 +17,18 @@ const SubmissionDetail = ({ dispatch, submission }) => {
   useEffect(() => {
     dispatch(getSubmissionData());
   }, [dispatch]);
-
+  if (!submission) {
+    return null;
+  }
   return (
-    <div>
-      {submission ? (
-        <Paper className={classes.root}>
-          <Typography style={{ textAlign: "center" }} variant="h4">
-            Submission Detail
-          </Typography>
-          <Typography style={{ textAlign: "center" }} variant="h6">
-            {submission.message}
-          </Typography>
-        </Paper>
-      ) : null}
-    </div>
+    <Paper className={classes.root}>
+      <Typography style={{ textAlign: "center" }} variant="h4">
+        Submission Detail
+      </Typography>
+      <Typography style={{ textAlign: "center" }} variant="h6">
+        {submission.message}
+      </Typography>
+    </Paper>
   );
 };
 const mapState = (state) => ({
