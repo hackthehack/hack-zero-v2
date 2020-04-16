@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  submitHackIdea
-} from "../store/actions/userActions";
-import { getSubmissionData } from "../store/actions/hackathonActions"
+import { submitHackIdea } from "../store/actions/submissionActions";
+import { getSubmissionData } from "../store/actions/hackathonActions";
 import { connect } from "react-redux";
 import SubmitDetails from "./subcomponents/submit/submit-details";
 import Upload from "./subcomponents/upload/upload";
@@ -33,21 +31,25 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1)
   }
 }));
-export function SubmitHack({ match, dispatch, submission, hackDetails, history }) {
+export function SubmitHack({
+  match,
+  dispatch,
+  submission,
+  hackDetails,
+  history
+}) {
   const classes = useStyles();
 
-  // const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState({});
   const [submitMessage, setSubmitMessage] = useState();
 
   useEffect(() => {
-    if (!submission || submission.hackId !== match.params.id) {
-      dispatch(getSubmissionData(match.params.id));
-    }
-  }, [submission, dispatch, match]);
+    dispatch(getSubmissionData(match.params.id));
+  }, []);
 
   const handelSubmit = () => {
-    dispatch(submitHackIdea({ message: submitMessage }));
-    setSubmitMessage(submission.message)
+    dispatch(submitHackIdea({ message: submitMessage, files: files}));
+    // setSubmitMessage(submission.message);
   };
   if (submission) {
     return (
@@ -79,7 +81,7 @@ export function SubmitHack({ match, dispatch, submission, hackDetails, history }
               />
             </Grid>
             <Grid item xs={12} className={classes.margin}>
-              <Upload className={classes.margin} />
+              <Upload className={classes.margin} files={files} setFiles={setFiles} />
             </Grid>
             <Grid item xs={12} style={{ float: "left" }}>
               <Button
@@ -99,6 +101,7 @@ export function SubmitHack({ match, dispatch, submission, hackDetails, history }
       </Grid>
     );
   }
+
   return (
     <Grid
       data-testid="main-container"

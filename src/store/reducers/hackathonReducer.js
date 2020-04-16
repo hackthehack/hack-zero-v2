@@ -35,8 +35,6 @@ const reducer = (state = initialState, action) => {
         assignedHacks: [...action.payload]
       };
     case ActionType.FETCH_HACK_A_THON:
-      // console.log("in reducer");
-      // console.log(action.payload[0].fields);
       return {
         ...state,
         items: { ...action.payload[0].fields }

@@ -135,7 +135,11 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                     <JoinButton team={hackDetails.team} history={history} />
                   </Grid>
                   <Grid item xs={4} sm={2}>
-                    <SubmitButton team={hackDetails.team} history={history} />
+                    <SubmitButton
+                      match={match}
+                      team={hackDetails.team}
+                      userId={userId}
+                    />
                   </Grid>
                 </Grid>
               </Grid>

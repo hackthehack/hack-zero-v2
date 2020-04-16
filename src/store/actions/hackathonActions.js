@@ -20,8 +20,7 @@ export const getAssignedHacksOkay = hacks => ({
 export const submissionData = submission => ({
   type: ActionType.SET_SUBMISSION_DATA,
   payload: submission
-})
-
+});
 
 export const getAssignedHacks = () => {
   return async (dispatch, getState) => {
@@ -69,12 +68,13 @@ export const getSubmissionData = () => {
       let result = await axios.get(
         urlJoin(
           process.env.REACT_APP_API_URL,
-          `submissionDetails/${store.getState().hack.hackDetails}`
+          `submissionDetails/${store.getState().hack.hackDetails._id}`
         )
       );
-      dispatch(submissionData(result))
+      dispatch(submissionData(result));
     } catch (err) {
       console.log(err);
     }
   };
 };
+
