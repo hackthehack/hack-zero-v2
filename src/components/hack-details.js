@@ -10,6 +10,7 @@ import SubmitHack from "./submit-hack";
 import { fetchingHackDetails } from "../store/actions/userActions";
 import { connect } from "react-redux";
 import LikeButton from "./subcomponents/LikeButton";
+import SubmissionDetal from "./subcomponents/submit/SubmissionDetail";
 
 // UI imports
 
@@ -17,27 +18,27 @@ import { Grid, Typography, Paper, CircularProgress } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(2),
     padding: theme.spacing(2),
     width: "80vw",
-    position: "relative"
+    position: "relative",
   },
   rightField: {
-    textAlign: "right"
+    textAlign: "right",
   },
   loading: {
-    marginTop: theme.spacing(10)
+    marginTop: theme.spacing(10),
   },
   marginTop: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
   creator: {
     height: theme.spacing(3),
     color: "red",
-    fontStyle: "italic"
-  }
+    fontStyle: "italic",
+  },
 }));
 
 export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
@@ -77,8 +78,12 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                   spacing={1}
                   className={classes.marginFix}
                 >
-                  
-                  <Grid item xs={12} sm={8} style={{display: "flex", flexWrap: "wrap"}}>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={8}
+                    style={{ display: "flex", flexWrap: "wrap" }}
+                  >
                     <Typography variant="h4">{hackDetails.title}</Typography>
                     <EditHackButton
                       match={match}
@@ -99,7 +104,7 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                     </Typography>
                   </Grid>
                 </Grid>
-                <Grid item xs={10} style={{marginTop:"1rem"}}>
+                <Grid item xs={10} style={{ marginTop: "1rem" }}>
                   <Typography variant="h6">Idea:</Typography>
                 </Grid>
                 <Grid item xs={12}>
@@ -119,11 +124,13 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                 <Grid item xs={12}>
                   <LikeButton />
                 </Grid>
+                <Grid item xs={12} style={{ marginTop: "1rem" }}>
+                  <JoinButton team={hackDetails.team} history={history} />
+                </Grid>
               </Grid>
             </Paper>
-            <div style={{ width: "20vw", marginLeft: "1rem" }}>
-              <JoinButton team={hackDetails.team} history={history} />
-            </div>
+
+            <SubmissionDetal />
           </Grid>
         </Route>
         <Route exact path="/hack/:id/edit" component={EditHack} />
@@ -146,9 +153,9 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
   );
 }
 
-const mapState = state => ({
+const mapState = (state) => ({
   userId: state.auth.userId,
-  hackDetails: state.hack.hackDetails
+  hackDetails: state.hack.hackDetails,
 });
 
 export default connect(mapState)(HackDetails);
