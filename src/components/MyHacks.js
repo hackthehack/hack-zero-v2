@@ -8,7 +8,7 @@ import { getAssignedHacks } from "../store/actions/hackathonActions";
 import { connect } from "react-redux";
 
 const UserAssignedHacks = ({ assignedHacks }) => {
-  return assignedHacks.map(hack => {
+  return assignedHacks.map((hack) => {
     return (
       <Grid
         data-testid="assignedHack"
@@ -43,22 +43,24 @@ export const MyHacks = ({ isAuth, assignedHacks, userId, dispatch }) => {
   }, [dispatch]);
   return (
     <div>
-      <Typography
-        style={{ textAlign: "center", margin: "2rem" }}
-        variant="h2"
-        component="h2"
-      >
-        Your are part of: {assignedHacks.length} hacks
-      </Typography>
+      {isAuth ? (
+        <Typography
+          style={{ textAlign: "center", margin: "2rem" }}
+          variant="h3"
+          component="h3"
+        >
+          My hacks: {assignedHacks.length} hacks
+        </Typography>
+      ) : null}
       <Grid container spacing={3} alignItems="stretch">
         <UserAssignedHacks assignedHacks={assignedHacks} />
       </Grid>
     </div>
   );
 };
-const mapState = state => ({
+const mapState = (state) => ({
   assignedHacks: state.hack.assignedHacks,
-  isAuth: state.auth.isAuth
+  isAuth: state.auth.isAuth,
   //userId: state.auth.userId
 });
 export default connect(mapState)(MyHacks);
