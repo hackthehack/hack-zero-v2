@@ -65,7 +65,7 @@ const reducer = (state = initialState, action) => {
       //console.log(action.payload);
       return {
         ...state,
-        submission: { ...action.payload },
+        submission: action.payload,
       };
     default:
       return state;

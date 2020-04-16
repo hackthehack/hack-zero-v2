@@ -71,6 +71,7 @@ export const getSubmissionData = () => {
           `submissionDetails/${getState().hack.hackDetails._id}`
         )
       );
+      //console.log(result.data);
       dispatch(submissionData(result.data));
     } catch (err) {
       console.log(err);
