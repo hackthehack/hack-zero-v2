@@ -9,6 +9,14 @@ body {
 .LinksMobileView {
   display: block;
 }
+
+.imageFrame {
+  overflow: hidden;
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  /*border: 10px solid #EEEEEE;*/
+}
 @media only screen and (max-width: 450px) {
   .LinksMobileView {
     display: none;

@@ -11,7 +11,7 @@ import {
   ListItemText,
   ListItem,
   Divider,
-  List
+  List,
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -28,76 +28,76 @@ import { withRouter } from "react-router";
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   appBar: {
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   hide: {
-    display: "none"
+    display: "none",
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0
+    flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
   },
   drawerHeader: {
     display: "flex",
     alignItems: "center",
     padding: theme.spacing(0, 1),
     ...theme.mixins.toolbar,
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
+      duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: -drawerWidth
+    marginLeft: -drawerWidth,
   },
   contentShift: {
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
+      duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: 0
+    marginLeft: 0,
   },
   loginbutton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   userMenu: {
-    right: theme.spacing(1)
+    right: theme.spacing(1),
   },
   link: {
     color: "#ffffff",
-    textDecoration: "none"
+    textDecoration: "none",
   },
   userLinks: {
-    justifyContent: "space-between"
-  }
+    justifyContent: "space-between",
+  },
 }));
 
-export const Header = props => {
+export const Header = (props) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const classes = useStyles();
   const theme = useTheme();
@@ -115,7 +115,7 @@ export const Header = props => {
     setOpenDrawer(false);
   };
   const links = ["/", "/create", "/hacks"];
-  const displayLinkIcon = index => {
+  const displayLinkIcon = (index) => {
     switch (index) {
       case 0:
         return <HomeIcon />;
@@ -139,17 +139,6 @@ export const Header = props => {
           Hacks
         </Button>
       </Link>
-
-      <Link to="/login" className={classes.link}>
-        <Button color="inherit" className={classes.loginbutton}>
-          Login
-        </Button>
-      </Link>
-      <Link to="/register" className={classes.link}>
-        <Button color="inherit" className={classes.loginbutton}>
-          Register
-        </Button>
-      </Link>
     </div>
   );
   const LoginLinks = () => (
@@ -171,22 +160,6 @@ export const Header = props => {
           Create
         </Button>
       </Link>
-
-      <Button
-        color="inherit"
-        className={classes.loginbutton}
-        onClick={handleLogout}
-      >
-        Logout
-      </Button>
-      <IconButton
-        aria-label="account of current user"
-        aria-controls="menu-appbar"
-        aria-haspopup="true"
-        color="inherit"
-      >
-        <AccountCircle />
-      </IconButton>
     </div>
   );
 
@@ -195,19 +168,57 @@ export const Header = props => {
       <CssBaseline />
       <AppBar position="static">
         <Toolbar className={classes.userLinks}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            data-testid="toggleButton"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, false && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <div className="LinksMobileView">
-            {props.auth.isAuth ? <LoginLinks /> : <LogoutLinks />}
+          <div>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              data-testid="toggleButton"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, false && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
+            <div
+              style={{ display: "inline-block" }}
+              className="LinksMobileView"
+            >
+              {props.auth.isAuth ? <LoginLinks /> : <LogoutLinks />}
+            </div>
           </div>
+
+          {!props.auth.isAuth ? (
+            <div className="LinksMobileView">
+              <Link to="/login" className={classes.link}>
+                <Button color="inherit" className={classes.loginbutton}>
+                  Login
+                </Button>
+              </Link>
+              <Link to="/register" className={classes.link}>
+                <Button color="inherit" className={classes.loginbutton}>
+                  Register
+                </Button>
+              </Link>
+            </div>
+          ) : (
+            <div>
+              <Button
+                color="inherit"
+                className={classes.loginbutton}
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </div>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -216,7 +227,7 @@ export const Header = props => {
         anchor="left"
         open={openDrawer}
         classes={{
-          paper: classes.drawerPaper
+          paper: classes.drawerPaper,
         }}
       >
         <div className={classes.drawerHeader}>
@@ -236,10 +247,7 @@ export const Header = props => {
             // **** /hacks ------> Hacks in the side nav
             let displayLinkText;
             displayLinkText =
-              text
-                .substr(1)
-                .charAt(0)
-                .toUpperCase() + text.slice(2);
+              text.substr(1).charAt(0).toUpperCase() + text.slice(2);
             return (
               <ListItem
                 onClick={handleDrawerClose}
@@ -264,15 +272,12 @@ export const Header = props => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  logout: history => dispatch(logout(history))
+const mapDispatchToProps = (dispatch) => ({
+  logout: (history) => dispatch(logout(history)),
 });
 
-const mapState = state => ({
-  auth: state.auth
+const mapState = (state) => ({
+  auth: state.auth,
 });
 
-export default connect(
-  mapState,
-  mapDispatchToProps
-)(withRouter(Header));
+export default connect(mapState, mapDispatchToProps)(withRouter(Header));
