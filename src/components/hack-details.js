@@ -10,7 +10,7 @@ import SubmitHack from "./submit-hack";
 import { fetchingHackDetails } from "../store/actions/userActions";
 import { connect } from "react-redux";
 import LikeButton from "./subcomponents/LikeButton";
-import SubmissionDetal from "./subcomponents/submit/SubmissionDetail";
+import SubmissionDetail from "./subcomponents/submit/SubmissionDetail";
 
 // UI imports
 
@@ -130,7 +130,7 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
               </Grid>
             </Paper>
 
-            <SubmissionDetal />
+            <SubmissionDetail />
           </Grid>
         </Route>
         <Route exact path="/hack/:id/edit" component={EditHack} />

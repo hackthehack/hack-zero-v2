@@ -5,23 +5,22 @@ import urlJoin from "url-join";
 //const testUrl = "http://localhost:3001/userhacks/";
 import store from "../../setupStore";
 
-export const getContentOkay = content => ({
+export const getContentOkay = (content) => ({
   type: ActionType.FETCH_HACK_A_THON,
-  payload: content
+  payload: content,
 });
 
-export const clearHackDetails = content => ({
-  type: ActionType.CLEAR_HACK
+export const clearHackDetails = (content) => ({
+  type: ActionType.CLEAR_HACK,
 });
-export const getAssignedHacksOkay = hacks => ({
+export const getAssignedHacksOkay = (hacks) => ({
   type: ActionType.FETCH_ASSIGNED_HACKS,
-  payload: hacks
+  payload: hacks,
 });
-export const submissionData = submission => ({
+export const submissionData = (submission) => ({
   type: ActionType.SET_SUBMISSION_DATA,
-  payload: submission
-})
-
+  payload: submission,
+});
 
 export const getAssignedHacks = () => {
   return async (dispatch, getState) => {
@@ -69,10 +68,10 @@ export const getSubmissionData = () => {
       let result = await axios.get(
         urlJoin(
           process.env.REACT_APP_API_URL,
-          `submissionDetails/${store.getState().hack.hackDetails}`
+          `submissionDetails/${getState().hack.hackDetails._id}`
         )
       );
-      dispatch(submissionData(result))
+      dispatch(submissionData(result.data));
     } catch (err) {
       console.log(err);
     }

@@ -5,7 +5,7 @@ const initialState = {
   assets: [],
   hackDetails: null,
   assignedHacks: [],
-  submission: null
+  submission: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,8 +16,8 @@ const reducer = (state = initialState, action) => {
         hackDetails: {
           ...state.hackDetails,
           hasUserLiked: false,
-          numberLikes: action.payload
-        }
+          numberLikes: action.payload,
+        },
       };
     case ActionType.LIKE_HACK:
       //console.log(action);
@@ -26,46 +26,47 @@ const reducer = (state = initialState, action) => {
         hackDetails: {
           ...state.hackDetails,
           hasUserLiked: true,
-          numberLikes: action.payload
-        }
+          numberLikes: action.payload,
+        },
       };
     case ActionType.FETCH_ASSIGNED_HACKS:
       return {
         ...state,
-        assignedHacks: [...action.payload]
+        assignedHacks: [...action.payload],
       };
     case ActionType.FETCH_HACK_A_THON:
       // console.log("in reducer");
       // console.log(action.payload[0].fields);
       return {
         ...state,
-        items: { ...action.payload[0].fields }
+        items: { ...action.payload[0].fields },
       };
     case ActionType.FETCH_HACK_DETAILS:
       return {
         ...state,
-        hackDetails: { ...action.payload }
+        hackDetails: { ...action.payload },
       };
     case ActionType.JOIN_HACK:
       return {
         ...state,
-        hackDetails: { ...action.payload }
+        hackDetails: { ...action.payload },
       };
     case ActionType.UPDATE_HACK:
       return {
         ...state,
-        hackDetails: { ...action.payload }
+        hackDetails: { ...action.payload },
       };
     case ActionType.CLEAR_HACK:
       return {
         ...state,
-        hackDetails: null
+        hackDetails: null,
       };
     case ActionType.SET_SUBMISSION_DATA:
-      return{
+      console.log(action.payload);
+      return {
         ...state,
-        submission: { ...action.payload }
-      }
+        submission: { ...action.payload },
+      };
     default:
       return state;
   }
