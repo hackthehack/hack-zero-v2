@@ -3,7 +3,7 @@ import axios from "axios";
 import urlJoin from "url-join";
 //const contentfulUrl = "https://cdn.contentful.com";
 //const testUrl = "http://localhost:3001/userhacks/";
-import store from "../../setupStore";
+//import store from "../../setupStore";
 
 export const getContentOkay = (content) => ({
   type: ActionType.FETCH_HACK_A_THON,

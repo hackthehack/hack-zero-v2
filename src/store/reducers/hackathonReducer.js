@@ -62,7 +62,7 @@ const reducer = (state = initialState, action) => {
         hackDetails: null,
       };
     case ActionType.SET_SUBMISSION_DATA:
-      console.log(action.payload);
+      //console.log(action.payload);
       return {
         ...state,
         submission: { ...action.payload },

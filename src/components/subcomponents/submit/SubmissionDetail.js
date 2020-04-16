@@ -12,18 +12,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SubmissionDetail = ({ dispatch }) => {
+const SubmissionDetail = ({ dispatch, submission }) => {
   const classes = useStyles();
   useEffect(() => {
     dispatch(getSubmissionData());
   }, [dispatch]);
+  console.log(submission);
   return (
     <Paper className={classes.root}>
       <Typography style={{ textAlign: "center" }} variant="h4">
         Submission Detail
       </Typography>
+      <Typography style={{ textAlign: "center" }} variant="h6">
+        {submission ? submission.message : null}
+      </Typography>
     </Paper>
   );
 };
-const mapState = (state) => ({});
-export default connect()(SubmissionDetail);
+const mapState = (state) => ({
+  submission: state.hack.submission,
+});
+export default connect(mapState)(SubmissionDetail);
