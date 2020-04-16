@@ -45,10 +45,18 @@ export function SubmitHack({
 
   useEffect(() => {
     dispatch(getSubmissionData(match.params.id));
+    if (submission !== null) {
+      if (submission.data !== null) {
+        setSubmitMessage(submission.data.message);
+        submission.data.files.map((file, index) => {
+          setFiles({ ...files, [index]: file });
+        });
+      }
+    }
   }, []);
 
   const handelSubmit = () => {
-    dispatch(submitHackIdea({ message: submitMessage, files: files}));
+    dispatch(submitHackIdea({ message: submitMessage, files: files }));
     // setSubmitMessage(submission.message);
   };
   if (submission) {
@@ -81,9 +89,13 @@ export function SubmitHack({
               />
             </Grid>
             <Grid item xs={12} className={classes.margin}>
-              <Upload className={classes.margin} files={files} setFiles={setFiles} />
+              <Upload
+                className={classes.margin}
+                files={files}
+                setFiles={setFiles}
+              />
             </Grid>
-            <Grid item xs={12} style={{ float: "left" }}>
+            <Grid item xs={12} style={{ float: "left", marginTop: "2rem" }}>
               <Button
                 variant="outlined"
                 color="primary"

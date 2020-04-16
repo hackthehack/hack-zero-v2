@@ -16,7 +16,6 @@ export function SubmitButton(props) {
 
   React.useEffect(() => {
     props.team.forEach(member => {
-      console.log(member)
       if (member._id === props.userId) {
         setVisible(false);
       }
