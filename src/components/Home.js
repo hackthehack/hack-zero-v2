@@ -9,17 +9,19 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { connect } from "react-redux";
 import { getHackathonContent } from "../store/actions/hackathonActions";
+import { FaMedal } from "react-icons/fa";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import MyHacks from "./MyHacks";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
-    color: theme.palette.text.secondary
-  }
+    color: theme.palette.text.secondary,
+  },
 }));
 
 const FixedCard = ({ id, title, values }) => {
@@ -49,9 +51,10 @@ export const Home = ({
   information,
   status,
   theme,
-
+  assets,
   userId,
-  prizeList
+  prizeList,
+  loading,
 }) => {
   const classes = useStyles();
 
@@ -61,70 +64,110 @@ export const Home = ({
 
   return (
     <div className={classes.root}>
-      <Container component="main">
-        <CssBaseline />
-        <Typography
-          data-testid="page-header"
-          style={{ textAlign: "center", margin: "2rem" }}
-          variant="h3"
-          component="h3"
+      {loading ? (
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          alignItems="stretch"
+          alignContent="center"
+          style={{ marginTop: "3rem" }}
         >
-          {title}
-        </Typography>
-        <Grid container spacing={3} alignItems="stretch">
-          <Grid style={{ display: "flex" }} item xs={12} sm={6}>
-            <FixedCard
-              id="prize"
-              title="Prize"
-              values={
-                prizeList
-                  ? [
-                      `1st ${prizeList[0]}`,
-                      `2nd ${prizeList[1]}`,
-                      `3rd ${prizeList[2]}`
-                    ]
-                  : []
-              }
-            />
-          </Grid>
-          <Grid style={{ display: "flex" }} item xs={12} sm={6}>
-            <FixedCard id="status" title="Status" values={[status]} />
-          </Grid>
-          <Grid style={{ display: "flex" }} item xs={12} sm={6}>
-            <FixedCard id="theme" title="Theme" values={[theme]} />
-          </Grid>
-          <Grid style={{ display: "flex" }} item xs={12} sm={6}>
-            <FixedCard
-              id="schedule"
-              title="Schedule"
-              values={[
-                <CoolDates status="startDate" time={from} />,
-                <CoolDates status="endDate" time={to} />
-              ]}
-              s
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FixedCard
-              id="information"
-              title="Information"
-              values={[information]}
-            />
-          </Grid>
+          <CircularProgress />
         </Grid>
-        <MyHacks />
-      </Container>
+      ) : (
+        <Container component="main">
+          <CssBaseline />
+          <Typography
+            data-testid="page-header"
+            style={{ textAlign: "center", margin: "2rem" }}
+            variant="h3"
+            component="h3"
+          >
+            {title}
+          </Typography>
+          <Grid container spacing={3} alignItems="stretch">
+            <Grid style={{ display: "flex" }} item xs={12} sm={6}>
+              <FixedCard
+                id="prize"
+                title="Prize"
+                values={
+                  prizeList
+                    ? [
+                        <div>
+                          <FaMedal style={{ color: "#FFD700" }} />
+                          {prizeList[0]}
+                        </div>,
+                        <div>
+                          <FaMedal style={{ color: "#C0C0C0" }} />
+                          {prizeList[1]}
+                        </div>,
+                        <div>
+                          <FaMedal style={{ color: "#CD7F32" }} />
+                          {prizeList[2]}
+                        </div>,
+                      ]
+                    : []
+                }
+              />
+            </Grid>
+            <Grid style={{ display: "flex" }} item xs={12} sm={6}>
+              <FixedCard id="status" title="Status" values={[status]} />
+            </Grid>
+            <Grid style={{ display: "flex" }} item xs={12} sm={6}>
+              <FixedCard
+                id="theme"
+                title="Theme"
+                values={[
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <p>{theme}</p>
+                    {assets.length !== 0 ? (
+                      <img
+                        alt="hack-event-thumbnail"
+                        className="imageFrame"
+                        src={`https:${assets[2].fields.file.url}`}
+                      />
+                    ) : null}
+                  </div>,
+                ]}
+              />
+            </Grid>
+            <Grid style={{ display: "flex" }} item xs={12} sm={6}>
+              <FixedCard
+                id="schedule"
+                title="Schedule"
+                values={[
+                  <CoolDates status="startDate" time={from} />,
+                  <CoolDates status="endDate" time={to} />,
+                ]}
+                s
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FixedCard
+                id="information"
+                title="Information"
+                values={[information]}
+              />
+            </Grid>
+          </Grid>
+          <MyHacks />
+        </Container>
+      )}
     </div>
   );
 };
-const mapState = state => ({
+const mapState = (state) => ({
   title: state.hack.items.title,
   information: state.hack.items.information,
   status: state.hack.items.status,
   theme: state.hack.items.theme,
-
+  assets: state.hack.assets,
   from: state.hack.items.from,
   to: state.hack.items.to,
-  prizeList: state.hack.items.prizeList
+  prizeList: state.hack.items.prizeList,
+  loadig: state.hack.loading,
 });
 export default connect(mapState)(Home);
