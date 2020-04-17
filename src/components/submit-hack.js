@@ -41,25 +41,22 @@ export function SubmitHack({
   const classes = useStyles();
 
   const [files, setFiles] = useState({});
-  const [submitMessage, setSubmitMessage] = useState();
+  const [submitMessage, setSubmitMessage] = useState("");
 
   useEffect(() => {
-    dispatch(getSubmissionData(match.params.id));
     if (submission !== null) {
-      if (submission.data !== null) {
-        setSubmitMessage(submission.data.message);
-        submission.data.files.map((file, index) => {
-          setFiles({ ...files, [index]: file });
-        });
-      }
+      setSubmitMessage(submission.message);
+      submission.files.map((file, index) => {
+        setFiles({ ...files, [index]: file });
+      });
     }
-  }, []);
+  }, [files, match.params.id, submission]);
 
   const handelSubmit = () => {
     dispatch(submitHackIdea({ message: submitMessage, files: files }));
     // setSubmitMessage(submission.message);
   };
-  if (submission) {
+  if (true) {
     return (
       <Grid
         data-testid="main-container"
@@ -84,6 +81,7 @@ export function SubmitHack({
             </Grid>
             <Grid item xs={12} className={classes.margin}>
               <SubmitDetails
+                message={submitMessage}
                 update={setSubmitMessage}
                 className={classes.margin}
               />
@@ -104,9 +102,15 @@ export function SubmitHack({
               >
                 Submit
               </Button>
-              <Button variant="outlined" color="secondary">
-                Cancel
-              </Button>
+              <Button
+                  color="secondary"
+                  variant="outlined"
+                  onClick={() => {
+                    history.push((`/hacks/${hackDetails._id}`));
+                  }}
+                >
+                  Cancel
+                </Button>
             </Grid>
           </Grid>
         </Paper>

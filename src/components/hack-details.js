@@ -10,6 +10,7 @@ import SubmitButton from "./subcomponents/submit/submit-button";
 import { fetchingHackDetails } from "../store/actions/userActions";
 import { connect } from "react-redux";
 import LikeButton from "./subcomponents/LikeButton";
+import SubmissionDetail from "./subcomponents/submit/SubmissionDetail";
 
 // UI imports
 
@@ -23,6 +24,13 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     width: "80vw",
     position: "relative"
+  },
+  buttonPaper: {
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    padding: theme.spacing(2),
+    width: "80vw",
   },
   rightField: {
     textAlign: "right"
@@ -75,7 +83,6 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                   alignItems="center"
                   alignContent="center"
                   spacing={1}
-                  className={classes.marginFix}
                 >
                   <Grid
                     item
@@ -123,18 +130,21 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                 <Grid item xs={4} sm={2}>
                   <LikeButton />
                 </Grid>
+              </Grid>
+            </Paper>
+            <Grid item xs={12}>
+              <Paper className={classes.buttonPaper}>
                 <Grid
                   container
                   justify="flex-start"
                   alignItems="center"
                   alignContent="center"
                   spacing={1}
-                  className={classes.marginFix}
                 >
-                  <Grid item xs={4} sm={2}>
+                  <Grid item>
                     <JoinButton team={hackDetails.team} history={history} />
                   </Grid>
-                  <Grid item xs={4} sm={2}>
+                  <Grid item>
                     <SubmitButton
                       match={match}
                       team={hackDetails.team}
@@ -142,8 +152,9 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                     />
                   </Grid>
                 </Grid>
-              </Grid>
-            </Paper>
+              </Paper>
+            </Grid>
+              <SubmissionDetail />
           </Grid>
         </Route>
         <Route exact path="/hack/:id/edit" component={EditHack} />

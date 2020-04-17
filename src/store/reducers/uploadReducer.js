@@ -6,7 +6,12 @@ const uploadFiles = (state = [], action) => {
     case ActionType.UPLOAD_WARMUP:
       return [...state, action.fileID];
     case ActionType.FILE_UPLOAD_CANCELLED:
-      return state.filter(fileId => fileId !== action.fileID)
+      return state.filter(fileId => fileId !== action.fileID);
+    case ActionType.CLEAR_UPLOAD:
+      state = [];
+      return [
+        ...state
+      ];
     default:
       return state;
   }
@@ -19,7 +24,7 @@ const statuses = (state = {}, action) => {
         ...state,
         [action.fileID]: {
           status: "PENDING",
-          progress: 0,
+          progress: 0
         }
       };
     case ActionType.UPLOAD_STARTED:
@@ -27,7 +32,7 @@ const statuses = (state = {}, action) => {
         ...state,
         [action.fileID]: {
           status: "UPLOADING",
-          progress: 0,
+          progress: 0
         }
       };
     case ActionType.UPLOAD_PROGRESS:
@@ -35,7 +40,7 @@ const statuses = (state = {}, action) => {
         ...state,
         [action.fileID]: {
           status: "UPLOADING",
-          progress: action.progress,
+          progress: action.progress
         }
       };
     case ActionType.UPLOAD_COMPLETE:
@@ -43,21 +48,26 @@ const statuses = (state = {}, action) => {
         ...state,
         [action.fileID]: {
           status: "UPLOADED",
-          progress: 100,
+          progress: 100
         }
       };
     case ActionType.UPLOAD_FAILED:
       return {
         ...state,
         [action.fileID]: {
-          status: "UPLOAD_FAILED",
+          status: "UPLOAD_FAILED"
         }
       };
     case ActionType.FILE_UPLOAD_CANCELLED:
-      delete state[action.fileID]
-      return{
+      delete state[action.fileID];
+      return {
         ...state
-      }
+      };
+    case ActionType.CLEAR_UPLOAD:
+      state = {};
+      return {
+        ...state
+      };
     default:
       return state;
   }

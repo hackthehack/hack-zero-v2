@@ -1,18 +1,21 @@
 import * as ActionType from "./index";
 import axios from "axios";
 import urlJoin from "url-join";
+import { clearUpload } from './submissionActions'
 //const contentfulUrl = "https://cdn.contentful.com";
 //const testUrl = "http://localhost:3001/userhacks/";
-import store from "../../setupStore";
+//import store from "../../setupStore";
 
 export const getContentOkay = (content) => ({
   type: ActionType.FETCH_HACK_A_THON,
   payload: content,
 });
+
 export const getContentAssetOkay = (asset) => ({
   type: ActionType.FETCH_ASSET,
   payload: asset,
 });
+
 export const clearHackDetails = (content) => ({
   type: ActionType.CLEAR_HACK,
 });
@@ -28,6 +31,7 @@ export const submissionData = (submission) => ({
 export const loadingStart = () => ({
   type: ActionType.FETCH_LOADING,
 });
+
 
 export const getAssignedHacks = () => {
   return async (dispatch, getState) => {
@@ -80,10 +84,14 @@ export const getSubmissionData = () => {
       let result = await axios.get(
         urlJoin(
           process.env.REACT_APP_API_URL,
-          `submissionDetails/${store.getState().hack.hackDetails._id}`
+          `submissionDetails/${getState().hack.hackDetails._id}`
         )
       );
-      dispatch(submissionData(result));
+
+      //console.log(result.data);
+      dispatch(submissionData(result.data));
+      dispatch(clearUpload())
+
     } catch (err) {
       console.log(err);
     }

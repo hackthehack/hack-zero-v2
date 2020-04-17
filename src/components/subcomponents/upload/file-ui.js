@@ -57,28 +57,18 @@ export function FileUI({ file, index, onDelete, progress, status }) {
   return (
     <Grid item key={index}>
       <Paper className={classes.attachment}>
-        {() => {
-          switch (status) {
-            case "UPLOAD_FAILED":
-            case "PENDING":
-              return (
-                <IconButton
-                  className={classes.attachDel}
-                  color="secondary"
-                  component="span"
-                  size="small"
-                  onClick={e => {
-                    e.preventDefault();
-                    onDelete(index);
-                  }}
-                >
-                  <HighlightOffIcon />
-                </IconButton>
-              );
-            default:
-              return null;
-          }
-        }}
+        <IconButton
+          className={classes.attachDel}
+          color="secondary"
+          component="span"
+          size="small"
+          onClick={e => {
+            e.preventDefault();
+            onDelete(index);
+          }}
+        >
+          <HighlightOffIcon />
+        </IconButton>
         <AttachFileIcon
           className={classes.attachIco}
           fontSize="large"
@@ -92,15 +82,8 @@ export function FileUI({ file, index, onDelete, progress, status }) {
         </Typography>
         {(() => {
           switch (status) {
-            case "UPLOADING":
-              return (
-                <LinearProgress
-                  variant="determinate"
-                  value={progress}
-                  className={classes.loading}
-                />
-              );
             case "UPLOADED":
+            case "UPLOADING":
               return (
                 <LinearProgress
                   variant="determinate"

@@ -3,15 +3,15 @@ import axios from "axios";
 import UrlJoin from "url-join";
 import store from "../../setupStore";
 
-export const uploadWarmup = (fileID) => ({
+export const uploadWarmup = fileID => ({
   type: ActionType.UPLOAD_WARMUP,
-  fileID: fileID,
+  fileID: fileID
 });
 
-export const uploadCanceled = (fileID) => ({
+export const uploadCanceled = fileID => ({
   type: ActionType.FILE_UPLOAD_CANCELLED,
   fileID: fileID
-})
+});
 
 export const uploadStart = (fileID, fName) => ({
   type: ActionType.UPLOAD_STARTED,
@@ -34,17 +34,21 @@ export const uploadFailed = fileID => ({
   fileID: fileID
 });
 
-export const addPendingFile = (fileID) =>{
-  return async (dispatch) => {
-    dispatch(uploadWarmup(fileID))
-  }
-}
+export const clearUpload = () => ({
+  type: ActionType.CLEAR_UPLOAD
+});
 
-export const cancelFileUpload = (fileID) =>{
-  return async (dispatch) => {
-    dispatch(uploadCanceled(fileID))
-  }
-}
+export const addPendingFile = fileID => {
+  return async dispatch => {
+    dispatch(uploadWarmup(fileID));
+  };
+};
+
+export const cancelFileUpload = fileID => {
+  return async dispatch => {
+    dispatch(uploadCanceled(fileID));
+  };
+};
 
 export const uploadprocess = (file, fileID) => {
   return async (dispatch, getState) => {
@@ -85,28 +89,36 @@ export const uploadprocess = (file, fileID) => {
 export const submitHackIdea = submitData => {
   return async (dispatch, getState) => {
     getState().upload.uploadFiles.map(fileID => {
-      dispatch(uploadprocess(submitData.files[fileID], fileID))
-    })
-      let config = {
-        headers: {
-          Authorization: "Bearer " + store.getState().auth.jwt
-        }
-      };
-      let files = []
-      console.log(submitData.files)
-      for(let file in submitData.files){
-        files.push({name: submitData.files[file].name, size: submitData.files[file].size, type: submitData.files[file].type})
+      dispatch(uploadprocess(submitData.files[fileID], fileID));
+    });
+    let config = {
+      headers: {
+        Authorization: "Bearer " + store.getState().auth.jwt
       }
-      console.log(files)
-      axios.post(
-        UrlJoin(process.env.REACT_APP_API_URL, "submit"),
-        {
-          submissionId: getState().hack.submission.data._id,
-          files: files,
-          message: submitData.message,
-          hackId: store.getState().hack.hackDetails._id
-        },
-        config
-      );
+    };
+    let files = [];
+    console.log(submitData.files);
+    for (let file in submitData.files) {
+      files.push({
+        name: submitData.files[file].name,
+        size: submitData.files[file].size,
+        type: submitData.files[file].type
+      });
+    }
+    console.log(files);
+    let submissionId = null;
+    if (getState().hack.submission !== null) {
+      submissionId = getState().hack.submission.data._id;
+    }
+    axios.post(
+      UrlJoin(process.env.REACT_APP_API_URL, "submit"),
+      {
+        submissionId: submissionId,
+        files: files,
+        message: submitData.message,
+        hackId: store.getState().hack.hackDetails._id
+      },
+      config
+    );
   };
 };
