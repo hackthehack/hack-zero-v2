@@ -26,11 +26,13 @@ export const submissionData = (submission) => ({
   type: ActionType.SET_SUBMISSION_DATA,
   payload: submission,
 });
+export const clearPreviousSubmissionData = () => ({
+  type: ActionType.CLEAR_PREV_SUBMISSION,
+});
 
 export const loadingStart = () => ({
   type: ActionType.FETCH_LOADING,
 });
-
 
 export const getAssignedHacks = () => {
   return async (dispatch, getState) => {
@@ -79,6 +81,7 @@ export const clearingHackDetails = () => {
 
 export const getSubmissionData = () => {
   return async (dispatch, getState) => {
+    dispatch(clearPreviousSubmissionData());
     try {
       let result = await axios.get(
         urlJoin(
@@ -89,7 +92,6 @@ export const getSubmissionData = () => {
 
       //console.log(result.data);
       dispatch(submissionData(result.data));
-
     } catch (err) {
       console.log(err);
     }
