@@ -123,7 +123,10 @@ export const Hacks = ({ dispatch }) => {
                           fontSize: "1.25rem",
                         }}
                       />
-                      <span style={{ marginLeft: "0.5rem" }}> 10</span>
+                      <span style={{ marginLeft: "0.5rem" }}>
+                        {" "}
+                        {hack.likes}
+                      </span>
                     </Button>
                   </Grid>
                 </Grid>
