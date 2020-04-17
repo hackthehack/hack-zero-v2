@@ -142,7 +142,6 @@ export const Home = ({
                   <CoolDates status="startDate" time={from} />,
                   <CoolDates status="endDate" time={to} />,
                 ]}
-                s
               />
             </Grid>
             <Grid item xs={12}>
