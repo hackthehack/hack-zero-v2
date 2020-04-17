@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { ThumbUp } from "@material-ui/icons";
 
 import { CircularProgress } from "@material-ui/core";
-
+import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
@@ -16,23 +16,23 @@ import { clearingHackDetails } from "../store/actions/hackathonActions";
 import { connect } from "react-redux";
 import HackStatus from "./subcomponents/hack-status";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(1),
     padding: theme.spacing(1),
-    width: "50vw"
+    width: "50vw",
   },
   paper: {
     padding: theme.spacing(3),
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
   },
   loading: {
-    marginTop: theme.spacing(10)
+    marginTop: theme.spacing(10),
   },
   hacklist: {
     flexGrow: 1,
-    marginTop: theme.spacing(5)
-  }
+    marginTop: theme.spacing(5),
+  },
 }));
 
 export const Hacks = ({ dispatch }) => {
@@ -63,7 +63,7 @@ export const Hacks = ({ dispatch }) => {
         <Grid className={classes.root} item xs={9}>
           <Typography variant="h4">Hackathon Teams</Typography>
         </Grid>
-        {data.map(hack => {
+        {data.map((hack) => {
           return (
             <Link
               key={hack._id}
@@ -110,24 +110,21 @@ export const Hacks = ({ dispatch }) => {
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
-                      flexWrap: "wrap"
+                      flexWrap: "wrap",
                     }}
                   >
                     <div>
                       <TeamMembers team={hack.team} />
                     </div>
-                    <div>
+                    <Button>
                       <ThumbUp
                         style={{
                           color: "dodgerBlue",
-                          fontSize: "1.5rem",
-
-                          display: "inline-block",
-                          marginTop: "1rem"
+                          fontSize: "1.25rem",
                         }}
                       />
-                      <span>{hack.likes}</span>
-                    </div>
+                      <span style={{ marginLeft: "0.5rem" }}> 10</span>
+                    </Button>
                   </Grid>
                 </Grid>
               </Paper>
@@ -153,9 +150,9 @@ export const Hacks = ({ dispatch }) => {
   }
 };
 
-const mapState = state => ({
+const mapState = (state) => ({
   userId: state.auth.userId,
-  hackDetails: state.hack.hackDetails
+  hackDetails: state.hack.hackDetails,
 });
 
 export default connect(mapState)(Hacks);
