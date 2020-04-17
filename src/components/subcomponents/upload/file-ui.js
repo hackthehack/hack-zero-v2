@@ -83,6 +83,11 @@ export function FileUI({ file, index, onDelete, progress, status }) {
         {(() => {
           switch (status) {
             case "UPLOADED":
+              return (
+                <Typography variant="body2" color="primary">
+                  Upload Complete
+                </Typography>
+              );
             case "UPLOADING":
               return (
                 <LinearProgress

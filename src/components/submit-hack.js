@@ -40,84 +40,14 @@ export function SubmitHack({
 }) {
   const classes = useStyles();
 
+  const [submitting, setSubmitting] = useState(false);
   const [files, setFiles] = useState({});
   const [submitMessage, setSubmitMessage] = useState("");
 
-  useEffect(() => {
-    if (submission !== null) {
-      setSubmitMessage(submission.message);
-      submission.files.map((file, index) => {
-        setFiles({ ...files, [index]: file });
-      });
-    }
-  }, [files, match.params.id, submission]);
-
   const handelSubmit = () => {
-    dispatch(submitHackIdea({ message: submitMessage, files: files }));
-    // setSubmitMessage(submission.message);
+    setSubmitting(true)
+    dispatch(submitHackIdea({ message: submitMessage, files: files }, history));
   };
-  if (true) {
-    return (
-      <Grid
-        data-testid="main-container"
-        container
-        direction="column"
-        justify="center"
-        alignItems="stretch"
-        alignContent="center"
-      >
-        <Paper className={classes.root}>
-          <Grid
-            container
-            justify="space-between"
-            alignItems="center"
-            alignContent="center"
-            spacing={1}
-          >
-            <Grid item xs={12}>
-              <Typography variant="h5">
-                {hackDetails.title} Submission
-              </Typography>
-            </Grid>
-            <Grid item xs={12} className={classes.margin}>
-              <SubmitDetails
-                message={submitMessage}
-                update={setSubmitMessage}
-                className={classes.margin}
-              />
-            </Grid>
-            <Grid item xs={12} className={classes.margin}>
-              <Upload
-                className={classes.margin}
-                files={files}
-                setFiles={setFiles}
-              />
-            </Grid>
-            <Grid item xs={12} style={{ float: "left", marginTop: "2rem" }}>
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={handelSubmit}
-                className={classes.backButton}
-              >
-                Submit
-              </Button>
-              <Button
-                  color="secondary"
-                  variant="outlined"
-                  onClick={() => {
-                    history.push((`/hack/${hackDetails._id}`));
-                  }}
-                >
-                  Cancel
-                </Button>
-            </Grid>
-          </Grid>
-        </Paper>
-      </Grid>
-    );
-  }
-
   return (
     <Grid
       data-testid="main-container"
@@ -126,9 +56,53 @@ export function SubmitHack({
       justify="center"
       alignItems="stretch"
       alignContent="center"
-      className={classes.loading}
     >
-      <CircularProgress />
+      <Paper className={classes.root}>
+        <Grid
+          container
+          justify="space-between"
+          alignItems="center"
+          alignContent="center"
+          spacing={1}
+        >
+          <Grid item xs={12}>
+            <Typography variant="h5">{hackDetails.title} Submission</Typography>
+          </Grid>
+          <Grid item xs={12} className={classes.margin}>
+            <SubmitDetails
+              message={submission !== null ? submission.message : ""}
+              update={setSubmitMessage}
+              className={classes.margin}
+            />
+          </Grid>
+          <Grid item xs={12} className={classes.margin}>
+            <Upload
+              className={classes.margin}
+              files={files}
+              setFiles={setFiles}
+            />
+          </Grid>
+          <Grid item xs={12} style={{ float: "left", marginTop: "2rem" }}>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={handelSubmit}
+              className={classes.backButton}
+            >
+              {submitting ? <CircularProgress size="1.5rem"/> : "Submit"}
+            </Button>
+            <Button
+              color="secondary"
+              variant="outlined"
+              onClick={() => {
+                history.push(`/hack/${hackDetails._id}`);
+              }}
+            >
+              Cancel
+            </Button>
+          </Grid>
+        </Grid>
+      </Paper>
     </Grid>
   );
 }

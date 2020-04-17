@@ -34,7 +34,7 @@ export function SubmitDetails(props) {
       <Grid item xs={12}>
         <FormControl fullWidth variant="outlined">
           <OutlinedInput
-            value={props.message}
+            defaultValue={props.message}
             onChange={e => props.update(e.target.value)}
             placeholder="Message"
             name="message"

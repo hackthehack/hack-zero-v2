@@ -1,7 +1,6 @@
 import * as ActionType from "./index";
 import axios from "axios";
 import UrlJoin from "url-join";
-import store from "../../setupStore";
 
 export const uploadWarmup = fileID => ({
   type: ActionType.UPLOAD_WARMUP,
@@ -50,8 +49,9 @@ export const cancelFileUpload = fileID => {
   };
 };
 
-export const uploadprocess = (file, fileID) => {
+export const uploadprocess = (file, fileID, history) => {
   return async (dispatch, getState) => {
+    const fileTracker = getState().upload.uploadFiles;
     dispatch(uploadStart(fileID, file.name));
     const fileUpload = axios.post(
       UrlJoin(process.env.REACT_APP_API_URL, `upload`),
@@ -74,6 +74,13 @@ export const uploadprocess = (file, fileID) => {
           .then(() => {
             dispatch(uploadComplete(fileID));
           })
+          .then(() => {
+            if (
+              fileTracker.indexOf(fileID) === (fileTracker.length - 1)
+            ) {
+              history.push((`/hack/${getState().hack.hackDetails._id}`));
+            }
+          })
           .catch(error => {
             dispatch(uploadFailed(fileID));
             console.log(error);
@@ -86,18 +93,17 @@ export const uploadprocess = (file, fileID) => {
   };
 };
 
-export const submitHackIdea = submitData => {
+export const submitHackIdea = (submitData, history) => {
   return async (dispatch, getState) => {
     getState().upload.uploadFiles.map(fileID => {
-      dispatch(uploadprocess(submitData.files[fileID], fileID));
+      dispatch(uploadprocess(submitData.files[fileID], fileID, history));
     });
     let config = {
       headers: {
-        Authorization: "Bearer " + store.getState().auth.jwt
+        Authorization: "Bearer " + getState().auth.jwt
       }
     };
     let files = [];
-    console.log(submitData.files);
     for (let file in submitData.files) {
       files.push({
         name: submitData.files[file].name,
@@ -105,10 +111,9 @@ export const submitHackIdea = submitData => {
         type: submitData.files[file].type
       });
     }
-    console.log(files);
     let submissionId = null;
     if (getState().hack.submission !== null) {
-      submissionId = getState().hack.submission.data._id;
+      submissionId = getState().hack.submission._id;
     }
     axios.post(
       UrlJoin(process.env.REACT_APP_API_URL, "submit"),
@@ -116,7 +121,7 @@ export const submitHackIdea = submitData => {
         submissionId: submissionId,
         files: files,
         message: submitData.message,
-        hackId: store.getState().hack.hackDetails._id
+        hackId: getState().hack.hackDetails._id
       },
       config
     );
