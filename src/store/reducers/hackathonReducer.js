@@ -62,7 +62,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         items: { ...action.payload[0].fields },
-
         loading: false,
       };
     case ActionType.FETCH_HACK_DETAILS:

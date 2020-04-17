@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Hacks = ({ dispatch }) => {
+export const Hacks = ({ dispatch, userId }) => {
   const classes = useStyles();
   const [data, setData] = useState([]);
 
@@ -49,7 +49,11 @@ export const Hacks = ({ dispatch }) => {
     fetchData();
     dispatch(clearingHackDetails());
   }, [dispatch]);
-
+  const sendLike = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    return;
+  };
   if (data.length > 0) {
     return (
       <Grid
@@ -116,10 +120,10 @@ export const Hacks = ({ dispatch }) => {
                     <div>
                       <TeamMembers team={hack.team} />
                     </div>
-                    <Button>
+                    <Button onClick={sendLike}>
                       <ThumbUp
                         style={{
-                          color: "dodgerBlue",
+                          color: userId ? "dodgerBlue" : "d3d3d3",
                           fontSize: "1.25rem",
                         }}
                       />
