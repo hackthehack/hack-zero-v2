@@ -40,7 +40,3 @@ test("If a container exists for displayng the submit form", () => {
   const grid = getByTestId("main-container");
   expect(grid).toBeInTheDocument();
 });
-/**
- * hackDetails={{title:"Test title"}}
-      submission={{message:"message test"}}
- */

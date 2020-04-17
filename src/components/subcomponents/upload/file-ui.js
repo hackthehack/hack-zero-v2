@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
+import UploadProgressBar from './upload-progress-bar'
 import {
   Grid,
   Typography,
   Paper,
-  IconButton,
-  LinearProgress
+  IconButton
 } from "@material-ui/core";
 
 import AttachFileIcon from "@material-ui/icons/AttachFile";
@@ -45,10 +45,6 @@ const useStyles = makeStyles(theme => ({
     textOverflow: "ellipsis",
     width: "inherit",
     padding: "0.5rem"
-  },
-  loading: {
-    width: " 100%",
-    height: ".5rem"
   }
 }));
 
@@ -57,18 +53,20 @@ export function FileUI({ file, index, onDelete, progress, status }) {
   return (
     <Grid item key={index}>
       <Paper className={classes.attachment}>
-        <IconButton
-          className={classes.attachDel}
-          color="secondary"
-          component="span"
-          size="small"
-          onClick={e => {
-            e.preventDefault();
-            onDelete(index);
-          }}
-        >
-          <HighlightOffIcon />
-        </IconButton>
+        {["UPLOAD_FAILED", "PENDING"].includes(status) && (
+          <IconButton
+            className={classes.attachDel}
+            color="secondary"
+            component="span"
+            size="small"
+            onClick={e => {
+              e.preventDefault();
+              onDelete(index);
+            }}
+          >
+            <HighlightOffIcon />
+          </IconButton>
+        )}
         <AttachFileIcon
           className={classes.attachIco}
           fontSize="large"
@@ -80,39 +78,13 @@ export function FileUI({ file, index, onDelete, progress, status }) {
         <Typography variant="body1">
           {(file.size / 1000000).toFixed(2) + "MB"}
         </Typography>
-        {(() => {
-          switch (status) {
-            case "UPLOADED":
-              return (
-                <Typography variant="body2" color="primary">
-                  Upload Complete
-                </Typography>
-              );
-            case "UPLOADING":
-              return (
-                <LinearProgress
-                  variant="determinate"
-                  value={progress}
-                  className={classes.loading}
-                />
-              );
-            case "UPLOAD_FAILED":
-              return (
-                <Typography variant="body2" color="secondary">
-                  Upload Failed
-                </Typography>
-              );
-            default:
-              return null;
-          }
-        })()}
+        {index !== null ? <UploadProgressBar fileID={index} /> : null}
       </Paper>
     </Grid>
   );
 }
 const mapStateToProps = (state, ownProps) => {
   return {
-    progress: state.upload.statuses[ownProps.index].progress,
     status: state.upload.statuses[ownProps.index].status
   };
 };

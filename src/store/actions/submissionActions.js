@@ -53,9 +53,15 @@ export const uploadprocess = (file, fileID, history) => {
   return async (dispatch, getState) => {
     const fileTracker = getState().upload.uploadFiles;
     dispatch(uploadStart(fileID, file.name));
+    let config = {
+      headers: {
+        Authorization: "Bearer " + getState().auth.jwt
+      }
+    };
     const fileUpload = axios.post(
       UrlJoin(process.env.REACT_APP_API_URL, `upload`),
-      { fileName: file.name }
+      { fileName: file.name },
+      config
     );
     fileUpload
       .then(res => {
@@ -75,10 +81,8 @@ export const uploadprocess = (file, fileID, history) => {
             dispatch(uploadComplete(fileID));
           })
           .then(() => {
-            if (
-              fileTracker.indexOf(fileID) === (fileTracker.length - 1)
-            ) {
-              history.push((`/hack/${getState().hack.hackDetails._id}`));
+            if (fileTracker.indexOf(fileID) === fileTracker.length - 1) {
+              history.push(`/hack/${getState().hack.hackDetails._id}`);
             }
           })
           .catch(error => {
