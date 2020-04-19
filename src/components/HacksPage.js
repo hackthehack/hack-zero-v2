@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Hacks = ({ dispatch, userId }) => {
+export const Hacks = ({ dispatch, userId, jwt }) => {
   const classes = useStyles();
   const [data, setData] = useState([]);
 
@@ -50,32 +50,60 @@ export const Hacks = ({ dispatch, userId }) => {
     dispatch(clearingHackDetails());
   }, [dispatch, userId]);
 
-  const sendLike = async (e, index) => {
+  const sendLike = async (e, index, hackId) => {
     e.stopPropagation();
     e.preventDefault();
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + jwt,
+      },
+    };
+    const body = {
+      hackId,
+      userId,
+    };
+
     if (!userId) {
       alert("You must login to like");
       return;
     }
     console.log("like route");
     let result = await axios.post(
-      UrlJoin(process.env.REACT_APP_API_URL, `likehack`)
+      UrlJoin(process.env.REACT_APP_API_URL, `likehack`),
+      body,
+      config
     );
+    console.log(result.data);
     console.log(data[index]);
     return;
   };
 
-  const sendDislike = async (e, index) => {
+  const sendDislike = async (e, index, hackId) => {
     e.stopPropagation();
     e.preventDefault();
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + jwt,
+      },
+    };
+    const body = {
+      hackId,
+      userId,
+    };
+
     if (!userId) {
       alert("You must login to like");
       return;
     }
     console.log("dislike route");
     let result = await axios.post(
-      UrlJoin(process.env.REACT_APP_API_URL, `dislikehack`)
+      UrlJoin(process.env.REACT_APP_API_URL, `dislikehack`),
+      body,
+      config
     );
+    console.log(result.data);
     console.log(data[index]);
     return;
   };
@@ -149,8 +177,8 @@ export const Hacks = ({ dispatch, userId }) => {
                     <Button
                       onClick={
                         hack.hasUserLiked
-                          ? (e) => sendDislike(e, index)
-                          : (e) => sendLike(e, index)
+                          ? (e) => sendDislike(e, index, hack._id)
+                          : (e) => sendLike(e, index, hack._id)
                       }
                       style={{ cursor: !userId ? "not-allowed" : "pointer" }}
                     >
@@ -192,7 +220,8 @@ export const Hacks = ({ dispatch, userId }) => {
 
 const mapState = (state) => ({
   userId: state.auth.userId,
-  hackDetails: state.hack.hackDetails,
+  //hackDetails: state.hack.hackDetails,
+  jwt: state.auth.jwt,
 });
 
 export default connect(mapState)(Hacks);
