@@ -49,6 +49,7 @@ export const Hacks = ({ dispatch, userId }) => {
     fetchData();
     dispatch(clearingHackDetails());
   }, [dispatch, userId]);
+
   const sendLike = (e) => {
     e.stopPropagation();
     e.preventDefault();
@@ -57,6 +58,16 @@ export const Hacks = ({ dispatch, userId }) => {
     }
     return;
   };
+
+  const sendDislike = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    if (!userId) {
+      alert("You must login to like");
+    }
+    return;
+  };
+
   if (data.length > 0) {
     return (
       <Grid
@@ -123,7 +134,10 @@ export const Hacks = ({ dispatch, userId }) => {
                     <div>
                       <TeamMembers team={hack.team} />
                     </div>
-                    <Button onClick={sendLike}>
+                    <Button
+                      onClick={hack.hasUserLiked ? sendDislike : sendLike}
+                      style={{ cursor: !userId ? "not-allowed" : "pointer" }}
+                    >
                       <ThumbUp
                         style={{
                           color: hack.hasUserLiked ? "dodgerBlue" : "d3d3d3",
