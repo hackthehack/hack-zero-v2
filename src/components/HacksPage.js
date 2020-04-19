@@ -42,16 +42,19 @@ export const Hacks = ({ dispatch, userId }) => {
   useEffect(() => {
     const fetchData = async () => {
       let result = await axios.get(
-        UrlJoin(process.env.REACT_APP_API_URL, "hacklist")
+        UrlJoin(process.env.REACT_APP_API_URL, `hacklist?userId=${userId}`)
       );
       setData([...result.data]);
     };
     fetchData();
     dispatch(clearingHackDetails());
-  }, [dispatch]);
+  }, [dispatch, userId]);
   const sendLike = (e) => {
     e.stopPropagation();
     e.preventDefault();
+    if (!userId) {
+      alert("You must login to like");
+    }
     return;
   };
   if (data.length > 0) {
@@ -123,7 +126,7 @@ export const Hacks = ({ dispatch, userId }) => {
                     <Button onClick={sendLike}>
                       <ThumbUp
                         style={{
-                          color: userId ? "dodgerBlue" : "d3d3d3",
+                          color: hack.hasUserLiked ? "dodgerBlue" : "d3d3d3",
                           fontSize: "1.25rem",
                         }}
                       />
