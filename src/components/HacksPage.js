@@ -50,21 +50,33 @@ export const Hacks = ({ dispatch, userId }) => {
     dispatch(clearingHackDetails());
   }, [dispatch, userId]);
 
-  const sendLike = (e) => {
+  const sendLike = async (e, index) => {
     e.stopPropagation();
     e.preventDefault();
     if (!userId) {
       alert("You must login to like");
+      return;
     }
+    console.log("like route");
+    let result = await axios.post(
+      UrlJoin(process.env.REACT_APP_API_URL, `likehack`)
+    );
+    console.log(data[index]);
     return;
   };
 
-  const sendDislike = (e) => {
+  const sendDislike = async (e, index) => {
     e.stopPropagation();
     e.preventDefault();
     if (!userId) {
       alert("You must login to like");
+      return;
     }
+    console.log("dislike route");
+    let result = await axios.post(
+      UrlJoin(process.env.REACT_APP_API_URL, `dislikehack`)
+    );
+    console.log(data[index]);
     return;
   };
 
@@ -81,7 +93,7 @@ export const Hacks = ({ dispatch, userId }) => {
         <Grid className={classes.root} item xs={9}>
           <Typography variant="h4">Hackathon Teams</Typography>
         </Grid>
-        {data.map((hack) => {
+        {data.map((hack, index) => {
           return (
             <Link
               key={hack._id}
@@ -135,7 +147,11 @@ export const Hacks = ({ dispatch, userId }) => {
                       <TeamMembers team={hack.team} />
                     </div>
                     <Button
-                      onClick={hack.hasUserLiked ? sendDislike : sendLike}
+                      onClick={
+                        hack.hasUserLiked
+                          ? (e) => sendDislike(e, index)
+                          : (e) => sendLike(e, index)
+                      }
                       style={{ cursor: !userId ? "not-allowed" : "pointer" }}
                     >
                       <ThumbUp
