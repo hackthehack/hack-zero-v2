@@ -68,15 +68,23 @@ export const Hacks = ({ dispatch, userId, jwt }) => {
       alert("You must login to like");
       return;
     }
-    console.log("like route");
+    //console.log("like route");
     let result = await axios.post(
       UrlJoin(process.env.REACT_APP_API_URL, `likehack`),
       body,
       config
     );
-    console.log(result.data);
-    console.log(data[index]);
-    return;
+    //console.log(result.data);
+    //console.log(data[index]);
+    //update the state
+    const newState = data.map((hack, position) => {
+      if (position === index) {
+        hack.hasUserLiked = true;
+        hack.likes = result.data.numberLikes;
+      }
+      return hack;
+    });
+    setData([...newState]);
   };
 
   const sendDislike = async (e, index, hackId) => {
@@ -97,15 +105,23 @@ export const Hacks = ({ dispatch, userId, jwt }) => {
       alert("You must login to like");
       return;
     }
-    console.log("dislike route");
+    //console.log("dislike route");
     let result = await axios.post(
       UrlJoin(process.env.REACT_APP_API_URL, `dislikehack`),
       body,
       config
     );
-    console.log(result.data);
-    console.log(data[index]);
-    return;
+    //console.log(result.data);
+    //console.log(data[index]);
+    // update ui
+    const newState = data.map((hack, position) => {
+      if (position === index) {
+        hack.hasUserLiked = false;
+        hack.likes = result.data.numberLikes;
+      }
+      return hack;
+    });
+    setData([...newState]);
   };
 
   if (data.length > 0) {
