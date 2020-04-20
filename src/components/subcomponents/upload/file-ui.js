@@ -1,12 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import UploadProgressBar from './upload-progress-bar'
-import {
-  Grid,
-  Typography,
-  Paper,
-  IconButton
-} from "@material-ui/core";
+import UploadProgressBar from "./upload-progress-bar";
+import { Grid, Typography, Paper, IconButton } from "@material-ui/core";
 
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
@@ -48,11 +43,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function FileUI({ file, index, onDelete, progress, status }) {
+export function FileUI({ file, index, onDelete, status }) {
   const classes = useStyles();
   return (
     <Grid item key={index}>
-      <Paper className={classes.attachment}>
+      <Paper className={classes.attachment} data-testid="fileUI">
         {["UPLOAD_FAILED", "PENDING"].includes(status) && (
           <IconButton
             className={classes.attachDel}
