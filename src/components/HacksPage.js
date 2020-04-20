@@ -228,7 +228,7 @@ export const Hacks = ({ dispatch, userId, jwt }) => {
         alignContent="center"
         className={classes.loading}
       >
-        <CircularProgress />
+        <CircularProgress data-testid="hacks-page-loader" />
       </Grid>
     );
   }
