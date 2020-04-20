@@ -6,7 +6,7 @@ const initialState = {
   hackDetails: null,
   assignedHacks: [],
   submission: null,
-  loading: false,
+  //loading: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -62,7 +62,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         items: { ...action.payload[0].fields },
-        loading: false,
+        //loading: false,
       };
     case ActionType.FETCH_HACK_DETAILS:
       return {
