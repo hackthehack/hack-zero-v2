@@ -71,7 +71,7 @@ export const Home = ({
         alignContent="center"
         style={{ marginTop: "3rem" }}
       >
-        <CircularProgress />
+        <CircularProgress data-testid="home-page-spinner" />
       </Grid>
     );
   }
