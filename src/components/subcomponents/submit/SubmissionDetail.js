@@ -26,8 +26,14 @@ const SubmissionDetail = ({ dispatch, submission }) => {
         Submission Detail
       </Typography>
       <Typography style={{ textAlign: "center" }} variant="h6">
-        {submission.message}
+        Messsage: {submission.message}
       </Typography>
+      <Typography style={{ textAlign: "center" }} variant="h4">
+        Files
+      </Typography>
+      {submission.files.map((file) => {
+        return <h3 key={file._id}>{file.name}</h3>;
+      })}
     </Paper>
   );
 };
