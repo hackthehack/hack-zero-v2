@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     margin: "0 auto",
     padding: theme.spacing(2),
-    width: "60vw",
+    width: "80vw",
   },
 }));
 
