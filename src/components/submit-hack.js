@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { submitHackIdea } from "../store/actions/submissionActions";
-import { getSubmissionData } from "../store/actions/hackathonActions";
 import { connect } from "react-redux";
 import SubmitDetails from "./subcomponents/submit/submit-details";
 import Upload from "./subcomponents/upload/upload";
@@ -71,6 +70,7 @@ export function SubmitHack({
           <Grid item xs={12} className={classes.margin}>
             <SubmitDetails
               message={submission !== null ? submission.message : ""}
+              files={submission !== null ? submission.files : []}
               update={setSubmitMessage}
               className={classes.margin}
             />

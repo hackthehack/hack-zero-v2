@@ -60,7 +60,7 @@ export const uploadprocess = (file, fileID, history) => {
     };
     const fileUpload = axios.post(
       UrlJoin(process.env.REACT_APP_API_URL, `upload`),
-      { fileName: file.name },
+      { fileName: `${getState().hack.hackDetails._id}/${file.name}` },
       config
     );
     fileUpload
@@ -99,9 +99,6 @@ export const uploadprocess = (file, fileID, history) => {
 
 export const submitHackIdea = (submitData, history) => {
   return async (dispatch, getState) => {
-    getState().upload.uploadFiles.map(fileID => {
-      dispatch(uploadprocess(submitData.files[fileID], fileID, history));
-    });
     let config = {
       headers: {
         Authorization: "Bearer " + getState().auth.jwt
@@ -119,15 +116,21 @@ export const submitHackIdea = (submitData, history) => {
     if (getState().hack.submission !== null) {
       submissionId = getState().hack.submission._id;
     }
-    axios.post(
-      UrlJoin(process.env.REACT_APP_API_URL, "submit"),
-      {
-        submissionId: submissionId,
-        files: files,
-        message: submitData.message,
-        hackId: getState().hack.hackDetails._id
-      },
-      config
-    );
+    axios
+      .post(
+        UrlJoin(process.env.REACT_APP_API_URL, "submit"),
+        {
+          submissionId: submissionId,
+          files: files,
+          message: submitData.message,
+          hackId: getState().hack.hackDetails._id
+        },
+        config
+      )
+      .then(() => {
+        getState().upload.uploadFiles.map(fileID => {
+          dispatch(uploadprocess(submitData.files[fileID], fileID, history));
+        });
+      });
   };
 };

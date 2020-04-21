@@ -1,10 +1,9 @@
 import React from "react";
-import { connect } from "react-redux";
 import UploadProgressBar from "./upload-progress-bar";
-import { Grid, Typography, Paper, IconButton } from "@material-ui/core";
+import CancelUpload from "./upload-remove-button";
+import { Grid, Typography, Paper } from "@material-ui/core";
 
 import AttachFileIcon from "@material-ui/icons/AttachFile";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -26,11 +25,6 @@ const useStyles = makeStyles(theme => ({
     textAlign: "center",
     padding: "0.5rem"
   },
-  attachDel: {
-    position: "absolute",
-    right: "-0.5rem",
-    top: "-0.5rem"
-  },
   attachIco: {
     height: "5rem"
   },
@@ -43,25 +37,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function FileUI({ file, index, onDelete, status }) {
+export function FileUI({ file, index, onDelete }) {
   const classes = useStyles();
   return (
     <Grid item key={index}>
       <Paper className={classes.attachment} data-testid="fileUI">
-        {["UPLOAD_FAILED", "PENDING"].includes(status) && (
-          <IconButton
-            className={classes.attachDel}
-            color="secondary"
-            component="span"
-            size="small"
-            onClick={e => {
-              e.preventDefault();
-              onDelete(index);
-            }}
-          >
-            <HighlightOffIcon />
-          </IconButton>
-        )}
+        {index !== null ? (
+          <CancelUpload fileID={index} onDelete={onDelete} />
+        ) : null}
         <AttachFileIcon
           className={classes.attachIco}
           fontSize="large"
@@ -78,10 +61,5 @@ export function FileUI({ file, index, onDelete, status }) {
     </Grid>
   );
 }
-const mapStateToProps = (state, ownProps) => {
-  return {
-    status: state.upload.statuses[ownProps.index].status
-  };
-};
 
-export default connect(mapStateToProps)(FileUI);
+export default FileUI;

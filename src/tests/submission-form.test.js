@@ -18,7 +18,8 @@ const initialState = {
       title: "a test"
     },
     submission: {
-      message: "Testing"
+      message: "Testing",
+      files: [{ name: "test file", size: 456243 }]
     }
   },
   upload: {

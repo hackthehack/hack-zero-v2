@@ -8,9 +8,7 @@ import {
   cancelFileUpload
 } from "../../../store/actions/submissionActions";
 import { connect } from "react-redux";
-import MoveToInboxIcon from '@material-ui/icons/MoveToInbox';
 import PublishIcon from '@material-ui/icons/Publish';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles(theme => ({
   root: {
