@@ -20,21 +20,20 @@ const FileCard = (props) => {
   return (
     <Card>
       <CardContent>
-        <Typography color="textSecondary" gutterBottom>
-          Word of the Day
+        <Typography color="textPrimary" gutterBottom>
+          File Name: {props.name}
         </Typography>
-        <Typography variant="h5" component="h2">
-          content
+        <Typography variant="h6" component="h6">
+          Size: {props.size}
         </Typography>
-        <Typography color="textSecondary">adjective</Typography>
-        <Typography variant="body2" component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
+        <Typography variant="h6" component="h6">
+          Type: {props.type}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small" color="primary">
+          Download
+        </Button>
       </CardActions>
     </Card>
   );
@@ -63,7 +62,11 @@ const SubmissionDetail = ({ dispatch, submission }) => {
           ? submission.files.map((file) => {
               return (
                 <Grid key={file._id} xs={12} sm={3}>
-                  <FileCard />
+                  <FileCard
+                    name={file.name}
+                    size={file.size}
+                    type={file.type}
+                  />
                 </Grid>
               );
             })
