@@ -3,47 +3,16 @@ import { connect } from "react-redux";
 import { Typography, Paper, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { getSubmissionData } from "../../../store/actions/hackathonActions";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
+import FileCard from "../FileCard";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: "0 auto",
-    padding: theme.spacing(2),
+    padding: theme.spacing(3),
     width: "80vw",
   },
 }));
 
-const FileCard = (props) => {
-  return (
-    <Card>
-      <CardContent>
-        <Typography color="textPrimary" gutterBottom>
-          File Name: {props.name}
-        </Typography>
-        <Typography variant="h6" component="h6">
-          Size: {props.size}
-        </Typography>
-        <Typography variant="h6" component="h6">
-          Type: {props.type}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button
-          size="small"
-          color="primary"
-          variant="contained"
-          startIcon={<CloudDownloadIcon />}
-        >
-          Download
-        </Button>
-      </CardActions>
-    </Card>
-  );
-};
 const SubmissionDetail = ({ dispatch, submission }) => {
   const classes = useStyles();
   useEffect(() => {
@@ -54,14 +23,18 @@ const SubmissionDetail = ({ dispatch, submission }) => {
   }
   return (
     <Paper className={classes.root}>
-      <Typography style={{ textAlign: "center" }} variant="h4">
+      <Typography style={{ textAlign: "left" }} variant="h4">
         Submission Detail
       </Typography>
-      <Typography style={{ textAlign: "center" }} variant="h6">
-        Messsage: {submission.message}
-      </Typography>
-      <Typography style={{ textAlign: "center" }} variant="h4">
-        Files
+      <div>
+        <Typography style={{ textAlign: "left" }} variant="h6">
+          Messsage:
+        </Typography>
+        <Typography variant="body1">{submission.message}</Typography>
+      </div>
+
+      <Typography style={{ textAlign: "left" }} variant="h6">
+        Files:
       </Typography>
       <Grid container spacing={3} className={classes.root}>
         {submission.files
