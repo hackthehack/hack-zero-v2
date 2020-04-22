@@ -82,7 +82,11 @@ export const uploadprocess = (file, fileID, history) => {
           })
           .then(() => {
             if (fileTracker.indexOf(fileID) === fileTracker.length - 1) {
-              history.push(`/hack/${getState().hack.hackDetails._id}`);
+              axios.post(UrlJoin(process.env.REACT_APP_API_URL, "checkOrphanage"),{
+                hackId: getState().hack.hackDetails._id
+              }).then(() => {
+                history.push(`/hack/${getState().hack.hackDetails._id}`);
+              })
             }
           })
           .catch(error => {
@@ -129,7 +133,9 @@ export const submitHackIdea = (submitData, history) => {
       )
       .then(() => {
         getState().upload.uploadFiles.map(fileID => {
-          dispatch(uploadprocess(submitData.files[fileID], fileID, history));
+          if(getState().upload.statuses[fileID].status!== "UPLOADED"){
+            dispatch(uploadprocess(submitData.files[fileID], fileID, history));
+          }
         });
       });
   };
