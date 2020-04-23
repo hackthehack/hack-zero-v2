@@ -57,6 +57,7 @@ export function CreateHack(props) {
         goal: goal,
         team: [],
         creator: props.userId,
+        status: status,
       };
       if (join) {
         newHack.team[0] = props.userId;
