@@ -5,32 +5,32 @@ import { logout } from "./authActions";
 import store from "../../setupStore";
 const usersUrl = UrlJoin(process.env.REACT_APP_API_URL, "userlist");
 
-const fetchUserOkay = users => ({
+const fetchUserOkay = (users) => ({
   type: ActionType.FETCH_USERS,
-  payload: users
+  payload: users,
 });
 
-const fetchHackDetails = hack => ({
+const fetchHackDetails = (hack) => ({
   type: ActionType.FETCH_HACK_DETAILS,
-  payload: hack
+  payload: hack,
 });
 
-const joinHackIdea = joiningUser => ({
+const joinHackIdea = (joiningUser) => ({
   type: ActionType.JOIN_HACK,
-  payload: joiningUser
+  payload: joiningUser,
 });
 
-const editHackIdea = updatedHack => ({
+const editHackIdea = (updatedHack) => ({
   type: ActionType.UPDATE_HACK,
-  payload: updatedHack
+  payload: updatedHack,
 });
-const likeOkay = numberLikes => ({
+const likeOkay = (numberLikes) => ({
   type: ActionType.LIKE_HACK,
-  payload: numberLikes
+  payload: numberLikes,
 });
-const dislikeOkay = numberLikes => ({
+const dislikeOkay = (numberLikes) => ({
   type: ActionType.DISLIKE_HACK,
-  payload: numberLikes
+  payload: numberLikes,
 });
 
 export const fetchUsers = () => {
@@ -50,12 +50,12 @@ export const dislikeHack = () => {
 
     const config = {
       headers: {
-        Authorization: "Bearer " + jwt
-      }
+        Authorization: "Bearer " + jwt,
+      },
     };
     const body = {
       hackId: hackDetails._id,
-      userId
+      userId,
     };
     try {
       let result = await axios.post(
@@ -80,12 +80,12 @@ export const likeHack = () => {
 
     const config = {
       headers: {
-        Authorization: "Bearer " + jwt
-      }
+        Authorization: "Bearer " + jwt,
+      },
     };
     const body = {
       hackId: hackDetails._id,
-      userId
+      userId,
     };
     try {
       let result = await axios.post(
@@ -117,16 +117,31 @@ export const fetchingHackDetails = (hackId, userId) => {
   };
 };
 
-export const joiningHackIdea = history => {
+export const unjoiningHackIdea = () => {
+  return (dispatch, getState) => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + getState().auth.jwt,
+      },
+    };
+    const body = {
+      hackId: getState().hack.hackDetails._id,
+      userId: getState().auth.userId,
+    };
+    console.log("unjoin a hack");
+  };
+};
+
+export const joiningHackIdea = (history) => {
   return async (dispatch, getState) => {
     let config = {
       headers: {
-        Authorization: "Bearer " + store.getState().auth.jwt
-      }
+        Authorization: "Bearer " + store.getState().auth.jwt,
+      },
     };
     const body = {
       hackId: store.getState().hack.hackDetails._id,
-      userId: store.getState().auth.userId
+      userId: store.getState().auth.userId,
     };
     try {
       let joinedHackIdea = await axios.post(
@@ -144,18 +159,18 @@ export const joiningHackIdea = history => {
   };
 };
 
-export const editingHackIdea = updatedData => {
+export const editingHackIdea = (updatedData) => {
   return async (dispatch, getState) => {
     let config = {
       headers: {
-        Authorization: "Bearer " + store.getState().auth.jwt
-      }
+        Authorization: "Bearer " + store.getState().auth.jwt,
+      },
     };
     let joinedHackIdea = await axios.post(
       UrlJoin(process.env.REACT_APP_API_URL, "edithack"),
       {
         ...updatedData,
-        hackId: store.getState().hack.hackDetails._id
+        hackId: store.getState().hack.hackDetails._id,
       },
       config
     );
@@ -168,9 +183,9 @@ export const submitHackIdea = (submitData) => {
   return async (dispatch, getState) => {
     let config = {
       headers: {
-        Authorization: "Bearer " + store.getState().auth.jwt
-      }
-    }
+        Authorization: "Bearer " + store.getState().auth.jwt,
+      },
+    };
     await axios.post(
       UrlJoin(process.env.REACT_APP_API_URL, "submit"),
       {
@@ -179,5 +194,5 @@ export const submitHackIdea = (submitData) => {
       },
       config
     );
-  }
-}
+  };
+};
