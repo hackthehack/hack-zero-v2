@@ -19,7 +19,10 @@ const joinHackIdea = (joiningUser) => ({
   type: ActionType.JOIN_HACK,
   payload: joiningUser,
 });
-
+const unjoinHackIdea = (unjoiningUser) => ({
+  type: ActionType.UNJOIN_HACK,
+  payload: unjoiningUser,
+});
 const editHackIdea = (updatedHack) => ({
   type: ActionType.UPDATE_HACK,
   payload: updatedHack,
@@ -118,7 +121,7 @@ export const fetchingHackDetails = (hackId, userId) => {
 };
 
 export const unjoiningHackIdea = () => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const config = {
       headers: {
         Authorization: "Bearer " + getState().auth.jwt,
@@ -128,7 +131,16 @@ export const unjoiningHackIdea = () => {
       hackId: getState().hack.hackDetails._id,
       userId: getState().auth.userId,
     };
-    console.log("unjoin a hack");
+    try {
+      let result = await axios.post(
+        UrlJoin(process.env.REACT_APP_API_URL, "unjoinHack"),
+        body,
+        config
+      );
+      dispatch(unjoinHackIdea(result.data));
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
 

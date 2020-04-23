@@ -14,7 +14,7 @@ const UnjoinButton = ({ dispatch, user, hackDetails }) => {
         setDisable(false);
       }
     });
-  });
+  }, [dispatch, hackDetails, user]);
 
   const unJoinHack = () => {
     dispatch(unjoiningHackIdea());
