@@ -101,8 +101,7 @@ export const submitHackIdea = (submitData, history) => {
     getState().upload.uploadFiles.map(file => {
       files.push({
         name: file.name,
-        size: file.size,
-        type: files.type
+        size: file.size
       })
     })
     if (getState().hack.submission !== null) {
