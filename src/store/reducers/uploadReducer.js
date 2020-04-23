@@ -9,15 +9,13 @@ const uploadFiles = (state = [], action) => {
       return [...state.filter(file => state.indexOf(file) !== action.fileID)];
     case ActionType.CLEAR_UPLOAD:
       state = [];
-      return [
-        ...state
-      ];
+      return [...state];
     default:
       return state;
   }
 };
 
-const statuses = (state = [], action) => {
+const statuses = (state = {}, action) => {
   switch (action.type) {
     case ActionType.UPLOAD_WARMUP:
       return {
@@ -59,10 +57,21 @@ const statuses = (state = [], action) => {
         }
       };
     case ActionType.FILE_UPLOAD_CANCELLED:
-      state = action.scrubbedState
-      return {
-        ...state
-      };
+      let newState = state;
+      let crawler = action.fileID + 1;
+      for (let key in newState) {
+        if (key >= action.fileID) {
+          if (crawler === Object.keys(newState).length) {
+            delete newState[key];
+            return {
+              ...newState
+            };
+          }
+          newState[crawler] = newState[key];
+          crawler++;
+        }
+      }
+      return { ...state };
     case ActionType.CLEAR_UPLOAD:
       state = {};
       return {

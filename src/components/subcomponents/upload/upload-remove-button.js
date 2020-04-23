@@ -4,7 +4,7 @@ import { IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import {
-  removeFileFromUpload
+  uploadCanceled
 } from "../../../store/actions/submissionActions";
 
 const useStyles = makeStyles(theme => ({
@@ -38,7 +38,7 @@ export function CancelUpload({ fileID, status, cancelUpload }) {
 }
 
 const mapDispatch = dispatch => ({
-  cancelUpload: fileID => dispatch(removeFileFromUpload(fileID))
+  cancelUpload: fileID => dispatch(uploadCanceled(fileID))
 });
 const mapStateToProps = (state, ownProps) => {
   return {

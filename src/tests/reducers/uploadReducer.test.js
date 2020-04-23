@@ -10,11 +10,15 @@ test("Returns default initialState", () => {
   expect(uploadReducer(undefined, action)).toEqual(initialState);
 });
 test("Returns state after user adds files for upload", () => {
-  const action = { type: ActionType.UPLOAD_WARMUP, fileID: "324421" };
+  const action = {
+    type: ActionType.UPLOAD_WARMUP,
+    fileID: 0,
+    file: { name: "Test File", size: "10000", type: "PDF/TYPE" }
+  };
   const expectedState = {
-    uploadFiles: ["324421"],
+    uploadFiles: [{ name: "Test File", size: "10000", type: "PDF/TYPE" }],
     statuses: {
-      324421: {
+      0: {
         status: "PENDING",
         progress: 0
       }
@@ -25,12 +29,12 @@ test("Returns state after user adds files for upload", () => {
 test("Returns state at beginning of upload", () => {
   const action = {
     type: ActionType.UPLOAD_STARTED,
-    fileID: "324421"
+    fileID: 0
   };
   const expectedState = {
     uploadFiles: [],
     statuses: {
-      324421: {
+      0: {
         status: "UPLOADING",
         progress: 0
       }
@@ -41,13 +45,13 @@ test("Returns state at beginning of upload", () => {
 test("Returns state during upload", () => {
   const action = {
     type: ActionType.UPLOAD_PROGRESS,
-    fileID: "324421",
+    fileID: 0,
     progress: 80
   };
   const expectedState = {
     uploadFiles: [],
     statuses: {
-      324421: {
+      0: {
         status: "UPLOADING",
         progress: 80
       }
@@ -58,12 +62,12 @@ test("Returns state during upload", () => {
 test("Returns state when upload has completed", () => {
   const action = {
     type: ActionType.UPLOAD_COMPLETE,
-    fileID: "324421"
+    fileID: 0
   };
   const expectedState = {
     uploadFiles: [],
     statuses: {
-      324421: {
+      0: {
         status: "UPLOADED",
         progress: 100
       }
@@ -74,33 +78,40 @@ test("Returns state when upload has completed", () => {
 test("Returns state when file upload is canceled", () => {
   const action = {
     type: ActionType.FILE_UPLOAD_CANCELLED,
-    fileID: "324421"
+    fileID: 1
   };
   const initialState = {
-    uploadFiles: ['324212','324421','453453'],
+    uploadFiles: [
+      { uploadFiles: [{ name: "Test File", size: "10001", type: "PDF/TYPE" }] },
+      { uploadFiles: [{ name: "Test File", size: "10002", type: "PDF/TYPE" }] },
+      { uploadFiles: [{ name: "Test File", size: "10003", type: "PDF/TYPE" }] }
+    ],
     statuses: {
-      324421: {
+      0: {
         status: "PENDING",
         progress: 0
       },
-      324212:{
+      1: {
         status: "PENDING",
         progress: 0
       },
-      453453:{
+      2: {
         status: "PENDING",
         progress: 0
       }
     }
   };
   const expectedState = {
-    uploadFiles: ['324212','453453'],
+    uploadFiles: [
+      { uploadFiles: [{ name: "Test File", size: "10001", type: "PDF/TYPE" }] },
+      { uploadFiles: [{ name: "Test File", size: "10003", type: "PDF/TYPE" }] }
+    ],
     statuses: {
-      324212:{
+      0: {
         status: "PENDING",
         progress: 0
       },
-      453453:{
+      1: {
         status: "PENDING",
         progress: 0
       }
@@ -111,12 +122,12 @@ test("Returns state when file upload is canceled", () => {
 test("Returns state when file upload has failed", () => {
   const action = {
     type: ActionType.UPLOAD_FAILED,
-    fileID: "324421"
+    fileID: 0
   };
   const expectedState = {
     uploadFiles: [],
     statuses: {
-      324421: {
+      0: {
         status: "UPLOAD_FAILED"
       }
     }
@@ -128,13 +139,16 @@ test("Returns state when upload data has been cleared", () => {
     type: ActionType.CLEAR_UPLOAD
   };
   const initialState = {
-    uploadFiles: ['324421','3029312'],
+    uploadFiles: [
+      { uploadFiles: [{ name: "Test File", size: "10000", type: "PDF/TYPE" }] },
+      { uploadFiles: [{ name: "Test File", size: "10000", type: "PDF/TYPE" }] }
+    ],
     statuses: {
-      324421: {
+      0: {
         status: "UPLOADED",
         progress: 100
       },
-      3029312:{
+      1: {
         status: "UPLOADED",
         progress: 100
       }

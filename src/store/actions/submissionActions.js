@@ -8,10 +8,9 @@ export const uploadWarmup = (file, fileID) => ({
   file: file
 });
 
-export const uploadCanceled = (fileID, scrubbedState) => ({
+export const uploadCanceled = (fileID) => ({
   type: ActionType.FILE_UPLOAD_CANCELLED,
-  fileID: fileID,
-  scrubbedState: scrubbedState
+  fileID: fileID
 });
 
 export const uploadStart = (fileID) => ({
@@ -37,29 +36,6 @@ export const uploadFailed = fileID => ({
 export const clearUpload = () => ({
   type: ActionType.CLEAR_UPLOAD
 });
-
-export const removeFileFromUpload = (fileID) => {
-  return async (dispatch, getState) => {
-    let fileStatusArray = getState().upload.statuses
-    // delete fileStatusArray[fileID];
-    let crawler = fileID + 1
-    console.log(`length: ${Object.keys(fileStatusArray).length - 1}`)
-    for(let key in fileStatusArray){
-      console.log(`key: ${key}  crawler: ${crawler}`)
-      if(key >= fileID){ 
-        if(crawler === (Object.keys(fileStatusArray).length)){
-          console.log("Delete")
-          delete fileStatusArray[key];
-          dispatch(uploadCanceled(fileID, fileStatusArray))
-          return
-        }
-        console.log("Change")
-        fileStatusArray[crawler] = fileStatusArray[key]
-        crawler++
-      }
-    }
-  }
-}
 
 export const uploadprocess = (file, fileID, history) => {
   return async (dispatch, getState) => {
