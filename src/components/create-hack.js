@@ -46,6 +46,7 @@ export function CreateHack(props) {
   const [description, setDescription] = useState("");
   const [goal, setGoal] = useState("");
   const [join, setJoin] = useState(false);
+  const [status, setStatus] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -100,7 +101,7 @@ export function CreateHack(props) {
               <Grid className={classes.field} item xs={12}>
                 <EditHackStatus
                   status=""
-                  handleUpdate={() => console.log("nothing")}
+                  handleUpdate={(statusValue) => setStatus(statusValue)}
                 />
               </Grid>
               <Grid className={classes.field} item xs={12}>
