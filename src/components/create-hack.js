@@ -12,7 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Axios from "axios";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Status from "./subcomponents/status";
+import EditHackStatus from "./subcomponents/edit-status";
 import UrlJoin from "url-join";
 import { connect } from "react-redux";
 
@@ -96,6 +96,12 @@ export function CreateHack(props) {
             >
               <Grid className={classes.field} item xs={12}>
                 <Typography variant="h4">New Hack Idea</Typography>
+              </Grid>
+              <Grid className={classes.field} item xs={12}>
+                <EditHackStatus
+                  status=""
+                  hanldeUpdate={() => console.log("nothing")}
+                />
               </Grid>
               <Grid className={classes.field} item xs={12}>
                 <FormControl fullWidth variant="outlined">
