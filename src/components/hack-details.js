@@ -127,7 +127,7 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                 </Grid>
                 <Grid item xs={12} style={{ marginTop: "1rem" }}>
                   <JoinButton team={hackDetails.team} history={history} />
-                  <UnJoinButton team={hackDetails.team} history={history} />
+                  <UnJoinButton />
                 </Grid>
               </Grid>
             </Paper>
