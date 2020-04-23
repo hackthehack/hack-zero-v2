@@ -100,7 +100,7 @@ export function CreateHack(props) {
               <Grid className={classes.field} item xs={12}>
                 <EditHackStatus
                   status=""
-                  hanldeUpdate={() => console.log("nothing")}
+                  handleUpdate={() => console.log("nothing")}
                 />
               </Grid>
               <Grid className={classes.field} item xs={12}>
