@@ -4,9 +4,9 @@ import * as ActionType from "../actions/index";
 const uploadFiles = (state = [], action) => {
   switch (action.type) {
     case ActionType.UPLOAD_WARMUP:
-      return [...state, action.fileID];
+      return [...state, action.file];
     case ActionType.FILE_UPLOAD_CANCELLED:
-      return state.filter(fileId => fileId !== action.fileID);
+      return [...state.filter(file => state.indexOf(file) !== action.fileID)];
     case ActionType.CLEAR_UPLOAD:
       state = [];
       return [
@@ -17,7 +17,7 @@ const uploadFiles = (state = [], action) => {
   }
 };
 
-const statuses = (state = {}, action) => {
+const statuses = (state = [], action) => {
   switch (action.type) {
     case ActionType.UPLOAD_WARMUP:
       return {
@@ -59,7 +59,7 @@ const statuses = (state = {}, action) => {
         }
       };
     case ActionType.FILE_UPLOAD_CANCELLED:
-      delete state[action.fileID];
+      state = action.scrubbedState
       return {
         ...state
       };

@@ -2,13 +2,9 @@ import React from "react";
 import FileUI from "./file-ui";
 import { Grid, Typography, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  uploadprocess,
-  addPendingFile,
-  cancelFileUpload
-} from "../../../store/actions/submissionActions";
+import { uploadWarmup } from "../../../store/actions/submissionActions";
 import { connect } from "react-redux";
-import PublishIcon from '@material-ui/icons/Publish';
+import PublishIcon from "@material-ui/icons/Publish";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,31 +15,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function UploadFiles({
-  files,
-  setFiles,
-  upload,
-  uploadFiles,
-  addFile,
-  cancelUpload
-}) {
+export function UploadFiles({ files, addFile }) {
   const onAddFile = e => {
-    const toUpload = {};
-    let fileID;
+    e.preventDefault()
+    let fileId = files.length
     Array.from(e.target.files).map(file => {
-      fileID = Math.floor(Math.random() * 99 + 1);
-      fileID = "" + fileID + file.size;
-      toUpload[fileID] = file;
-      addFile(fileID);
+      addFile(file, fileId)
+      fileId++
     });
-    setFiles({ ...files, ...toUpload });
+    console.log(files)
     e.target.files = null;
-  };
-  const onDelete = fileID => {
-    let delete_obj = files;
-    delete delete_obj[fileID];
-    cancelUpload(fileID);
-    setFiles(delete_obj);
   };
   const classes = useStyles();
 
@@ -72,21 +53,15 @@ export function UploadFiles({
         />
         <label htmlFor="upload-field">
           <Button variant="outlined" color="primary" component="span">
-            <PublishIcon style={{marginRight: "0.5rem"}}/>Upload File 
+            <PublishIcon style={{ marginRight: "0.5rem" }} />
+            Upload File
           </Button>
         </label>
       </Grid>
       <Grid item xs={12}>
         <Grid container spacing={2}>
-          {uploadFiles.map(fileID => {
-            return (
-              <FileUI
-                key={fileID}
-                file={files[fileID]}
-                index={fileID}
-                onDelete={onDelete}
-              />
-            );
+          {files.map((file, fileID) => {
+            return <FileUI key={fileID} file={file} index={fileID} />;
           })}
         </Grid>
       </Grid>
@@ -95,13 +70,11 @@ export function UploadFiles({
 }
 
 const mapDispatch = dispatch => ({
-  upload: (file, index) => dispatch(uploadprocess(file, index)),
-  addFile: fileID => dispatch(addPendingFile(fileID)),
-  cancelUpload: fileID => dispatch(cancelFileUpload(fileID))
+  addFile: (file, fileID) => dispatch(uploadWarmup(file, fileID)),
 });
 
 const mapStateToProps = state => ({
-  uploadFiles: state.upload.uploadFiles
+  files: state.upload.uploadFiles
 });
 
 export default connect(mapStateToProps, mapDispatch)(UploadFiles);

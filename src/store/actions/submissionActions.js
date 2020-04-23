@@ -2,20 +2,21 @@ import * as ActionType from "./index";
 import axios from "axios";
 import UrlJoin from "url-join";
 
-export const uploadWarmup = fileID => ({
+export const uploadWarmup = (file, fileID) => ({
   type: ActionType.UPLOAD_WARMUP,
-  fileID: fileID
-});
-
-export const uploadCanceled = fileID => ({
-  type: ActionType.FILE_UPLOAD_CANCELLED,
-  fileID: fileID
-});
-
-export const uploadStart = (fileID, fName) => ({
-  type: ActionType.UPLOAD_STARTED,
   fileID: fileID,
-  fileName: fName
+  file: file
+});
+
+export const uploadCanceled = (fileID, scrubbedState) => ({
+  type: ActionType.FILE_UPLOAD_CANCELLED,
+  fileID: fileID,
+  scrubbedState: scrubbedState
+});
+
+export const uploadStart = (fileID) => ({
+  type: ActionType.UPLOAD_STARTED,
+  fileID: fileID
 });
 export const uploadProgress = (fileID, progress) => ({
   type: ActionType.UPLOAD_PROGRESS,
@@ -37,17 +38,28 @@ export const clearUpload = () => ({
   type: ActionType.CLEAR_UPLOAD
 });
 
-export const addPendingFile = fileID => {
-  return async dispatch => {
-    dispatch(uploadWarmup(fileID));
-  };
-};
-
-export const cancelFileUpload = fileID => {
-  return async dispatch => {
-    dispatch(uploadCanceled(fileID));
-  };
-};
+export const removeFileFromUpload = (fileID) => {
+  return async (dispatch, getState) => {
+    let fileStatusArray = getState().upload.statuses
+    // delete fileStatusArray[fileID];
+    let crawler = fileID + 1
+    console.log(`length: ${Object.keys(fileStatusArray).length - 1}`)
+    for(let key in fileStatusArray){
+      console.log(`key: ${key}  crawler: ${crawler}`)
+      if(key >= fileID){ 
+        if(crawler === (Object.keys(fileStatusArray).length)){
+          console.log("Delete")
+          delete fileStatusArray[key];
+          dispatch(uploadCanceled(fileID, fileStatusArray))
+          return
+        }
+        console.log("Change")
+        fileStatusArray[crawler] = fileStatusArray[key]
+        crawler++
+      }
+    }
+  }
+}
 
 export const uploadprocess = (file, fileID, history) => {
   return async (dispatch, getState) => {
@@ -81,7 +93,7 @@ export const uploadprocess = (file, fileID, history) => {
             dispatch(uploadComplete(fileID));
           })
           .then(() => {
-            if (fileTracker.indexOf(fileID) === fileTracker.length - 1) {
+            if (fileTracker.indexOf(file) === fileTracker.length - 1) {
               axios.post(UrlJoin(process.env.REACT_APP_API_URL, "checkOrphanage"),{
                 hackId: getState().hack.hackDetails._id
               }).then(() => {
@@ -108,15 +120,15 @@ export const submitHackIdea = (submitData, history) => {
         Authorization: "Bearer " + getState().auth.jwt
       }
     };
-    let files = [];
-    for (let file in submitData.files) {
-      files.push({
-        name: submitData.files[file].name,
-        size: submitData.files[file].size,
-        type: submitData.files[file].type
-      });
-    }
     let submissionId = null;
+    let files = []
+    getState().upload.uploadFiles.map(file => {
+      files.push({
+        name: file.name,
+        size: file.size,
+        type: files.type
+      })
+    })
     if (getState().hack.submission !== null) {
       submissionId = getState().hack.submission._id;
     }
@@ -132,9 +144,9 @@ export const submitHackIdea = (submitData, history) => {
         config
       )
       .then(() => {
-        getState().upload.uploadFiles.map(fileID => {
+        getState().upload.uploadFiles.map((file, fileID) => {
           if(getState().upload.statuses[fileID].status!== "UPLOADED"){
-            dispatch(uploadprocess(submitData.files[fileID], fileID, history));
+            dispatch(uploadprocess(file, fileID, history));
           }
         });
       });

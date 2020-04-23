@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 export function SubmitHack({
-  match,
+  files,
   dispatch,
   submission,
   hackDetails,
@@ -40,7 +40,6 @@ export function SubmitHack({
   const classes = useStyles();
 
   const [submitting, setSubmitting] = useState(false);
-  const [files, setFiles] = useState({});
   const [submitMessage, setSubmitMessage] = useState("");
 
   const handelSubmit = () => {
@@ -79,7 +78,6 @@ export function SubmitHack({
             <Upload
               className={classes.margin}
               files={files}
-              setFiles={setFiles}
             />
           </Grid>
           <Grid item xs={12} style={{ float: "left", marginTop: "2rem" }}>
@@ -110,7 +108,8 @@ export function SubmitHack({
 const mapState = state => ({
   userId: state.auth.userId,
   hackDetails: state.hack.hackDetails,
-  submission: state.hack.submission
+  submission: state.hack.submission,
+  files: state.upload.uploadFiles
 });
 
 export default connect(mapState)(SubmitHack);
