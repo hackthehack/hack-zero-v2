@@ -20,6 +20,7 @@ import AddIcon from "@material-ui/icons/Add";
 import MenuIcon from "@material-ui/icons/Menu";
 import ViewListIcon from "@material-ui/icons/ViewList";
 import HomeIcon from "@material-ui/icons/Home";
+import HelpIcon from "@material-ui/icons/Help";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { logout } from "../store/actions/authActions";
@@ -114,7 +115,7 @@ export const Header = (props) => {
   const handleDrawerClose = () => {
     setOpenDrawer(false);
   };
-  const links = ["/", "/create", "/hacks"];
+  const links = ["/", "/create", "/hacks", "/about"];
   const displayLinkIcon = (index) => {
     switch (index) {
       case 0:
@@ -123,6 +124,8 @@ export const Header = (props) => {
         return <AddIcon />;
       case 2:
         return <ViewListIcon />;
+      case 3:
+        return <HelpIcon />;
       default:
         return "/";
     }
