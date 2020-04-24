@@ -248,6 +248,8 @@ export const Header = (props) => {
             let displayLinkText;
             displayLinkText =
               text.substr(1).charAt(0).toUpperCase() + text.slice(2);
+            if (displayLinkText === "Add New Idea") text = "create";
+            if (displayLinkText === "Idea List") text = "hacks";
             return (
               <ListItem
                 onClick={handleDrawerClose}
