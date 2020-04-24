@@ -114,7 +114,7 @@ export const Header = (props) => {
   const handleDrawerClose = () => {
     setOpenDrawer(false);
   };
-  const links = ["/", "/create", "/hacks"];
+  const links = ["/", "/Add New Idea", "/Idea List"];
   const displayLinkIcon = (index) => {
     switch (index) {
       case 0:
@@ -136,7 +136,7 @@ export const Header = (props) => {
       </Link>
       <Link to="/hacks" className={classes.link}>
         <Button color="inherit" className={classes.loginbutton}>
-          Hacks
+          Idea List
         </Button>
       </Link>
     </div>
@@ -151,13 +151,13 @@ export const Header = (props) => {
       <Link to="/hacks" className={classes.link}>
         {" "}
         <Button color="inherit" className={classes.loginbutton}>
-          Hacks
+          Idea List
         </Button>
       </Link>
       <Link to="/create" className={classes.link}>
         {" "}
         <Button color="inherit" className={classes.loginbutton}>
-          Create
+          Add New Idea
         </Button>
       </Link>
     </div>
