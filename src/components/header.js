@@ -139,6 +139,11 @@ export const Header = (props) => {
           Hacks
         </Button>
       </Link>
+      <Link to="/about" className={classes.link}>
+        <Button color="inherit" className={classes.loginbutton}>
+          About
+        </Button>
+      </Link>
     </div>
   );
   const LoginLinks = () => (
@@ -158,6 +163,12 @@ export const Header = (props) => {
         {" "}
         <Button color="inherit" className={classes.loginbutton}>
           Create
+        </Button>
+      </Link>
+      <Link to="/About" className={classes.link}>
+        {" "}
+        <Button color="inherit" className={classes.loginbutton}>
+          About
         </Button>
       </Link>
     </div>
