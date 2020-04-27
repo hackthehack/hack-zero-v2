@@ -13,6 +13,9 @@ export const FETCH_LOADING = "FETCH_LOADING";
 
 export const LOGGING_IN = "LOGGING_IN";
 export const LOGGING_OUT = "LOGGING_OUT";
+export const REGISTERING = "REGISTERING";
+export const REGISTER_FAILED = "REGISTER_FAILED";
 
 export const LIKE_HACK = "LIKE_HACK";
 export const DISLIKE_HACK = "DISLIKE_HACK";
+export const CLEAR_REGISTER = "CLEAR_REGISTER";
