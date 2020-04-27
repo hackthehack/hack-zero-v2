@@ -100,10 +100,7 @@ export function CreateHack(props) {
                 <Typography variant="h4">New Hack Idea</Typography>
               </Grid>
               <Grid className={classes.field} item xs={12}>
-                <EditHackStatus
-                  status=""
-                  handleUpdate={(statusValue) => setStatus(statusValue)}
-                />
+                <EditHackStatus status="" handleUpdate={setStatus} />
               </Grid>
               <Grid className={classes.field} item xs={12}>
                 <FormControl fullWidth variant="outlined">
