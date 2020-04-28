@@ -36,11 +36,11 @@ const SubmissionDetail = ({ dispatch, submission }) => {
       <Typography style={{ textAlign: "left" }} variant="h6">
         Files:
       </Typography>
-      <Grid container spacing={3} className={classes.root}>
+      <Grid container spacing={3} className={classes.root} alignItems="stretch">
         {submission.files
           ? submission.files.map((file) => {
               return (
-                <Grid key={file._id} xs={12} sm={4}>
+                <Grid key={file._id} xs={12} sm={4} style={{ display: "flex" }}>
                   <FileCard
                     name={file.name}
                     size={file.size}

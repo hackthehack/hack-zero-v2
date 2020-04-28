@@ -8,7 +8,7 @@ import { Typography } from "@material-ui/core";
 
 const FileCard = (props) => {
   return (
-    <Card>
+    <Card style={{ margin: "0.5rem", width: "100%" }}>
       <CardContent>
         <Typography color="textPrimary" gutterBottom>
           File Name: {props.name}
