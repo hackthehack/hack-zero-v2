@@ -6,15 +6,26 @@ const initialState = {
   hackDetails: null,
   assignedHacks: [],
   submission: null,
+
   //loading: false,
+
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+
     case ActionType.CLEAR_PREV_SUBMISSION:
       return {
         ...state,
         submission: null,
+      };
+    case ActionType.UNJOIN_HACK:
+      console.log(action);
+      console.log("unjoin hack from reducer");
+      return {
+        ...state,
+        hackDetails: { ...action.payload },
+
       };
     case ActionType.FETCH_LOADING:
       return {
@@ -62,7 +73,9 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         items: { ...action.payload[0].fields },
+
         //loading: false,
+
       };
     case ActionType.FETCH_HACK_DETAILS:
       return {

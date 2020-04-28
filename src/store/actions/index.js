@@ -2,6 +2,7 @@ export const LOGIN = "LOGIN";
 export const FETCH_USERS = "FETCH_USERS";
 export const FETCH_HACK_DETAILS = "FETCH_HACK_DETAILS";
 export const JOIN_HACK = "JOIN_HACK";
+export const UNJOIN_HACK = "UNJOIN_HACK";
 export const UPDATE_HACK = "UPDATE_HACK";
 export const CLEAR_HACK = "CLEAR_HACK";
 export const CLEAR_PREV_SUBMISSION = "CLEAR_PREV_SUBMISSION";
