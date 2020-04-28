@@ -12,12 +12,12 @@ const mockStore = configureStore(middlewares);
 test("Register component Renders", () => {
   const initialState = {
     auth: {
-    loginStatus: null,
-    isAuth: false,
-    userId: null,
-    jwt: null,
-    registerError: null,
-    registerStatus: null
+      loginStatus: null,
+      isAuth: false,
+      userId: null,
+      jwt: null,
+      registerError: null,
+      registerStatus: null
     }
   };
   const store = mockStore(initialState);

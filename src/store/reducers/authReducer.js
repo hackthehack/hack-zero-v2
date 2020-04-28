@@ -17,12 +17,12 @@ const reducer = (state = initialState, action) => {
         isAuth: true,
         userId,
         loginStatus: action.payload.status,
-        jwt
+        jwt,
       };
     case ActionType.LOGGING_IN:
       return {
         ...state,
-        loginStatus: action.payload
+        loginStatus: action.payload,
       };
     case ActionType.LOGGING_OUT:
       return initialState;

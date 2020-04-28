@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { ThumbUp } from "@material-ui/icons";
 
 import { CircularProgress } from "@material-ui/core";
-
+import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
@@ -16,39 +16,117 @@ import { clearingHackDetails } from "../store/actions/hackathonActions";
 import { connect } from "react-redux";
 import HackStatus from "./subcomponents/hack-status";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(1),
     padding: theme.spacing(1),
-    width: "50vw"
+    width: "50vw",
   },
   paper: {
     padding: theme.spacing(3),
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
   },
   loading: {
-    marginTop: theme.spacing(10)
+    marginTop: theme.spacing(10),
   },
   hacklist: {
     flexGrow: 1,
-    marginTop: theme.spacing(5)
-  }
+    marginTop: theme.spacing(5),
+  },
 }));
 
-export const Hacks = ({ dispatch }) => {
+
+export const Hacks = ({ dispatch, userId, jwt }) => {
+
   const classes = useStyles();
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       let result = await axios.get(
-        UrlJoin(process.env.REACT_APP_API_URL, "hacklist")
+        UrlJoin(process.env.REACT_APP_API_URL, `hacklist?userId=${userId}`)
       );
       setData([...result.data]);
     };
     fetchData();
     dispatch(clearingHackDetails());
-  }, [dispatch]);
+  }, [dispatch, userId]);
+
+
+  const sendLike = async (e, index, hackId) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + jwt,
+      },
+    };
+    const body = {
+      hackId,
+      userId,
+    };
+
+    if (!userId) {
+      alert("You must login to like");
+      return;
+    }
+    //console.log("like route");
+    let result = await axios.post(
+      UrlJoin(process.env.REACT_APP_API_URL, `likehack`),
+      body,
+      config
+    );
+    //console.log(result.data);
+    //console.log(data[index]);
+    //update the state
+    const newState = data.map((hack, position) => {
+      if (position === index) {
+        hack.hasUserLiked = true;
+        hack.likes = result.data.numberLikes;
+      }
+      return hack;
+    });
+    setData([...newState]);
+  };
+
+  const sendDislike = async (e, index, hackId) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + jwt,
+      },
+    };
+    const body = {
+      hackId,
+      userId,
+    };
+
+    if (!userId) {
+      alert("You must login to like");
+      return;
+    }
+    //console.log("dislike route");
+    let result = await axios.post(
+      UrlJoin(process.env.REACT_APP_API_URL, `dislikehack`),
+      body,
+      config
+    );
+    //console.log(result.data);
+    //console.log(data[index]);
+    // update ui
+    const newState = data.map((hack, position) => {
+      if (position === index) {
+        hack.hasUserLiked = false;
+        hack.likes = result.data.numberLikes;
+      }
+      return hack;
+    });
+    setData([...newState]);
+  };
+
 
   if (data.length > 0) {
     return (
@@ -63,7 +141,11 @@ export const Hacks = ({ dispatch }) => {
         <Grid className={classes.root} item xs={9}>
           <Typography variant="h4">Hackathon Teams</Typography>
         </Grid>
-        {data.map(hack => {
+
+        {data.map((hack, index) => {
+
+       
+
           return (
             <Link
               key={hack._id}
@@ -110,24 +192,35 @@ export const Hacks = ({ dispatch }) => {
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
-                      flexWrap: "wrap"
+                      flexWrap: "wrap",
                     }}
                   >
                     <div>
                       <TeamMembers team={hack.team} />
                     </div>
-                    <div>
+                    <Button
+                      onClick={
+                        hack.hasUserLiked
+                          ? (e) => sendDislike(e, index, hack._id)
+                          : (e) => sendLike(e, index, hack._id)
+                      }
+                      style={{ cursor: !userId ? "not-allowed" : "pointer" }}
+                    >
                       <ThumbUp
                         style={{
-                          color: "dodgerBlue",
-                          fontSize: "1.5rem",
 
-                          display: "inline-block",
-                          marginTop: "1rem"
+                          color: hack.hasUserLiked ? "dodgerBlue" : "d3d3d3",
+                          fontSize: "1.25rem",
+
+                          
+
                         }}
                       />
-                      <span>{hack.likes}</span>
-                    </div>
+                      <span style={{ marginLeft: "0.5rem" }}>
+                        {" "}
+                        {hack.likes}
+                      </span>
+                    </Button>
                   </Grid>
                 </Grid>
               </Paper>
@@ -147,15 +240,19 @@ export const Hacks = ({ dispatch }) => {
         alignContent="center"
         className={classes.loading}
       >
-        <CircularProgress />
+        <CircularProgress data-testid="hacks-page-loader" />
       </Grid>
     );
   }
 };
 
-const mapState = state => ({
+const mapState = (state) => ({
   userId: state.auth.userId,
-  hackDetails: state.hack.hackDetails
+  
+  jwt: state.auth.jwt,
+
+  
+
 });
 
 export default connect(mapState)(Hacks);
