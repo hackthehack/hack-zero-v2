@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Typography, Paper } from "@material-ui/core";
+import { Typography, Paper, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { getSubmissionData } from "../../../store/actions/hackathonActions";
+import FileCard from "../FileCard";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: "0 auto",
+    //margin: "0 auto",
     padding: theme.spacing(2),
-    width: "60vw",
+    width: "80vw",
   },
 }));
 
@@ -21,13 +22,35 @@ const SubmissionDetail = ({ dispatch, submission }) => {
     return null;
   }
   return (
-    <Paper className={classes.root}>
-      <Typography style={{ textAlign: "center" }} variant="h4">
+    <Paper className={classes.root} style={{ margin: "0 auto" }}>
+      <Typography style={{ textAlign: "left" }} variant="h4">
         Submission Detail
       </Typography>
-      <Typography style={{ textAlign: "center" }} variant="h6">
-        {submission.message}
+      <div>
+        <Typography style={{ textAlign: "left" }} variant="h6">
+          Messsage:
+        </Typography>
+        <Typography variant="body1">{submission.message}</Typography>
+      </div>
+
+      <Typography style={{ textAlign: "left" }} variant="h6">
+        Files:
       </Typography>
+      <Grid container spacing={3} className={classes.root} alignItems="stretch">
+        {submission.files
+          ? submission.files.map((file) => {
+              return (
+                <Grid key={file._id} xs={12} sm={4} style={{ display: "flex" }}>
+                  <FileCard
+                    name={file.name}
+                    size={file.size}
+                    type={file.type}
+                  />
+                </Grid>
+              );
+            })
+          : null}
+      </Grid>
     </Paper>
   );
 };
