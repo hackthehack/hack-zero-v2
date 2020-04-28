@@ -6,13 +6,9 @@ const initialState = {
   hackDetails: null,
   assignedHacks: [],
   submission: null,
-<<<<<<< HEAD
-  loading: false,
-=======
 
   //loading: false,
 
->>>>>>> master
 };
 
 const reducer = (state = initialState, action) => {
