@@ -16,39 +16,39 @@ import { clearingHackDetails } from "../store/actions/hackathonActions";
 import { connect } from "react-redux";
 import HackStatus from "./subcomponents/hack-status";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(1),
     padding: theme.spacing(1),
-    width: "50vw"
+    width: "50vw",
   },
   paper: {
     padding: theme.spacing(3),
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
   },
   loading: {
-    marginTop: theme.spacing(10)
+    marginTop: theme.spacing(10),
   },
   hacklist: {
     flexGrow: 1,
-    marginTop: theme.spacing(5)
-  }
+    marginTop: theme.spacing(5),
+  },
 }));
 
-export const Hacks = ({ dispatch }) => {
+export const Hacks = ({ dispatch, userId }) => {
   const classes = useStyles();
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       let result = await axios.get(
-        UrlJoin(process.env.REACT_APP_API_URL, "hacklist")
+        UrlJoin(process.env.REACT_APP_API_URL, `hacklist?userId=${userId}`)
       );
       setData([...result.data]);
     };
     fetchData();
     dispatch(clearingHackDetails());
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   if (data.length > 0) {
     return (
@@ -63,7 +63,7 @@ export const Hacks = ({ dispatch }) => {
         <Grid className={classes.root} item xs={9}>
           <Typography variant="h4">Hackathon Teams</Typography>
         </Grid>
-        {data.map(hack => {
+        {data.map((hack) => {
           return (
             <Link
               key={hack._id}
@@ -110,7 +110,7 @@ export const Hacks = ({ dispatch }) => {
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
-                      flexWrap: "wrap"
+                      flexWrap: "wrap",
                     }}
                   >
                     <div>
@@ -123,7 +123,7 @@ export const Hacks = ({ dispatch }) => {
                           fontSize: "1.5rem",
 
                           display: "inline-block",
-                          marginTop: "1rem"
+                          marginTop: "1rem",
                         }}
                       />
                       <span>{hack.likes}</span>
@@ -153,9 +153,9 @@ export const Hacks = ({ dispatch }) => {
   }
 };
 
-const mapState = state => ({
+const mapState = (state) => ({
   userId: state.auth.userId,
-  hackDetails: state.hack.hackDetails
+  hackDetails: state.hack.hackDetails,
 });
 
 export default connect(mapState)(Hacks);
