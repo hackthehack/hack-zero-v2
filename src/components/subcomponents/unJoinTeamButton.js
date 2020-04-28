@@ -28,7 +28,7 @@ const UnjoinButton = ({ dispatch, user, hackDetails }) => {
       color="primary"
       style={{ marginLeft: "0.5rem" }}
     >
-      Unjoin
+      Leave
     </Button>
   );
 };
