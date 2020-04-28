@@ -6,24 +6,25 @@ import { uploadWarmup } from "../../../store/actions/submissionActions";
 import { connect } from "react-redux";
 import PublishIcon from "@material-ui/icons/Publish";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
   },
   input: {
-    display: "none"
-  }
+    display: "none",
+  },
 }));
 
 export function UploadFiles({ files, addFile }) {
-  const onAddFile = e => {
-    e.preventDefault()
-    let fileId = files.length
-    Array.from(e.target.files).map(file => {
-      addFile(file, fileId)
-      fileId++
+  const onAddFile = (e) => {
+    e.preventDefault();
+    let fileId = files.length;
+    Array.from(e.target.files).map((file) => {
+      addFile(file, fileId);
+      fileId++;
+      return null;
     });
-    console.log(files)
+    console.log(files);
     e.target.files = null;
   };
   const classes = useStyles();
@@ -69,12 +70,12 @@ export function UploadFiles({ files, addFile }) {
   );
 }
 
-const mapDispatch = dispatch => ({
+const mapDispatch = (dispatch) => ({
   addFile: (file, fileID) => dispatch(uploadWarmup(file, fileID)),
 });
 
-const mapStateToProps = state => ({
-  files: state.upload.uploadFiles
+const mapStateToProps = (state) => ({
+  files: state.upload.uploadFiles,
 });
 
 export default connect(mapStateToProps, mapDispatch)(UploadFiles);
