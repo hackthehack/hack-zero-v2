@@ -2,9 +2,6 @@ import * as ActionType from "./index";
 import axios from "axios";
 import urlJoin from "url-join";
 import { clearUpload } from './submissionActions'
-//const contentfulUrl = "https://cdn.contentful.com";
-//const testUrl = "http://localhost:3001/userhacks/";
-//import store from "../../setupStore";
 
 export const getContentOkay = (content) => ({
   type: ActionType.FETCH_HACK_A_THON,
@@ -91,9 +88,7 @@ export const getSubmissionData = () => {
         )
       );
 
-      //console.log(result.data);
       dispatch(submissionData(result.data));
-      dispatch(clearUpload())
 
     } catch (err) {
       console.log(err);
