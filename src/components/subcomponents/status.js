@@ -8,8 +8,18 @@ import AutorenewIcon from "@material-ui/icons/Autorenew";
 import NotInterestedIcon from "@material-ui/icons/NotInterested";
 import CancelIcon from "@material-ui/icons/Cancel";
 import PublishIcon from "@material-ui/icons/Publish";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  chip:{
+    marginLeft: theme.spacing(1),
+    marginBottom: theme.spacing(1)
+  }
+}))
 
 export function Status({ label, style, clickable, onclick }) {
+
+  const classes = useStyles();
 
   const type = value => {
     switch (value) {
@@ -65,6 +75,7 @@ export function Status({ label, style, clickable, onclick }) {
 
   return (
     <Chip
+      className={classes.chip}
       label={label}
       style={{...type(style), color: "white", borderRadius: ".5rem", marginRight: "0.5rem"}}
       clickable={clickable}

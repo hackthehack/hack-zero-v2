@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import authReducer from "./store/reducers/authReducer";
 import userReducer from "./store/reducers/userReducer";
 import hackReducer from "./store/reducers/hackathonReducer";
+import { uploadReducer } from "./store/reducers/uploadReducer"
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage/session'
 
@@ -20,7 +21,8 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: persistReducer(persistConfig, authReducer),
   user: userReducer,
-  hack: hackReducer
+  hack: hackReducer,
+  upload: uploadReducer,
 });
 
 export const store = createStore(
