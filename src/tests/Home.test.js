@@ -1,8 +1,9 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, act } from "@testing-library/react";
 
 import { Provider } from "react-redux";
-import ReduxConnectedHome from "../components/Home";
+import ReduxConnectedHome, { Home } from "../components/Home";
+
 import thunk from "redux-thunk";
 
 import configureStore from "redux-mock-store";
@@ -18,37 +19,42 @@ const initialState = {
       information: "a information",
       status: "active",
       theme: "a testing theme",
+      prizeList: ["100", "22", "200"],
     },
     assignedHacks: [],
     assets: [],
   },
 };
-test("<Home/> component heading should be rendered in the page", () => {
+test("<Home/> component heading should be rendered on the page", async () => {
   const store = mockStore(initialState);
-  const { getByTestId } = render(
-    <Provider store={store}>
-      <ReduxConnectedHome />
-    </Provider>
-  );
-  const header = getByTestId("page-header");
-  expect(header).toBeInTheDocument();
+  await act(async () => {
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <ReduxConnectedHome />
+      </Provider>
+    );
+    const header = getByTestId("page-header");
+    expect(header).toBeInTheDocument();
+  });
 });
 
-test("<Home/> component should have 5 cards, information, schedule, prize, theme and status", () => {
+test("<Home/> component should have 5 cards, information, schedule, prize, theme and status after loading", async () => {
   const store = mockStore(initialState);
-  const { getByTestId } = render(
-    <Provider store={store}>
-      <ReduxConnectedHome />
-    </Provider>
-  );
-  const schedule = getByTestId("schedule-card");
-  const status = getByTestId("status-card");
-  const prize = getByTestId("prize-card");
-  const theme = getByTestId("theme-card");
-  const info = getByTestId("information-card");
-  expect(prize).toBeInTheDocument();
-  expect(status).toBeInTheDocument();
-  expect(info).toBeInTheDocument();
-  expect(theme).toBeInTheDocument();
-  expect(schedule).toBeInTheDocument();
+  await act(async () => {
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <ReduxConnectedHome />
+      </Provider>
+    );
+    const schedule = getByTestId("schedule-card");
+    const status = getByTestId("status-card");
+    const prize = getByTestId("prize-card");
+    const theme = getByTestId("theme-card");
+    const info = getByTestId("information-card");
+    expect(prize).toBeInTheDocument();
+    expect(status).toBeInTheDocument();
+    expect(info).toBeInTheDocument();
+    expect(theme).toBeInTheDocument();
+    expect(schedule).toBeInTheDocument();
+  });
 });

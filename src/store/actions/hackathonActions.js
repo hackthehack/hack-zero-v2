@@ -27,11 +27,13 @@ export const submissionData = (submission) => ({
   type: ActionType.SET_SUBMISSION_DATA,
   payload: submission,
 });
-
-export const loadingStart = () => ({
-  type: ActionType.FETCH_LOADING,
+export const clearPreviousSubmissionData = () => ({
+  type: ActionType.CLEAR_PREV_SUBMISSION,
 });
 
+// export const loadingStart = () => ({
+//   type: ActionType.FETCH_LOADING,
+// });
 
 export const getAssignedHacks = () => {
   return async (dispatch, getState) => {
@@ -55,7 +57,7 @@ export const getHackathonContent = () => {
   return async (dispatch, getState) => {
     //console.log(process.env.REACT_APP_CONTENTFUL_KEY);
     try {
-      dispatch(loadingStart());
+      //dispatch(loadingStart());
       let result = await axios.get(
         `${process.env.REACT_APP_CONTENTFUL_API}/spaces/${process.env.REACT_APP_CONTENTFUL_SPACE_ID}/entries?access_token=${process.env.REACT_APP_CONTENTFUL_KEY}&content_type=hackEvent`
       );
@@ -80,6 +82,7 @@ export const clearingHackDetails = () => {
 
 export const getSubmissionData = () => {
   return async (dispatch, getState) => {
+    dispatch(clearPreviousSubmissionData());
     try {
       let result = await axios.get(
         urlJoin(

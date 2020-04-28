@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import Team from "./subcomponents/hack-team";
 import JoinButton from "./subcomponents/join-team-button";
+import UnJoinButton from "./subcomponents/unJoinTeamButton";
 import EditHackButton from "./subcomponents/edit-hack-button";
 import HackStatus from "./subcomponents/hack-status";
 import EditHack from "./edit-hack";
@@ -129,6 +130,10 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                 </Grid>
                 <Grid item xs={4} sm={2}>
                   <LikeButton />
+                </Grid>
+                <Grid item xs={12} style={{ marginTop: "1rem" }}>
+                  <JoinButton team={hackDetails.team} history={history} />
+                  <UnJoinButton />
                 </Grid>
               </Grid>
             </Paper>
