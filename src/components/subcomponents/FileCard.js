@@ -21,6 +21,7 @@ const FileCard = (props) => {
           size="small"
           color="primary"
           variant="contained"
+          style={{ margin: "0 auto" }}
           startIcon={<CloudDownloadIcon />}
         >
           Download

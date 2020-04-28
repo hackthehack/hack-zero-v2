@@ -7,8 +7,8 @@ import FileCard from "../FileCard";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: "0 auto",
-    padding: theme.spacing(3),
+    //margin: "0 auto",
+    padding: theme.spacing(2),
     width: "80vw",
   },
 }));
@@ -22,7 +22,7 @@ const SubmissionDetail = ({ dispatch, submission }) => {
     return null;
   }
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} style={{ margin: "0 auto" }}>
       <Typography style={{ textAlign: "left" }} variant="h4">
         Submission Detail
       </Typography>
@@ -40,7 +40,7 @@ const SubmissionDetail = ({ dispatch, submission }) => {
         {submission.files
           ? submission.files.map((file) => {
               return (
-                <Grid key={file._id} xs={12} sm={3}>
+                <Grid key={file._id} xs={12} sm={4}>
                   <FileCard
                     name={file.name}
                     size={file.size}
