@@ -35,11 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 export const Hacks = ({ dispatch, userId, jwt }) => {
-
-
   const classes = useStyles();
   const [data, setData] = useState([]);
 
@@ -53,8 +49,6 @@ export const Hacks = ({ dispatch, userId, jwt }) => {
     fetchData();
     dispatch(clearingHackDetails());
   }, [dispatch, userId]);
-
-
 
   const sendLike = async (e, index, hackId) => {
     e.stopPropagation();
@@ -130,8 +124,6 @@ export const Hacks = ({ dispatch, userId, jwt }) => {
     setData([...newState]);
   };
 
-
-
   if (data.length > 0) {
     return (
       <Grid
@@ -146,8 +138,7 @@ export const Hacks = ({ dispatch, userId, jwt }) => {
           <Typography variant="h4">Hackathon Teams</Typography>
         </Grid>
 
-        {data.map((hack) => {
-
+        {data.map((hack, index) => {
           return (
             <Link
               key={hack._id}
@@ -210,14 +201,8 @@ export const Hacks = ({ dispatch, userId, jwt }) => {
                     >
                       <ThumbUp
                         style={{
-
-
                           color: hack.hasUserLiked ? "dodgerBlue" : "d3d3d3",
                           fontSize: "1.25rem",
-
-                          
-
-
                         }}
                       />
                       <span style={{ marginLeft: "0.5rem" }}>
@@ -253,12 +238,7 @@ export const Hacks = ({ dispatch, userId, jwt }) => {
 const mapState = (state) => ({
   userId: state.auth.userId,
 
-  
   jwt: state.auth.jwt,
-
-  
-
-
 });
 
 export default connect(mapState)(Hacks);
