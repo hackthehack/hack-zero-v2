@@ -2,8 +2,10 @@ export const LOGIN = "LOGIN";
 export const FETCH_USERS = "FETCH_USERS";
 export const FETCH_HACK_DETAILS = "FETCH_HACK_DETAILS";
 export const JOIN_HACK = "JOIN_HACK";
+export const UNJOIN_HACK = "UNJOIN_HACK";
 export const UPDATE_HACK = "UPDATE_HACK";
 export const CLEAR_HACK = "CLEAR_HACK";
+export const CLEAR_PREV_SUBMISSION = "CLEAR_PREV_SUBMISSION";
 export const FETCH_HACK_A_THON = "FETCH_HACK_A_THON";
 export const SET_SUBMISSION_DATA = "SET_SUBMISSION_DATA";
 
@@ -16,3 +18,11 @@ export const LOGGING_OUT = "LOGGING_OUT";
 
 export const LIKE_HACK = "LIKE_HACK";
 export const DISLIKE_HACK = "DISLIKE_HACK";
+
+export const UPLOAD_STARTED = "UPLOAD_STARTED";
+export const UPLOAD_PROGRESS = "UPLOAD_PROGRESS";
+export const UPLOAD_COMPLETE = "UPLOAD_COMPLETE";
+export const UPLOAD_FAILED = "UPLOAD_FAILED";
+export const UPLOAD_WARMUP = "UPLOAD_WARMUP";
+export const FILE_UPLOAD_CANCELLED = "FILE_UPLOAD_CANCELLED";
+export const CLEAR_UPLOAD = "CLEAR_UPLOAD";

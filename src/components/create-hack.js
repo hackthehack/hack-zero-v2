@@ -12,7 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Axios from "axios";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-
+import EditHackStatus from "./subcomponents/edit-status";
 import UrlJoin from "url-join";
 import { connect } from "react-redux";
 
@@ -46,6 +46,7 @@ export function CreateHack(props) {
   const [description, setDescription] = useState("");
   const [goal, setGoal] = useState("");
   const [join, setJoin] = useState(false);
+  const [status, setStatus] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -56,6 +57,9 @@ export function CreateHack(props) {
         goal: goal,
         team: [],
         creator: props.userId,
+
+        status: status,
+
       };
       if (join) {
         newHack.team[0] = props.userId;
@@ -98,6 +102,9 @@ export function CreateHack(props) {
             >
               <Grid className={classes.field} item xs={12}>
                 <Typography variant="h4">New Hack Idea</Typography>
+              </Grid>
+              <Grid className={classes.field} item xs={12}>
+                <EditHackStatus status="" handleUpdate={setStatus} />
               </Grid>
               <Grid className={classes.field} item xs={12}>
                 <FormControl fullWidth variant="outlined">
