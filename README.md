@@ -13,14 +13,23 @@ Participates are also able to sign up to gain access to a range of features.
  * Hack Idea Creation
  * Join Hack Idea Team
  * Editing Hacks
-
-### Planned Features
  * Hack Status
  * Liking Hack Ideas
- * Commenting on Hacks
- * Judge Voting
  * Submit Hacks for Judging
  * Upload Files to Hack
+
+### Planned Features
+ * Commenting on Hack Ideas
+ * Judge Voting
+ * User Profile
+ * User Roles
+ * Filer Hack Idea List
+ * ToDo list
+ * Invite user to app/hack
+
+## Usage
+
+Hack Zero hack can be loaded into an S3 bucket for simple and quick deployment. An entity (A Company, Not for Profit or individual) can deploy the application ahead of a hackathon event and request users to sign up. Once the user has signed up they can create ideas for the upcoming hackathon and create teams. The entity can then use contentful to push updates about the event to the users home page.
 
 ## Installation
 
@@ -35,11 +44,6 @@ Once the app folder has finished downloading simply install the dependencies usi
 ```sh
 npm install
 ```
-
-
-## Usage
-
-Hack Zero hack can be loaded into an S3 bucket for simple and quick deployment. An entity (A Company, Not for Profit or individual) can deploy the application ahead of a hackathon event and request users to sign up. Once the user has signed up they can create ideas for the upcoming hackathon and create teams. The entity can then use contentful to push updates about the event to the users home page.
 
 ## Development setup
 
@@ -64,6 +68,37 @@ Describe how to install all development dependencies and how to run an automated
 npm run
 ```
 
+## S3 Bucket Configuration
+1. Navigate to the Amazon S3 dashboard
+2. Create a new bucket and name it accordingly, this can be whatever you want, select your preferred region 
+3. Skip configuring the properties step, we wont need to change anything here
+4. In the permissions step you will need to set the public access to "Grant public read access to this bucket"
+5. Then hit create bucket
+6. Select the bucket and navigate to its properties tab
+7. Select website hosting
+8. Click the "Use this bucket to host a website" and in both the Index and Error document field type "index.html" and click save
+9. Next Move to the Permissions tab and select "Bucket Policy"
+10. enter the following details into the policy editor
+```JSON
+{
+    "Version": "2008-10-17",
+    "Id": "PolicyForPublicWebsiteContent",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "*"
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::[BUCKET NAME]/*"
+        }
+    ]
+}
+```
+11. Click save
+
+Your bucket configuration is now complete
 
 ## Contributing
 
