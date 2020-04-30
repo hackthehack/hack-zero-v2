@@ -13,14 +13,23 @@ Participates are also able to sign up to gain access to a range of features.
  * Hack Idea Creation
  * Join Hack Idea Team
  * Editing Hacks
-
-### Planned Features
  * Hack Status
  * Liking Hack Ideas
- * Commenting on Hacks
- * Judge Voting
  * Submit Hacks for Judging
  * Upload Files to Hack
+
+### Planned Features
+ * Commenting on Hack Ideas
+ * Judge Voting
+ * User Profile
+ * User Roles
+ * Filer Hack Idea List
+ * ToDo list
+ * Invite user to app/hack
+
+## Usage
+
+Hack Zero hack can be loaded into an S3 bucket for simple and quick deployment. An entity (A Company, Not for Profit or individual) can deploy the application ahead of a hackathon event and request users to sign up. Once the user has signed up they can create ideas for the upcoming hackathon and create teams. The entity can then use contentful to push updates about the event to the users home page.
 
 ## Installation
 
@@ -36,23 +45,19 @@ Once the app folder has finished downloading simply install the dependencies usi
 npm install
 ```
 
-
-## Usage
-
-Hack Zero hack can be loaded into an S3 bucket for simple and quick deployment. An entity (A Company, Not for Profit or individual) can deploy the application ahead of a hackathon event and request users to sign up. Once the user has signed up they can create ideas for the upcoming hackathon and create teams. The entity can then use contentful to push updates about the event to the users home page.
-
 ## Development setup
 
 You will need to install Node.js in order to run this application, please refer to the installation above
 <br>
-The .env file will need to be updated with the correct API url:
+The .env file will need to be updated with the correct API url
 ```sh
 REACT_APP_API_URL=[url]
 ```
-the Contentful connection will also beed to be updated in the .env file:
+the Contentful connection will also beed to be updated in the .env file
+if you do not have a contentful account please read the instructions further down on the page
 ```sh
-REACT_APP_CONTENTFUL_KEY=[Your Key]
-REACT_APP_CONTENTFUL_SPACE_ID=[Your ID]
+REACT_APP_CONTENTFUL_KEY=[Space ID]
+REACT_APP_CONTENTFUL_SPACE_ID=[Content Delivery API - access token]
 ```
 Hack Zero utilizes reacts built in testing library along side Jest, to run the automated tests simply run the command below
 ```sh
@@ -64,6 +69,45 @@ Describe how to install all development dependencies and how to run an automated
 npm run
 ```
 
+## Contentful Setup
+1. head to the [Contentful Webside](https://www.contentful.com)
+2. Create an account and login
+3. From the dashboard you should be able to create models and add data to those models.
+4. to grab the contentful key and space id you will need to click on Settings -> API Keys
+5. Add a new API Key, you can name it whatever you like
+6. Scroll down on the page and you should see two values "Space ID" and "Content Delivery API - access token" you need to copy these values into your .env file you might have been missing these values from the step above
+
+## S3 Bucket Configuration
+1. Navigate to the Amazon S3 dashboard
+2. Create a new bucket and name it accordingly, this can be whatever you want, select your preferred region 
+3. Skip configuring the properties step, we wont need to change anything here
+4. In the permissions step you will need to set the public access to "Grant public read access to this bucket"
+5. Then hit create bucket
+6. Select the bucket and navigate to its properties tab
+7. Select website hosting
+8. Click the "Use this bucket to host a website" and in both the Index and Error document field type "index.html" and click save
+9. Next Move to the Permissions tab and select "Bucket Policy"
+10. enter the following details into the policy editor
+```JSON
+{
+    "Version": "2008-10-17",
+    "Id": "PolicyForPublicWebsiteContent",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "*"
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::[BUCKET NAME]/*"
+        }
+    ]
+}
+```
+11. Click save
+
+Your bucket configuration is now complete
 
 ## Contributing
 
