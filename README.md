@@ -68,6 +68,14 @@ Describe how to install all development dependencies and how to run an automated
 npm run
 ```
 
+## Contentful Setup
+1. head to the [Contentful Webside](https://www.contentful.com)
+2. Create an account and login
+3. From the dashboard you should be able to create models and add data to those models.
+4. to grab the contentful key and space id you will need to click on Settings -> API Keys
+5. Add a new API Key, you can name it whatever you like
+6. Scroll down on the page and you should see two values "Space ID" and "Content Delivery API - access token" you need to copy these values into your .env file you might have been missing these values from the step above
+
 ## S3 Bucket Configuration
 1. Navigate to the Amazon S3 dashboard
 2. Create a new bucket and name it accordingly, this can be whatever you want, select your preferred region 
