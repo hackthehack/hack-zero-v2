@@ -49,14 +49,15 @@ npm install
 
 You will need to install Node.js in order to run this application, please refer to the installation above
 <br>
-The .env file will need to be updated with the correct API url:
+The .env file will need to be updated with the correct API url
 ```sh
 REACT_APP_API_URL=[url]
 ```
-the Contentful connection will also beed to be updated in the .env file:
+the Contentful connection will also beed to be updated in the .env file
+if you do not have a contentful account please read the instructions further down on the page
 ```sh
-REACT_APP_CONTENTFUL_KEY=[Your Key]
-REACT_APP_CONTENTFUL_SPACE_ID=[Your ID]
+REACT_APP_CONTENTFUL_KEY=[Space ID]
+REACT_APP_CONTENTFUL_SPACE_ID=[Content Delivery API - access token]
 ```
 Hack Zero utilizes reacts built in testing library along side Jest, to run the automated tests simply run the command below
 ```sh
