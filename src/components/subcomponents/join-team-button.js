@@ -15,15 +15,15 @@ export function JoinButton({ hackDetails, user, dispatch, history }) {
     if (
       hackDetails.status === "Canceled" ||
       hackDetails.status === "Team Closed" ||
-      hackDetails.status === "Submitted"
+      hackDetails.status === "Submitted" ||
+      !user.userId
     ) {
       setDisable(true);
       return;
     }
+
     hackDetails.team.forEach((member) => {
       if (member._id === user.userId || !user.userId) {
-        console.log(typeof user.userId);
-        console.log(typeof member._id);
         setDisable(true);
       } else {
         setDisable(false);
