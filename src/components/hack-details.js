@@ -1,37 +1,24 @@
 import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
-import Team from "./subcomponents/hack-team";
-import JoinButton from "./subcomponents/join-team-button";
-import UnJoinButton from "./subcomponents/unJoinTeamButton";
-import EditHackButton from "./subcomponents/edit-hack-button";
-import HackStatus from "./subcomponents/hack-status";
 import EditHack from "./edit-hack";
 import SubmitHack from "./submit-hack";
-import SubmitButton from "./subcomponents/submit/submit-button";
 import { fetchingHackDetails } from "../store/actions/userActions";
 import { connect } from "react-redux";
-import LikeButton from "./subcomponents/LikeButton";
-import SubmissionDetail from "./subcomponents/submit/SubmissionDetail";
+import HackView from "./subcomponents/hackdetails/hack-view";
 
 // UI imports
 
-import { Grid, Typography, Paper, CircularProgress } from "@material-ui/core";
+import { Grid, CircularProgress } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    margin: theme.spacing(2),
-    padding: theme.spacing(2),
-    width: "80vw",
-    position: "relative"
-  },
   buttonPaper: {
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     marginBottom: theme.spacing(2),
     padding: theme.spacing(2),
-    width: "80vw",
+    width: "80vw"
   },
   rightField: {
     textAlign: "right"
@@ -49,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
+export function HackDetails({ match, dispatch, userId, hackDetails }) {
   const classes = useStyles();
 
   useEffect(() => {
@@ -60,111 +47,17 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
 
   if (hackDetails) {
     return (
-      <Switch>
-        <Route exact path="/hack/:id">
-          <Grid
-            data-testid="main-container"
-            container
-            direction="column"
-            justify="center"
-            alignItems="stretch"
-            alignContent="center"
-          >
-            <Paper className={classes.root}>
-              <Grid
-                container
-                // direction="column"
-                justify="flex-start"
-                alignItems="stretch"
-                alignContent="center"
-              >
-                <Grid
-                  container
-                  justify="flex-start"
-                  alignItems="center"
-                  alignContent="center"
-                  spacing={1}
-                >
-                  <Grid
-                    item
-                    xs={12}
-                    sm={8}
-                    style={{ display: "flex", flexWrap: "wrap" }}
-                  >
-                    <Typography variant="h4">{hackDetails.title}</Typography>
-                    <EditHackButton
-                      match={match}
-                      team={hackDetails.team}
-                      userId={userId}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={4}>
-                    <HackStatus status={hackDetails.status} />
-                  </Grid>
-
-                  <Grid item xs={10} className={classes.creator}>
-                    <Typography variant="body1">
-                      Created by:{" "}
-                      {hackDetails.creator
-                        ? hackDetails.creator.name
-                        : "Unknown"}
-                    </Typography>
-                  </Grid>
-                </Grid>
-                <Grid item xs={10} style={{ marginTop: "1rem" }}>
-                  <Typography variant="h6">Idea:</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="body1">
-                    {hackDetails.description}
-                  </Typography>
-                  <Grid item xs={10}>
-                    <Typography variant="h6">Goal:</Typography>
-                  </Grid>
-                </Grid>
-                <Grid item xs={10}>
-                  <Typography variant="body1">{hackDetails.goal}</Typography>
-                </Grid>
-                <Grid item xs={10}>
-                  <Team team={hackDetails.team} name={hackDetails.teamName} />
-                </Grid>
-                <Grid item xs={4} sm={2}>
-                  <LikeButton />
-                </Grid>
-                <Grid item xs={12} style={{ marginTop: "1rem" }}>
-                  <JoinButton team={hackDetails.team} history={history} />
-                  <UnJoinButton />
-                </Grid>
-              </Grid>
-            </Paper>
-            <Grid item xs={12}>
-              <Paper className={classes.buttonPaper}>
-                <Grid
-                  container
-                  justify="flex-start"
-                  alignItems="center"
-                  alignContent="center"
-                  spacing={1}
-                >
-                  <Grid item>
-                    <JoinButton team={hackDetails.team} history={history} />
-                  </Grid>
-                  <Grid item>
-                    <SubmitButton
-                      match={match}
-                      team={hackDetails.team}
-                      userId={userId}
-                    />
-                  </Grid>
-                </Grid>
-              </Paper>
+      <Grid container justify="center">
+        <Switch>
+          <Route exact path="/hack/:id">
+            <Grid item xs={12} sm={10} md={8}>
+              <HackView match={match} />
             </Grid>
-              <SubmissionDetail />
-          </Grid>
-        </Route>
-        <Route exact path="/hack/:id/edit" component={EditHack} />
-        <Route exact path="/hack/:id/submit" component={SubmitHack} />
-      </Switch>
+          </Route>
+          <Route exact path="/hack/:id/edit" component={EditHack} />
+          <Route exact path="/hack/:id/submit" component={SubmitHack} />
+        </Switch>
+      </Grid>
     );
   }
   return (

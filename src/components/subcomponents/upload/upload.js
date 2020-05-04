@@ -6,20 +6,20 @@ import { uploadWarmup } from "../../../store/actions/submissionActions";
 import { connect } from "react-redux";
 import PublishIcon from "@material-ui/icons/Publish";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(1)
   },
   input: {
-    display: "none",
-  },
+    display: "none"
+  }
 }));
 
 export function UploadFiles({ files, addFile }) {
-  const onAddFile = (e) => {
+  const onAddFile = e => {
     e.preventDefault();
     let fileId = files.length;
-    Array.from(e.target.files).map((file) => {
+    Array.from(e.target.files).map(file => {
       addFile(file, fileId);
       fileId++;
       return null;
@@ -41,7 +41,10 @@ export function UploadFiles({ files, addFile }) {
         <Typography variant="h6">Attach Files</Typography>
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="body1">[Upload instructions Here]</Typography>
+        <Typography variant="body1">
+          Please upload your teams lean canvas and any other supporting
+          documents.
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <input
@@ -70,12 +73,12 @@ export function UploadFiles({ files, addFile }) {
   );
 }
 
-const mapDispatch = (dispatch) => ({
-  addFile: (file, fileID) => dispatch(uploadWarmup(file, fileID)),
+const mapDispatch = dispatch => ({
+  addFile: (file, fileID) => dispatch(uploadWarmup(file, fileID))
 });
 
-const mapStateToProps = (state) => ({
-  files: state.upload.uploadFiles,
+const mapStateToProps = state => ({
+  files: state.upload.uploadFiles
 });
 
 export default connect(mapStateToProps, mapDispatch)(UploadFiles);

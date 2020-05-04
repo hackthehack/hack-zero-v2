@@ -19,7 +19,7 @@ export const LikeButton = ({
       variant="outlined"
       color="primary"
       onClick={!hasUserLiked ? upVote : downVote}
-      style={{ position: "absolute", bottom: "0.75rem", right: "1rem" }}
+      // style={{ position: "absolute", bottom: "0.75rem", right: "1rem" }}
     >
       <ThumbUp
         style={{
