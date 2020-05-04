@@ -4,9 +4,13 @@ import { unjoiningHackIdea } from "../../store/actions/userActions";
 import { connect } from "react-redux";
 
 const UnjoinButton = ({ dispatch, user, hackDetails }) => {
-  const [disable, setDisable] = useState(false);
+  const [disable, setDisable] = useState(true);
 
   useEffect(() => {
+    if (hackDetails.team.length === 0) {
+      setDisable(true);
+      return;
+    }
     hackDetails.team.forEach((member) => {
       if (member._id !== user.userId || !user.userId) {
         setDisable(true);

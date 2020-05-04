@@ -22,6 +22,8 @@ export function JoinButton({ hackDetails, user, dispatch, history }) {
     }
     hackDetails.team.forEach((member) => {
       if (member._id === user.userId || !user.userId) {
+        console.log(typeof user.userId);
+        console.log(typeof member._id);
         setDisable(true);
       } else {
         setDisable(false);
