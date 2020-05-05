@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Grid } from "@material-ui/core";
 import Status from "./status";
+
 const statusLabel = [
   "New Hack",
   "Looking for members",
@@ -11,6 +12,7 @@ const statusLabel = [
 ];
 
 export function EditHackStatus({ status, handleUpdate }) {
+
   const [enabled, setEnabled] = useState("");
 
   useEffect(() => {

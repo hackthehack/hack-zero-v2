@@ -157,7 +157,7 @@ export function EditHack({ dispatch, hackDetails, history }) {
                   color="secondary"
                   variant="outlined"
                   onClick={() => {
-                    history.push((`/hacks/${hackDetails._id}`));
+                    history.push((`/hack/${hackDetails._id}`));
                   }}
                 >
                   Cancel
