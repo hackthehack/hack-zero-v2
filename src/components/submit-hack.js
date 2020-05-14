@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from "react";
-import {
-  submitHackIdea
-} from "../store/actions/userActions";
-import { getSubmissionData } from "../store/actions/hackathonActions"
+import React, { useState } from "react";
+import { submitHackIdea } from "../store/actions/submissionActions";
 import { connect } from "react-redux";
 import SubmitDetails from "./subcomponents/submit/submit-details";
-import Upload from "./subcomponents/submit/upload";
+import Upload from "./subcomponents/upload/upload";
 
 // UI imports
 import {
@@ -33,72 +30,22 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1)
   }
 }));
-export function SubmitHack({ match, dispatch, submission, hackDetails, history }) {
+export function SubmitHack({
+  files,
+  dispatch,
+  submission,
+  hackDetails,
+  history
+}) {
   const classes = useStyles();
 
-  // const [files, setFiles] = useState([]);
-  const [submitMessage, setSubmitMessage] = useState();
-
-  useEffect(() => {
-    if (!submission || submission.hackId !== match.params.id) {
-      dispatch(getSubmissionData(match.params.id));
-    }
-  }, [submission, dispatch, match]);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState("");
 
   const handelSubmit = () => {
-    dispatch(submitHackIdea({ message: submitMessage }));
-    setSubmitMessage(submission.message)
+    setSubmitting(true)
+    dispatch(submitHackIdea({ message: submitMessage, files: files }, history));
   };
-  if (submission) {
-    return (
-      <Grid
-        data-testid="main-container"
-        container
-        direction="column"
-        justify="center"
-        alignItems="stretch"
-        alignContent="center"
-      >
-        <Paper className={classes.root}>
-          <Grid
-            container
-            justify="space-between"
-            alignItems="center"
-            alignContent="center"
-            spacing={1}
-          >
-            <Grid item xs={12}>
-              <Typography variant="h5">
-                {hackDetails.title} Submission
-              </Typography>
-            </Grid>
-            <Grid item xs={12} className={classes.margin}>
-              <SubmitDetails
-                update={setSubmitMessage}
-                className={classes.margin}
-              />
-            </Grid>
-            <Grid item xs={12} className={classes.margin}>
-              <Upload className={classes.margin} />
-            </Grid>
-            <Grid item xs={12} style={{ float: "left" }}>
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={handelSubmit}
-                className={classes.backButton}
-              >
-                Submit
-              </Button>
-              <Button variant="outlined" color="secondary">
-                Cancel
-              </Button>
-            </Grid>
-          </Grid>
-        </Paper>
-      </Grid>
-    );
-  }
   return (
     <Grid
       data-testid="main-container"
@@ -107,9 +54,53 @@ export function SubmitHack({ match, dispatch, submission, hackDetails, history }
       justify="center"
       alignItems="stretch"
       alignContent="center"
-      className={classes.loading}
     >
-      <CircularProgress />
+      <Paper className={classes.root}>
+        <Grid
+          container
+          justify="space-between"
+          alignItems="center"
+          alignContent="center"
+          spacing={1}
+        >
+          <Grid item xs={12}>
+            <Typography variant="h5">{hackDetails.title} Submission</Typography>
+          </Grid>
+          <Grid item xs={12} className={classes.margin}>
+            <SubmitDetails
+              message={submission !== null ? submission.message : ""}
+              files={submission !== null ? submission.files : []}
+              update={setSubmitMessage}
+              className={classes.margin}
+            />
+          </Grid>
+          <Grid item xs={12} className={classes.margin}>
+            <Upload
+              className={classes.margin}
+              files={files}
+            />
+          </Grid>
+          <Grid item xs={12} style={{ float: "left", marginTop: "2rem" }}>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={handelSubmit}
+              className={classes.backButton}
+            >
+              {submitting ? <CircularProgress size="1.5rem"/> : "Submit"}
+            </Button>
+            <Button
+              color="secondary"
+              variant="outlined"
+              onClick={() => {
+                history.push(`/hack/${hackDetails._id}`);
+              }}
+            >
+              Cancel
+            </Button>
+          </Grid>
+        </Grid>
+      </Paper>
     </Grid>
   );
 }
@@ -117,7 +108,8 @@ export function SubmitHack({ match, dispatch, submission, hackDetails, history }
 const mapState = state => ({
   userId: state.auth.userId,
   hackDetails: state.hack.hackDetails,
-  submission: state.hack.submission
+  submission: state.hack.submission,
+  files: state.upload.uploadFiles
 });
 
 export default connect(mapState)(SubmitHack);

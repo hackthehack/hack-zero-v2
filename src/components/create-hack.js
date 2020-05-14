@@ -12,31 +12,31 @@ import { makeStyles } from "@material-ui/core/styles";
 import Axios from "axios";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-
+import EditHackStatus from "./subcomponents/edit-status";
 import UrlJoin from "url-join";
 import { connect } from "react-redux";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     margin: theme.spacing(2),
     width: "80vw",
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   absolute: {
     position: "absolute",
     bottom: theme.spacing(2),
-    right: theme.spacing(3)
+    right: theme.spacing(3),
   },
   field: {
     padding: theme.spacing(1),
     textAlign: "left",
     color: theme.palette.text.secondary,
-    width: "90vw"
+    width: "90vw",
   },
   button: {
-    margin: theme.spacing(1)
-  }
+    margin: theme.spacing(1),
+  },
 }));
 
 export function CreateHack(props) {
@@ -46,8 +46,9 @@ export function CreateHack(props) {
   const [description, setDescription] = useState("");
   const [goal, setGoal] = useState("");
   const [join, setJoin] = useState(false);
+  const [status, setStatus] = useState("");
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const fetchData = async () => {
       const newHack = {
@@ -55,24 +56,29 @@ export function CreateHack(props) {
         description: description,
         goal: goal,
         team: [],
-        creator: props.userId
+        creator: props.userId,
+
+        status: status,
+
       };
       if (join) {
         newHack.team[0] = props.userId;
       }
       let config = {
         headers: {
-          Authorization: "Bearer " + props.token
-        }
+          Authorization: "Bearer " + props.token,
+        },
       };
-      await Axios.post(
+      let result = await Axios.post(
         UrlJoin(process.env.REACT_APP_API_URL, "addhack"),
         newHack,
         config
       );
+      //console.log(result.data);
+      return result.data.id;
     };
-    fetchData().then(() => {
-      props.history.push("/hacks");
+    fetchData().then((id) => {
+      props.history.push(`/hack/${id}`);
     });
   };
 
@@ -98,6 +104,9 @@ export function CreateHack(props) {
                 <Typography variant="h4">New Hack Idea</Typography>
               </Grid>
               <Grid className={classes.field} item xs={12}>
+                <EditHackStatus status="" handleUpdate={setStatus} />
+              </Grid>
+              <Grid className={classes.field} item xs={12}>
                 <FormControl fullWidth variant="outlined">
                   <InputLabel htmlFor="outlined-adornment-amount">
                     Hack Name
@@ -105,7 +114,7 @@ export function CreateHack(props) {
                   <OutlinedInput
                     placeholder="Hack Name"
                     name="title"
-                    onChange={event => {
+                    onChange={(event) => {
                       setTitle(event.target.value);
                     }}
                     value={title}
@@ -121,7 +130,7 @@ export function CreateHack(props) {
                   <OutlinedInput
                     placeholder="Hack Description"
                     name="description"
-                    onChange={event => {
+                    onChange={(event) => {
                       setDescription(event.target.value);
                     }}
                     value={description}
@@ -139,7 +148,7 @@ export function CreateHack(props) {
                   <OutlinedInput
                     placeholder="Hack Goal"
                     name="goal"
-                    onChange={event => {
+                    onChange={(event) => {
                       setGoal(event.target.value);
                     }}
                     value={goal}
@@ -155,7 +164,7 @@ export function CreateHack(props) {
                     control={
                       <Checkbox
                         checked={join}
-                        onChange={event => {
+                        onChange={(event) => {
                           setJoin(event.target.checked);
                         }}
                         value="joinHack"
@@ -184,9 +193,9 @@ export function CreateHack(props) {
   );
 }
 
-const mapState = state => ({
+const mapState = (state) => ({
   token: state.auth.jwt,
-  userId: state.auth.userId
+  userId: state.auth.userId,
 });
 
 export default connect(mapState)(CreateHack);

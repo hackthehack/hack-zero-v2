@@ -8,84 +8,79 @@ import AutorenewIcon from "@material-ui/icons/Autorenew";
 import NotInterestedIcon from "@material-ui/icons/NotInterested";
 import CancelIcon from "@material-ui/icons/Cancel";
 import PublishIcon from "@material-ui/icons/Publish";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  chip:{
+    marginLeft: theme.spacing(1),
+    marginBottom: theme.spacing(1)
+  }
+}))
 
 export function Status({ label, style, clickable, onclick }) {
+
+  const classes = useStyles();
 
   const type = value => {
     switch (value) {
       case "New Hack":
         return {
-          icon: <NewReleasesIcon style={{ color: "white" }} />,
-          color: {
-            backgroundColor: "#41b53f",
-            color: "white",
-            borderRadius: ".5rem"
-          }
+          backgroundColor: "#41b53f"
         };
       case "Looking for members":
         return {
-          icon: <VisibilityIcon style={{ color: "white" }} />,
-          color: {
-            backgroundColor: "#a73fb5",
-            color: "white",
-            borderRadius: ".5rem"
-          }
+          backgroundColor: "#a73fb5"
         };
       case "In Progress":
         return {
-          icon: <AutorenewIcon style={{ color: "white" }} />,
-          color: {
-            backgroundColor: "#b57e3f",
-            color: "white",
-            borderRadius: ".5rem"
-          }
+          backgroundColor: "#b57e3f"
         };
       case "Team Closed":
         return {
-          icon: <VisibilityOffIcon style={{ color: "white" }} />,
-          color: {
-            backgroundColor: "#3fabb5",
-            color: "white",
-            borderRadius: ".5rem"
-          }
+          backgroundColor: "#3fabb5"
         };
       case "Canceled":
         return {
-          icon: <CancelIcon style={{ color: "white" }} />,
-          color: {
-            backgroundColor: "#b54b3f",
-            color: "white",
-            borderRadius: ".5rem"
-          }
+          backgroundColor: "#b54b3f"
         };
       case "Submitted":
         return {
-          icon: <PublishIcon style={{ color: "white" }} />,
-          color: {
-            backgroundColor: "#b53f8c",
-            color: "white",
-            borderRadius: ".5rem"
-          }
+          backgroundColor: "#b53f8c"
         };
       default:
         return {
-          icon: <NotInterestedIcon style={{ color: "white" }} />,
-          color: {
-            backgroundColor: "grey",
-            color: "white",
-            borderRadius: ".5rem"
-          }
+          backgroundColor: "grey"
         };
+    }
+  };
+
+  const chipIcon = label => {
+    switch (label) {
+      case "New Hack":
+        return <NewReleasesIcon style={{ color: "white" }} />;
+      case "Looking for members":
+        return <VisibilityIcon style={{ color: "white" }} />;
+      case "In Progress":
+        return <AutorenewIcon style={{ color: "white" }} />;
+      case "Team Closed":
+        return <VisibilityOffIcon style={{ color: "white" }} />;
+      case "Canceled":
+        return <CancelIcon style={{ color: "white" }} />;
+      case "Submitted":
+        return <PublishIcon style={{ color: "white" }} />;
+      default:
+        return <NotInterestedIcon style={{ color: "white" }} />;
     }
   };
 
   return (
     <Chip
+      className={classes.chip}
       label={label}
-      style={style ? type(style).color : type(style).color}
+      style={{...type(style), color: "white", borderRadius: ".5rem", marginRight: "0.5rem"}}
       clickable={clickable}
       onClick={clickable ? onclick : null}
-      icon={type(style).icon}
+      icon={chipIcon(label)}
     />
   );
 }

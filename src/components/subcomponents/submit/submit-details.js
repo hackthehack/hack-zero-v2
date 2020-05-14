@@ -6,6 +6,7 @@ import {
   OutlinedInput
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import FileUI from "../upload/file-ui";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,6 +35,7 @@ export function SubmitDetails(props) {
       <Grid item xs={12}>
         <FormControl fullWidth variant="outlined">
           <OutlinedInput
+            defaultValue={props.message}
             onChange={e => props.update(e.target.value)}
             placeholder="Message"
             name="message"
@@ -41,6 +43,13 @@ export function SubmitDetails(props) {
             rows="5"
           ></OutlinedInput>
         </FormControl>
+      </Grid>
+      <Grid item xs={12}>
+        <Grid container spacing={2}>
+          {props.files.map((file, index) => {
+            return <FileUI key={index} index={null} file={file} />;
+          })}
+        </Grid>
       </Grid>
     </Grid>
   );

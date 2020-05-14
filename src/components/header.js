@@ -115,7 +115,9 @@ export const Header = (props) => {
   const handleDrawerClose = () => {
     setOpenDrawer(false);
   };
-  const links = ["/", "/create", "/hacks", "/about"];
+
+  const links = ["/", "/Add New Idea", "/Idea List", "/About"];
+
   const displayLinkIcon = (index) => {
     switch (index) {
       case 0:
@@ -139,7 +141,7 @@ export const Header = (props) => {
       </Link>
       <Link to="/hacks" className={classes.link}>
         <Button color="inherit" className={classes.loginbutton}>
-          Hacks
+          Idea List
         </Button>
       </Link>
       <Link to="/about" className={classes.link}>
@@ -159,13 +161,13 @@ export const Header = (props) => {
       <Link to="/hacks" className={classes.link}>
         {" "}
         <Button color="inherit" className={classes.loginbutton}>
-          Hacks
+          Idea List
         </Button>
       </Link>
       <Link to="/create" className={classes.link}>
         {" "}
         <Button color="inherit" className={classes.loginbutton}>
-          Create
+          Add New Idea
         </Button>
       </Link>
       <Link to="/About" className={classes.link}>
@@ -262,6 +264,8 @@ export const Header = (props) => {
             let displayLinkText;
             displayLinkText =
               text.substr(1).charAt(0).toUpperCase() + text.slice(2);
+            if (displayLinkText === "Add New Idea") text = "create";
+            if (displayLinkText === "Idea List") text = "hacks";
             return (
               <ListItem
                 onClick={handleDrawerClose}

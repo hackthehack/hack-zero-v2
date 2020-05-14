@@ -2,11 +2,12 @@ import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import Team from "./subcomponents/hack-team";
 import JoinButton from "./subcomponents/join-team-button";
+import UnJoinButton from "./subcomponents/unJoinTeamButton";
 import EditHackButton from "./subcomponents/edit-hack-button";
 import HackStatus from "./subcomponents/hack-status";
 import EditHack from "./edit-hack";
 import SubmitHack from "./submit-hack";
-// import SubmitButton from "./subcomponents/submit-button";
+import SubmitButton from "./subcomponents/submit/submit-button";
 import { fetchingHackDetails } from "../store/actions/userActions";
 import { connect } from "react-redux";
 import LikeButton from "./subcomponents/LikeButton";
@@ -18,27 +19,34 @@ import { Grid, Typography, Paper, CircularProgress } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     margin: theme.spacing(2),
     padding: theme.spacing(2),
     width: "80vw",
-    position: "relative",
+    position: "relative"
+  },
+  buttonPaper: {
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    padding: theme.spacing(2),
+    width: "80vw",
   },
   rightField: {
-    textAlign: "right",
+    textAlign: "right"
   },
   loading: {
-    marginTop: theme.spacing(10),
+    marginTop: theme.spacing(10)
   },
   marginTop: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(2)
   },
   creator: {
     height: theme.spacing(3),
     color: "red",
-    fontStyle: "italic",
-  },
+    fontStyle: "italic"
+  }
 }));
 
 export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
@@ -65,8 +73,8 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
             <Paper className={classes.root}>
               <Grid
                 container
-                direction="column"
-                justify="center"
+                // direction="column"
+                justify="flex-start"
                 alignItems="stretch"
                 alignContent="center"
               >
@@ -76,7 +84,6 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                   alignItems="center"
                   alignContent="center"
                   spacing={1}
-                  className={classes.marginFix}
                 >
                   <Grid
                     item
@@ -121,16 +128,38 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
                 <Grid item xs={10}>
                   <Team team={hackDetails.team} name={hackDetails.teamName} />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={4} sm={2}>
                   <LikeButton />
                 </Grid>
                 <Grid item xs={12} style={{ marginTop: "1rem" }}>
                   <JoinButton team={hackDetails.team} history={history} />
+                  <UnJoinButton />
                 </Grid>
               </Grid>
             </Paper>
-
-            <SubmissionDetail />
+            <Grid item xs={12}>
+              <Paper className={classes.buttonPaper}>
+                <Grid
+                  container
+                  justify="flex-start"
+                  alignItems="center"
+                  alignContent="center"
+                  spacing={1}
+                >
+                  <Grid item>
+                    <JoinButton team={hackDetails.team} history={history} />
+                  </Grid>
+                  <Grid item>
+                    <SubmitButton
+                      match={match}
+                      team={hackDetails.team}
+                      userId={userId}
+                    />
+                  </Grid>
+                </Grid>
+              </Paper>
+            </Grid>
+              <SubmissionDetail />
           </Grid>
         </Route>
         <Route exact path="/hack/:id/edit" component={EditHack} />
@@ -153,9 +182,9 @@ export function HackDetails({ match, dispatch, userId, hackDetails, history }) {
   );
 }
 
-const mapState = (state) => ({
+const mapState = state => ({
   userId: state.auth.userId,
-  hackDetails: state.hack.hackDetails,
+  hackDetails: state.hack.hackDetails
 });
 
 export default connect(mapState)(HackDetails);
