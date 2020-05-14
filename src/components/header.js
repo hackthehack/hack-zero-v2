@@ -20,6 +20,7 @@ import AddIcon from "@material-ui/icons/Add";
 import MenuIcon from "@material-ui/icons/Menu";
 import ViewListIcon from "@material-ui/icons/ViewList";
 import HomeIcon from "@material-ui/icons/Home";
+import HelpIcon from "@material-ui/icons/Help";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { logout } from "../store/actions/authActions";
@@ -114,15 +115,22 @@ export const Header = (props) => {
   const handleDrawerClose = () => {
     setOpenDrawer(false);
   };
-  let links = ["/", "/Idea List", "/Add New Idea"];
+
+  let links = ["/", "/Idea List", "/Add New Idea","/About"];
+
   const displayLinkIcon = (index) => {
     switch (index) {
       case 0:
         return <HomeIcon />;
       case 1:
         return <ViewListIcon />;
+
       case 2:
         return <AddIcon />;
+
+      case 3:
+        return <HelpIcon />;
+
       default:
         return "/";
     }
@@ -137,6 +145,11 @@ export const Header = (props) => {
       <Link to="/hacks" className={classes.link}>
         <Button color="inherit" className={classes.loginbutton}>
           Idea List
+        </Button>
+      </Link>
+      <Link to="/about" className={classes.link}>
+        <Button color="inherit" className={classes.loginbutton}>
+          About
         </Button>
       </Link>
     </div>
@@ -158,6 +171,12 @@ export const Header = (props) => {
         {" "}
         <Button color="inherit" className={classes.loginbutton}>
           Add New Idea
+        </Button>
+      </Link>
+      <Link to="/About" className={classes.link}>
+        {" "}
+        <Button color="inherit" className={classes.loginbutton}>
+          About
         </Button>
       </Link>
     </div>

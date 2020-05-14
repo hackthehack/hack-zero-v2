@@ -15,9 +15,14 @@ export const FETCH_LOADING = "FETCH_LOADING";
 
 export const LOGGING_IN = "LOGGING_IN";
 export const LOGGING_OUT = "LOGGING_OUT";
+export const REGISTERING = "REGISTERING";
+export const REGISTER_FAILED = "REGISTER_FAILED";
 
 export const LIKE_HACK = "LIKE_HACK";
 export const DISLIKE_HACK = "DISLIKE_HACK";
+ 
+export const CLEAR_REGISTER = "CLEAR_REGISTER";
+
 
 export const UPLOAD_STARTED = "UPLOAD_STARTED";
 export const UPLOAD_PROGRESS = "UPLOAD_PROGRESS";
@@ -26,3 +31,4 @@ export const UPLOAD_FAILED = "UPLOAD_FAILED";
 export const UPLOAD_WARMUP = "UPLOAD_WARMUP";
 export const FILE_UPLOAD_CANCELLED = "FILE_UPLOAD_CANCELLED";
 export const CLEAR_UPLOAD = "CLEAR_UPLOAD";
+

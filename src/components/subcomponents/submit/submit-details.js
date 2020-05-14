@@ -30,7 +30,10 @@ export function SubmitDetails(props) {
         <Typography variant="h6">Submission Details</Typography>
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="body1">[Submission instructions Here]</Typography>
+        <Typography variant="body1">
+          If you have any additional notes to add to your submission please fill
+          out the field below
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <FormControl fullWidth variant="outlined">

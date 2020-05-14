@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     //margin: "0 auto",
     padding: theme.spacing(2),
-    width: "80vw",
   },
 }));
 
@@ -22,8 +21,8 @@ const SubmissionDetail = ({ dispatch, submission }) => {
     return null;
   }
   return (
-    <Paper className={classes.root} style={{ margin: "0 auto" }}>
-      <Typography style={{ textAlign: "left" }} variant="h4">
+    <Paper className={classes.root}>
+      <Typography style={{ textAlign: "left" }} variant="h5">
         Submission Detail
       </Typography>
       <div>
@@ -40,7 +39,7 @@ const SubmissionDetail = ({ dispatch, submission }) => {
         {submission.files
           ? submission.files.map((file) => {
               return (
-                <Grid key={file._id} xs={12} sm={4} style={{ display: "flex" }}>
+                <Grid item key={file._id} xs={12} sm={4} style={{ display: "flex" }}>
                   <FileCard
                     name={file.name}
                     size={file.size}

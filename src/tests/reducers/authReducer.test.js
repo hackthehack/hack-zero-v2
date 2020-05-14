@@ -7,7 +7,9 @@ test("Auth reducer returns default initialState", () => {
     loginStatus: null,
     isAuth: false,
     userId: null,
-    jwt: null
+    jwt: null,
+    registerError: null,
+    registerStatus: null
   };
   expect(authReducer(undefined, action)).toEqual(initialState);
 });
@@ -17,13 +19,17 @@ test("Auth reduer returns correct state after user logged out", () => {
     loginStatus: null,
     isAuth: false,
     userId: null,
-    jwt: null
+    jwt: null,
+    registerError: null,
+    registerStatus: null
   };
   const expectedState = {
     loginStatus: null,
     isAuth: false,
     userId: null,
-    jwt: null
+    jwt: null,
+    registerError: null,
+    registerStatus: null
   };
 
   expect(authReducer(initialState, action)).toEqual(expectedState);
@@ -37,13 +43,15 @@ test("Auth reducer returns correct state after user is login", () => {
     loginStatus: null,
     isAuth: false,
     userId: null,
-    jwt: null
+    jwt: null,
+    registerError: null,
+    registerStatus: null
   };
   const expectedState = {
     isAuth: true,
     userId: 1,
     jwt: "jwtToken",
-    loginStatus: "login"
+    loginStatus: "login",
   };
   expect(authReducer(initialState, action)).toEqual(expectedState);
 });

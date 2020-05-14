@@ -16,6 +16,60 @@ const sessionExpired = () => ({
 });
 const logginOut = () => ({ type: ActionType.LOGGING_OUT });
 
+const registering = () => ({
+  type: ActionType.REGISTERING,
+  payload: "PENDING"
+});
+const registerSuccess = () => ({
+  type: ActionType.REGISTERING,
+  payload: "SUCCESS"
+});
+
+const registerFailed = error => ({
+  type: ActionType.REGISTER_FAILED,
+  payload: "FAILED",
+  message: error
+});
+export const clearRegister = () => ({
+  type: ActionType.CLEAR_REGISTER
+});
+
+export const register = (
+  firstName,
+  lastName,
+  email,
+  password,
+  confirmPassword
+) => {
+  return async dispatch => {
+    dispatch(registering());
+    if (password === confirmPassword) {
+      let obj = {
+        name: firstName + " " + lastName,
+        email: email,
+        password: password
+      };
+      try {
+        console.log("Request")
+        axios
+          .post(UrlJoin(process.env.REACT_APP_API_URL, "register"), obj)
+          .then(res => {
+            if (res.status === 200) {
+              dispatch(registerSuccess());
+            }
+          }).catch(error =>{
+            dispatch(registerFailed(error.response.data));
+          });
+      } catch (error) {
+        dispatch(registerFailed(error.response.data));
+      }
+    }
+    else{
+      dispatch(registerFailed("Confirmation password does not match"));
+    }
+  };
+};
+
 export const login = (email, password, history) => {
   return async (dispatch, getState) => {
     dispatch(loggingIn());
