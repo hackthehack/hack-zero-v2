@@ -116,18 +116,21 @@ export const Header = (props) => {
     setOpenDrawer(false);
   };
 
-  const links = ["/", "/Add New Idea", "/Idea List", "/About"];
+  let links = ["/", "/Idea List", "/Add New Idea","/About"];
 
   const displayLinkIcon = (index) => {
     switch (index) {
       case 0:
         return <HomeIcon />;
       case 1:
-        return <AddIcon />;
-      case 2:
         return <ViewListIcon />;
+
+      case 2:
+        return <AddIcon />;
+
       case 3:
         return <HelpIcon />;
+
       default:
         return "/";
     }
@@ -178,7 +181,9 @@ export const Header = (props) => {
       </Link>
     </div>
   );
-
+  if (!props.auth.isAuth) {
+    links = ["/", "/Idea List"];
+  }
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -266,6 +271,7 @@ export const Header = (props) => {
               text.substr(1).charAt(0).toUpperCase() + text.slice(2);
             if (displayLinkText === "Add New Idea") text = "create";
             if (displayLinkText === "Idea List") text = "hacks";
+
             return (
               <ListItem
                 onClick={handleDrawerClose}
