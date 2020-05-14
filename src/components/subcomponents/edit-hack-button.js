@@ -1,11 +1,17 @@
 import React from "react";
-import { Button } from "@material-ui/core";
+import { Button, Hidden } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
-  editButton: {
+  linkRoot:{
+    width: "-webkit-fill-available"
+  },
+  buttonRoot:{
+    width: "inherit"
+  },
+  buttonText:{
     marginLeft: theme.spacing(1)
   }
 }));
@@ -22,14 +28,15 @@ export function EditHackButton(props) {
       }
     });
   });
-
+  
   if (disable) {
     return null;
   }
   return (
-    <Link to={`${props.match.url}/edit`}>
-      <Button className={classes.editButton}>
+    <Link to={`${props.match.url}/edit`} style={{ textDecoration: "none" }} className={classes.linkRoot}>
+      <Button variant="contained" color="primary" className={classes.buttonRoot}>
         <EditIcon />
+        <Hidden xsDown><span className={classes.buttonText}>Edit</span></Hidden>
       </Button>
     </Link>
   );

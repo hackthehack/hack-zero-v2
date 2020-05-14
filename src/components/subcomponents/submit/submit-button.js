@@ -1,17 +1,24 @@
 import React from "react";
-import { Button } from "@material-ui/core";
+import { Button, Hidden } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+import PublishIcon from "@material-ui/icons/Publish";
 
 const useStyles = makeStyles(theme => ({
-  editButton: {
+  linkRoot:{
+    width: "-webkit-fill-available",
+    textDecoration: "none"
+  },
+  buttonRoot:{
+    width: "inherit"
+  },
+  buttonText:{
     marginLeft: theme.spacing(1)
   }
 }));
 
 export function SubmitButton(props) {
-  const classes = useStyles();
-
+  const classes = useStyles()
   const [visible, setVisible] = React.useState(true);
 
   React.useEffect(() => {
@@ -26,9 +33,10 @@ export function SubmitButton(props) {
     return null;
   }
   return (
-    <Link to={`${props.match.url}/submit`} style={{ textDecoration: "none" }}>
-      <Button variant="outlined" color="primary" className={classes.editButton}>
-        Submit
+    <Link to={`${props.match.url}/submit`} className={classes.linkRoot} >
+      <Button variant="contained" color="primary" className={classes.buttonRoot}>
+        <PublishIcon />
+        <Hidden xsDown><span className={classes.buttonText}>Submit</span></Hidden>
       </Button>
     </Link>
   );
