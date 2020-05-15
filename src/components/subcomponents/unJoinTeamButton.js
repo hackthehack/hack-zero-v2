@@ -5,13 +5,13 @@ import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   buttonRoot: {
-    width: "-webkit-fill-available"
+    width: "-webkit-fill-available",
   },
   buttonText: {
-    marginLeft: theme.spacing(1)
-  }
+    marginLeft: theme.spacing(1),
+  },
 }));
 
 const UnjoinButton = ({ dispatch, user, hackDetails }) => {
@@ -26,10 +26,10 @@ const UnjoinButton = ({ dispatch, user, hackDetails }) => {
       if (member._id !== user.userId || !user.userId) {
         setDisable(true);
       } else {
-          setDisable(false);
+        setDisable(false);
       }
     });
-  }, [hackDetails, userId]);
+  }, [hackDetails, user]);
 
   const unJoinHack = () => {
     dispatch(unjoiningHackIdea());
@@ -54,9 +54,9 @@ const UnjoinButton = ({ dispatch, user, hackDetails }) => {
   );
 };
 
-const mapState = state => ({
-  userId: state.auth.userId,
-  hackDetails: state.hack.hackDetails
+const mapState = (state) => ({
+  user: state.auth,
+  hackDetails: state.hack.hackDetails,
 });
 
 export default connect(mapState)(UnjoinButton);
