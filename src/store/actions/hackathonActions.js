@@ -1,7 +1,6 @@
 import * as ActionType from "./index";
 import axios from "axios";
 import urlJoin from "url-join";
-import { clearUpload } from './submissionActions'
 
 export const getContentOkay = (content) => ({
   type: ActionType.FETCH_HACK_A_THON,

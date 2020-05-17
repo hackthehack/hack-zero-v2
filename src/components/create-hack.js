@@ -57,7 +57,9 @@ export function CreateHack(props) {
         goal: goal,
         team: [],
         creator: props.userId,
+
         status: status,
+
       };
       if (join) {
         newHack.team[0] = props.userId;
@@ -67,14 +69,16 @@ export function CreateHack(props) {
           Authorization: "Bearer " + props.token,
         },
       };
-      await Axios.post(
+      let result = await Axios.post(
         UrlJoin(process.env.REACT_APP_API_URL, "addhack"),
         newHack,
         config
       );
+      //console.log(result.data);
+      return result.data.id;
     };
-    fetchData().then(() => {
-      props.history.push("/hacks");
+    fetchData().then((id) => {
+      props.history.push(`/hack/${id}`);
     });
   };
 

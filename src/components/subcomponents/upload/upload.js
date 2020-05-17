@@ -17,13 +17,14 @@ const useStyles = makeStyles(theme => ({
 
 export function UploadFiles({ files, addFile }) {
   const onAddFile = e => {
-    e.preventDefault()
-    let fileId = files.length
+    e.preventDefault();
+    let fileId = files.length;
     Array.from(e.target.files).map(file => {
-      addFile(file, fileId)
-      fileId++
+      addFile(file, fileId);
+      fileId++;
+      return null;
     });
-    console.log(files)
+    console.log(files);
     e.target.files = null;
   };
   const classes = useStyles();
@@ -40,7 +41,10 @@ export function UploadFiles({ files, addFile }) {
         <Typography variant="h6">Attach Files</Typography>
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="body1">[Upload instructions Here]</Typography>
+        <Typography variant="body1">
+          Please upload your teams lean canvas and any other supporting
+          documents.
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <input
@@ -70,7 +74,7 @@ export function UploadFiles({ files, addFile }) {
 }
 
 const mapDispatch = dispatch => ({
-  addFile: (file, fileID) => dispatch(uploadWarmup(file, fileID)),
+  addFile: (file, fileID) => dispatch(uploadWarmup(file, fileID))
 });
 
 const mapStateToProps = state => ({

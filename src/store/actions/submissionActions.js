@@ -6,36 +6,36 @@ import { editingHackIdea } from "./userActions";
 export const uploadWarmup = (file, fileID) => ({
   type: ActionType.UPLOAD_WARMUP,
   fileID: fileID,
-  file: file
+  file: file,
 });
 
 export const uploadCanceled = fileID => ({
   type: ActionType.FILE_UPLOAD_CANCELLED,
-  fileID: fileID
+  fileID: fileID,
 });
 
 export const uploadStart = fileID => ({
   type: ActionType.UPLOAD_STARTED,
-  fileID: fileID
+  fileID: fileID,
 });
 export const uploadProgress = (fileID, progress) => ({
   type: ActionType.UPLOAD_PROGRESS,
   fileID: fileID,
-  progress: progress
+  progress: progress,
 });
 
-export const uploadComplete = fileID => ({
+export const uploadComplete = (fileID) => ({
   type: ActionType.UPLOAD_COMPLETE,
-  fileID: fileID
+  fileID: fileID,
 });
 
-export const uploadFailed = fileID => ({
+export const uploadFailed = (fileID) => ({
   type: ActionType.UPLOAD_FAILED,
-  fileID: fileID
+  fileID: fileID,
 });
 
 export const clearUpload = () => ({
-  type: ActionType.CLEAR_UPLOAD
+  type: ActionType.CLEAR_UPLOAD,
 });
 
 export const uploadprocess = (file, fileID, history) => {
@@ -44,8 +44,8 @@ export const uploadprocess = (file, fileID, history) => {
     dispatch(uploadStart(fileID, file.name));
     let config = {
       headers: {
-        Authorization: "Bearer " + getState().auth.jwt
-      }
+        Authorization: "Bearer " + getState().auth.jwt,
+      },
     };
     const fileUpload = axios.post(
       UrlJoin(process.env.REACT_APP_API_URL, `upload`),
@@ -53,16 +53,16 @@ export const uploadprocess = (file, fileID, history) => {
       config
     );
     fileUpload
-      .then(res => {
+      .then((res) => {
         const url = res.data.fileUploadURL;
         const config = {
           headers: { "Content-Type": "multipart/form-data" },
-          onUploadProgress: function(progressEvent) {
+          onUploadProgress: function (progressEvent) {
             let percentCompleted = Math.round(
               (progressEvent.loaded * 100) / progressEvent.total
             );
             dispatch(uploadProgress(fileID, percentCompleted));
-          }
+          },
         };
         axios
           .put(url, file, config)
@@ -75,7 +75,7 @@ export const uploadprocess = (file, fileID, history) => {
                 .post(
                   UrlJoin(process.env.REACT_APP_API_URL, "checkOrphanage"),
                   {
-                    hackId: getState().hack.hackDetails._id
+                    hackId: getState().hack.hackDetails._id,
                   }
                 )
                 .then(() => {
@@ -83,12 +83,12 @@ export const uploadprocess = (file, fileID, history) => {
                 });
             }
           })
-          .catch(error => {
+          .catch((error) => {
             dispatch(uploadFailed(fileID));
             console.log(error);
           });
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(uploadFailed(fileID));
         console.log(error);
       });
@@ -99,16 +99,17 @@ export const submitHackIdea = (submitData, history) => {
   return async (dispatch, getState) => {
     let config = {
       headers: {
-        Authorization: "Bearer " + getState().auth.jwt
-      }
+        Authorization: "Bearer " + getState().auth.jwt,
+      },
     };
     let submissionId = null;
     let files = [];
-    getState().upload.uploadFiles.map(file => {
+    getState().upload.uploadFiles.map((file) => {
       files.push({
         name: file.name,
-        size: file.size
+        size: file.size,
       });
+      return null;
     });
     if (getState().hack.submission !== null) {
       submissionId = getState().hack.submission._id;
@@ -121,7 +122,7 @@ export const submitHackIdea = (submitData, history) => {
           submissionId: submissionId,
           files: files,
           message: submitData.message,
-          hackId: getState().hack.hackDetails._id
+          hackId: getState().hack.hackDetails._id,
         },
         config
       )
@@ -131,6 +132,7 @@ export const submitHackIdea = (submitData, history) => {
             if (getState().upload.statuses[fileID].status !== "UPLOADED") {
               dispatch(uploadprocess(file, fileID, history));
             }
+            return null;
           });
         } else {
           history.push(`/hack/${getState().hack.hackDetails._id}`);
