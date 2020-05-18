@@ -5,26 +5,31 @@ import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   buttonRoot: {
-    width: "-webkit-fill-available"
+    width: "-webkit-fill-available",
   },
   buttonText: {
-    marginLeft: theme.spacing(1)
-  }
+    marginLeft: theme.spacing(1),
+  },
 }));
 
-const UnjoinButton = ({ dispatch, userId, hackDetails }) => {
-  const classes = useStyles();
+const UnjoinButton = ({ dispatch, user, hackDetails }) => {
   const [disable, setDisable] = useState(true);
-
+  const classes = useStyles();
   useEffect(() => {
-    hackDetails.team.forEach(member => {
-      if (member._id === userId) {
+    if (hackDetails.team.length === 0) {
+      setDisable(true);
+      return;
+    }
+    hackDetails.team.forEach((member) => {
+      if (member._id !== user.userId || !user.userId) {
+        setDisable(true);
+      } else {
         setDisable(false);
       }
     });
-  }, [hackDetails, userId]);
+  }, [hackDetails, user]);
 
   const unJoinHack = () => {
     dispatch(unjoiningHackIdea());
@@ -49,9 +54,9 @@ const UnjoinButton = ({ dispatch, userId, hackDetails }) => {
   );
 };
 
-const mapState = state => ({
-  userId: state.auth.userId,
-  hackDetails: state.hack.hackDetails
+const mapState = (state) => ({
+  user: state.auth,
+  hackDetails: state.hack.hackDetails,
 });
 
 export default connect(mapState)(UnjoinButton);

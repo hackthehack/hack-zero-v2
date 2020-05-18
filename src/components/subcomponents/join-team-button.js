@@ -26,7 +26,20 @@ export function JoinButton({ hackDetails, user, dispatch, history }) {
   };
 
   React.useEffect(() => {
+
+    if (
+      hackDetails.status === "Canceled" ||
+      hackDetails.status === "Team Closed" ||
+      hackDetails.status === "Submitted" ||
+      !user.userId
+    ) {
+      setDisable(true);
+      return;
+    }
+
+
     hackDetails.team.forEach(member => {
+
       if (member._id === user.userId || !user.userId) {
         setDisable(true);
       }
