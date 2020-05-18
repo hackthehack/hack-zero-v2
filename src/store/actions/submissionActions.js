@@ -1,6 +1,7 @@
 import * as ActionType from "./index";
 import axios from "axios";
 import UrlJoin from "url-join";
+import { editingHackIdea } from "./userActions";
 
 export const uploadWarmup = (file, fileID) => ({
   type: ActionType.UPLOAD_WARMUP,
@@ -8,12 +9,12 @@ export const uploadWarmup = (file, fileID) => ({
   file: file,
 });
 
-export const uploadCanceled = (fileID) => ({
+export const uploadCanceled = fileID => ({
   type: ActionType.FILE_UPLOAD_CANCELLED,
   fileID: fileID,
 });
 
-export const uploadStart = (fileID) => ({
+export const uploadStart = fileID => ({
   type: ActionType.UPLOAD_STARTED,
   fileID: fileID,
 });
@@ -113,6 +114,7 @@ export const submitHackIdea = (submitData, history) => {
     if (getState().hack.submission !== null) {
       submissionId = getState().hack.submission._id;
     }
+    dispatch(editingHackIdea({ status: "Submitted" }));
     axios
       .post(
         UrlJoin(process.env.REACT_APP_API_URL, "submit"),
@@ -125,12 +127,16 @@ export const submitHackIdea = (submitData, history) => {
         config
       )
       .then(() => {
-        getState().upload.uploadFiles.map((file, fileID) => {
-          if (getState().upload.statuses[fileID].status !== "UPLOADED") {
-            dispatch(uploadprocess(file, fileID, history));
-          }
-          return null;
-        });
+        if (getState().upload.uploadFiles.length > 0) {
+          getState().upload.uploadFiles.map((file, fileID) => {
+            if (getState().upload.statuses[fileID].status !== "UPLOADED") {
+              dispatch(uploadprocess(file, fileID, history));
+            }
+            return null;
+          });
+        } else {
+          history.push(`/hack/${getState().hack.hackDetails._id}`);
+        }
       });
   };
 };
